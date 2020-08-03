@@ -1,4 +1,4 @@
-import firebase from "firebase";
+import firebase from 'firebase';
 
 const firebaseApp = firebase.initializeApp({
   apiKey: process.env.FIREBASE_KEY,
@@ -8,7 +8,7 @@ const firebaseApp = firebase.initializeApp({
   storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
   messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
   appId: process.env.FIREBASE_APP_ID,
-  measurementId: process.env.FIREBASE_MEASUREMENT_ID,
+  measurementId: process.env.FIREBASE_MEASUREMENT_ID
 });
 
 const db = firebaseApp.firestore();
@@ -25,7 +25,7 @@ const [images, setImages] = useState;
 
 useEffect(() => {
   db.collection('Images').onSnapshot((snapshot) => {
-    //every time onSnapshot fires from a change in 'canvases' (collection name in firebase), do this
+    //every time onSnapshot fires from a change in 'images' (collection name in firebase), do this
     setImages(snapshot.docs.map((doc) => ({ id: doc.id, image: doc.data() })));
   });
 }, []);
