@@ -13,24 +13,58 @@ const firebaseApp = firebase.initializeApp({
 
 const db = firebaseApp.firestore();
 const storage = firebase.storage();
-console.log(db);
+
 export { db, storage };
 
-//Add this to the top of page where required
-// import { db } from './firebase';
+/*
 
-/* Add this inside Images function
+Add this to the top of page where required
 
-const [images, setImages] = useState;
+import { db } from './firebase';
+--
+Example, in case I forget
 
-useEffect(() => {
-  db.collection('Images').onSnapshot((snapshot) => {
-    //every time onSnapshot fires from a change in 'images' (collection name in firebase), do this
-    setImages(snapshot.docs.map((doc) => ({ id: doc.id, image: doc.data() })));
-  });
-}, []);
+import Images from './Images';
+---
 
-function Images() {
-  return <div className='images-test'>test</div>;
+Add code where needed; this is a sample that works
+
+function App() {
+  const [images, setImages] = useState([]);
+
+  useEffect(() => {
+    db.collection('Images').onSnapshot((snapshot) => {
+      //every time onSnapshot fires from a change in 'images' (collection name in firebase), do this
+      setImages(snapshot.docs.map((doc) => doc.data()));
+    });
+  }, []);
+
+  return (
+    <div>
+      {images.map((image) => (
+        <Images imageUrl={image.image_url} />
+      ))}
+      <Images />
+    </div>
+  );
 }
+----
+This is test code used to verify connectivity with firebase
+
+import React from 'react';
+
+
+function Images(props) {
+  const { imageUrl } = props;
+
+  return (
+    <div className='images-test'>
+      <h3>test</h3>
+      <img src={imageUrl}></img>
+    </div>
+  );
+}
+
+export default Images;
+
 */
