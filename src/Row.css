@@ -12,12 +12,12 @@
 .row_canvi {
   object-fit: contain;
   width: 100%;
-  max-height: 100px;
+  max-height: 250px;
   margin-right: 10px;
   transition: transform 450ms;
 }
 
 .row_canvi:hover {
-  transform: scale(1.08);
+  transform: scale(1.09);
   opacity: 1;
 }

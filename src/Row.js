@@ -24,6 +24,7 @@ function Row({ title, fetchUrl }) {
       <div className="row_canvis">
         {canvi.map((canvi) => (
           <img
+            key={canvi.id}
             className="row_canvi"
             src={`${base_url}${canvi.poster_path}`}
             alt={canvi.name}

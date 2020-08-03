@@ -14,7 +14,7 @@ npm install
 
 If you have already run `npm install` before this update, follow these instructions
 
-Insall Firebase Tools
+Install Firebase Tools
 
 ```
 npm install -g firebase-tools
