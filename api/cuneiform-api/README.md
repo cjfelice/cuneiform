@@ -1,24 +1,63 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Only outputs json data when visiting pages below; not connected to app. Useful for test data for setting up front end
 
-Things you may want to cover:
+Must be run on vagrant machine. Two terminals is probably best, one vagrant, one for React
 
-* Ruby version
+Running this api with React server will make one of them ask if you would like to change ports, they don't like each other yet, enter `y`.
 
-* System dependencies
+Did not get around to removing log and tmp nonsense. They update with every refresh of the server. Recommend not pushing those changes to the repository, it's no use.
 
-* Configuration
+- Ruby version 2.7.1
+  To change:
 
-* Database creation
+```
+rvm install 2.7.1
+```
 
-* Database initialization
+- Rails version 6.0.3.2
+  To change:
 
-* How to run the test suite
+```
+gem install rails -v 6.0.3.2
+```
 
-* Services (job queues, cache servers, search engines, etc.)
+- System dependencies added
+  (for others see Gemfile)
 
-* Deployment instructions
+'fast_jsonapi'
+'rails'
 
-* ...
+- Configuration
+
+```
+bundle install
+```
+
+- Database creation
+
+```
+rails db:prepare
+rails db:seed
+```
+
+- Run server (port 3001)
+
+```
+rails s -b 0.0.0.0 -p 3001
+```
+
+```
+http://localhost:3001
+```
+
+for json output of tables:
+
+```
+http://localhost:3001/api/v1/users
+http://localhost:3001/api/v1/canvases
+http://localhost:3001/api/v1/images
+http://localhost:3001/api/v1/comments
+http://localhost:3001/api/v1/likes
+http://localhost:3001/api/v1/videos
+```
