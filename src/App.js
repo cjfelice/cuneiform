@@ -93,6 +93,40 @@ function App() {
     }
   ]);
 
+  const test = {
+    name: 'Test5/rename to title!',
+    description: 'Yangmingshan Taipei Chinese Pavilion2!',
+    music_id: '',
+    media: [
+      {
+        mediaUrl:
+          'https://get.pxhere.com/photo/landscape-nature-grass-branch-light-sky-sun-fog-sunrise-sunset-mist-field-grain-sunlight-morning-dawn-summer-dusk-evening-harvest-autumn-fields-mood-arable-atmospheric-phenomenon-grass-family-642150.jpg'
+      },
+      {
+        mediaUrl:
+          'https://c.pxhere.com/photos/81/db/autumn_forest_autumn_forest_trees_leaves_sunbeam_nature_sunlight-967621.jpg!d'
+      },
+      {
+        mediaUrl:
+          'https://static.pexels.com/photos/8486/water-rain-raindrops-drops.jpg'
+      }
+    ]
+  };
+  /*
+  suggestion on how to add a newly created canvas to the existing
+  const testing = () => {
+    const test5 = [...canvas, test];
+    return test5;
+  };
+
+  console.log(canvas);
+
+  useEffect(() => {
+    //onSubmit (probably) do this
+    setCanvas(testing());
+  }, []);
+*/
+
   return (
     <div className='App'>
       <div className='header'>
