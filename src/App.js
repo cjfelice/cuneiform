@@ -9,7 +9,7 @@ import './App.scss';
 
 //Component files
 import Panel from './component/Panel';
-import './component/panel.scss';
+import './component/Panel.scss';
 import UserAuth from './auth/authUser';
 
 function App() {
@@ -141,7 +141,7 @@ function App() {
       </div>
       <Row title='Suggested Canvi' fetchUrl={requests.fetchTrending} />
 
-      {/* <div className='panel_canvis'>
+      <div className='panel_canvis'>
         {panel.map((pane) => (
           <Panel
             name={pane.name}
@@ -150,8 +150,7 @@ function App() {
             media={[...pane.media]}
           />
         ))}
-        <Workspace />
-      </div> */}
+      </div>
     </div>
   );
 }
