@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
-import axios from "./axios";
-import "./Row.scss";
+import React, { useState, useEffect } from 'react';
+import axios from './axios';
+// import "./Row.scss";
 
-const base_url = "https://image.tmdb.org/t/p/original/";
+const base_url = 'https://image.tmdb.org/t/p/original/';
 
 function Row({ title, fetchUrl }) {
   const [canvi, setCanvi] = useState([]);
@@ -17,13 +17,13 @@ function Row({ title, fetchUrl }) {
   }, [fetchUrl]);
 
   return (
-    <div className="row">
+    <div className='row'>
       <h2>{title}</h2>
-      <div className="row_canvis">
+      <div className='row_canvis'>
         {canvi.map((canvi) => (
           <img
             key={canvi.id}
-            className="row_canvi"
+            className='row_canvi'
             src={`${base_url}${canvi.poster_path}`}
             alt={canvi.name}
           />
