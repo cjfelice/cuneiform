@@ -1,21 +1,19 @@
 import React from 'react';
 import './Canvas.scss';
 
-function Canvas() {
+function Canvas(props) {
+  // title = name
+  const { name, description, music_id, mediaUrl } = props;
+
   return (
     <div>
-      {/* header name */}
       <div className='canvas'>
         <div className='canvas_header'>
-          <h1 className='canvas_user'>username</h1>
-          <h4 className='canvas_title'>name </h4>
+          <h4 className='canvas_title'>username</h4>
+          <h1 className='canvas_user'>{name}</h1>
         </div>
         <div className='canvas_canvis'>
-          <img
-            className='canvas_media'
-            src='https://get.pxhere.com/photo/landscape-nature-grass-branch-light-sky-sun-fog-sunrise-sunset-mist-field-grain-sunlight-morning-dawn-summer-dusk-evening-harvest-autumn-fields-mood-arable-atmospheric-phenomenon-grass-family-642150.jpg'
-            alt=''
-          />
+          <img className='canvas_media' src={mediaUrl} alt='' />
 
           <img
             className='canvas_media'
@@ -44,8 +42,9 @@ function Canvas() {
             alt=''
           />
         </div>
-        <h1 className='canvas_user'>username</h1>
-        <h4 className='canvas_title'>name </h4>
+        <h4 className='canvas_user'>{description}</h4>
+        {/* h1 and h4 tags are only placeholders here */}
+        <h1 className='canvas_title'>name </h1>
       </div>
     </div>
   );

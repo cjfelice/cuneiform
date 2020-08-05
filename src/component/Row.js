@@ -5,12 +5,12 @@ import axios from './axios';
 const base_url = 'https://image.tmdb.org/t/p/original/';
 
 function Row({ title, fetchUrl }) {
-  const [canvi, setCanvi] = useState([]);
+  const [media, setMedia] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
       const request = await axios.get(fetchUrl);
-      setCanvi(request.data.results);
+      setMedia(request.data.results);
       return request;
     }
     fetchData();
@@ -19,13 +19,13 @@ function Row({ title, fetchUrl }) {
   return (
     <div className='row'>
       <h2>{title}</h2>
-      <div className='row_canvis'>
-        {canvi.map((canvi) => (
+      <div className='row_medias'>
+        {media.map((media) => (
           <img
-            key={canvi.id}
-            className='row_canvi'
-            src={`${base_url}${canvi.poster_path}`}
-            alt={canvi.name}
+            key={media.id}
+            className='row_media'
+            src={`${base_url}${media.poster_path}`}
+            alt={media.name}
           />
         ))}
       </div>
