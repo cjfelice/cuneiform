@@ -1,4 +1,4 @@
-.panel {
+.panels {
   max-width: 400px;
   border: 2px solid black;
   background-color: lavender;
@@ -7,7 +7,7 @@
   margin-right: 10px;
 }
 
-.panel_canvis {
+.panels_canvis {
   display: flex;
   overflow-y: hidden;
   overflow-x: scroll;
@@ -15,24 +15,24 @@
   padding: 20px;
 }
 
-.panel_header {
+.panels_header {
   display: flex;
   align-items: center;
   padding: 20px;
 }
 
-.panel_title {
+.panels_title {
   padding: 20px;
 }
-.panel_user {
+.panels_user {
   margin-right: 20px;
 }
 
-.panel_canvis::-webkit-scrollbar {
+.panels_canvis::-webkit-scrollbar {
   display: none;
 }
 
-.panel_media {
+.panels_media {
   object-fit: contain;
   width: 100%;
   max-height: 250px;
@@ -40,11 +40,11 @@
   transition: transform 450ms;
 }
 
-// .panel_media:hover {
+// .panels_media:hover {
 //   transform: scale(1.5);
 //   opacity: 1;
 // }
-.panel:hover {
+.panels:hover {
   transform: scale(1.3);
   opacity: 1;
 }
