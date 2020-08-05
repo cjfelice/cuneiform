@@ -1,3 +1,10 @@
+.canvas {
+  max-width: 400px;
+  border: 2px solid black;
+  background-color: lavender;
+  transition: transform 450ms;
+}
+
 .canvas_canvis {
   display: flex;
   overflow-y: hidden;
@@ -5,19 +12,38 @@
   padding: 20px;
 }
 
+.canvas_header {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+}
+
+.canvas_title {
+  padding: 20px;
+}
+.canvas_user {
+  margin-right: 20px;
+}
+
 .canvas_canvis::-webkit-scrollbar {
   display: none;
 }
 
-.canvas_canvi {
+.canvas_media {
   object-fit: contain;
   width: 100%;
   max-height: 250px;
   margin-right: 10px;
   transition: transform 450ms;
+  border: 2px solid black;
+  border-bottom: 2px solid black;
 }
 
-.canvas_canvi:hover {
-  transform: scale(1.09);
+// .canvas_media:hover {
+//   transform: scale(1.5);
+//   opacity: 1;
+// }
+.canvas:hover {
+  transform: scale(2);
   opacity: 1;
 }
