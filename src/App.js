@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.scss';
 import Row from './Row';
+import Canvas from './Canvas';
 import Title from './Title';
 import UserAuth from './auth/authUser';
 import requests from './requests';
@@ -13,6 +14,7 @@ function App() {
         <Title text='chiMera' />
       </div>
       <Row title='Suggested Canvi' fetchUrl={requests.fetchTrending} />
+      <Canvas />
     </div>
   );
 }

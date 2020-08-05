@@ -131,6 +131,9 @@ function UserAuth() {
           </form>
         </div>
       </Modal>
+      <div>
+        <h1>{name}</h1>
+      </div>
 
       {user ? (
         <Button onClick={() => authorize.signOut()}>Sign Out</Button>
