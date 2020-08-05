@@ -102,11 +102,11 @@ function App() {
       </div>
 
       <div>
-        <Workspace className='workspace' />
+        <Workspace />
       </div>
       <Row title='Suggested Canvi' fetchUrl={requests.fetchTrending} />
 
-      <div className='canvas_canvis'>
+      {/* <div className='canvas_canvis'>
         {canvas.map((canva) => (
           <Canvas
             name={canva.name}
@@ -115,7 +115,8 @@ function App() {
             media={[...canva.media]}
           />
         ))}
-      </div>
+        <Workspace />
+      </div> */}
     </div>
   );
 }

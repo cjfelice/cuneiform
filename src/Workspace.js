@@ -1,5 +1,5 @@
 import React from "react";
-import "./App.scss";
+import "./Workspace.scss";
 import Canvas from "./Canvas";
 
 function Workspace() {
