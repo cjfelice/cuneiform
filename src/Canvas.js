@@ -3,6 +3,7 @@ import "./react_resizable_styles.scss";
 import "./react_grid_styles.scss";
 import _ from "lodash";
 import "./App.scss";
+import Mediabox from "./Mediabox";
 import ReactPlayer from "react-player";
 
 import { Responsive, WidthProvider } from "react-grid-layout";
@@ -44,6 +45,7 @@ function Canvas() {
         ) : (
           <span className="text">{i}</span>
         )}
+        <Mediabox />
         <span
           className="remove"
           style={removeStyle}
@@ -113,6 +115,8 @@ function Canvas() {
     </div>
   );
 }
+
+export default Canvas;
 // function Canvas() {
 //   const [item, setItem] = useState({
 //     layout: [{ i: "a", x: 6, y: 6, w: 1, h: 2 }],
@@ -192,5 +196,3 @@ function Canvas() {
             src="https://www.sciencemag.org/sites/default/files/styles/article_main_large/public/cc_iStock-478639870_16x9.jpg?itok=1-jMc4Xv"
             alt="tree"
           ></img> */
-
-export default Canvas;
