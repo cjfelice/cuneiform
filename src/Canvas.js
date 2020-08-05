@@ -1,258 +1,150 @@
 import React, { useState } from "react";
 import "./react_resizable_styles.scss";
 import "./react_grid_styles.scss";
-import renderHTML from "react-render-html";
-import bounds from "react-bounds";
 import _ from "lodash";
 import "./App.scss";
 import ReactPlayer from "react-player";
-
-import GridLayout from "react-grid-layout";
 
 import { Responsive, WidthProvider } from "react-grid-layout";
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 function Canvas() {
-  const [layout, setLayout] = useState([]);
-  const [newCounter, setNewCounter] = useState(0);
-  const [boxes, setBoxes] = useState([]);
+  const [state, setState] = useState({
+    items: [0, 1, 2, 3, 4].map(function (i, key, list) {
+      return {
+        i: i.toString(),
+        x: i * 2,
+        y: 0,
+        w: 2,
+        h: 2,
+        add: i === list.length - 1,
+      };
+    }),
+    newCounter: 0,
+  });
 
-  // const bounds = () => {
-  //   return {
-  //     'bound-name': {
-  //       minWidth: 0,
-  //       maxWidth: 500,
-  //     },
-  //   };
-  // }
-
-  const boxMapper = (boxes) => {
-    let squares = "";
-    const boxi = boxes.map((box) => `<div key="${box}">${box}</div>`);
-
-    for (const box of boxi) {
-      squares += box;
-    }
-    return squares;
+  const createElement = (el) => {
+    const removeStyle = {
+      position: "absolute",
+      right: "2px",
+      top: 0,
+      cursor: "pointer",
+    };
+    const i = el.add ? "+" : el.i;
+    return (
+      <div key={i} data-grid={el}>
+        {el.add ? (
+          <span
+            className="add text"
+            onClick={onAddItem}
+            title="You can add an item by clicking here, too."
+          >
+            Add +
+          </span>
+        ) : (
+          <span className="text">{i}</span>
+        )}
+        <span
+          className="remove"
+          style={removeStyle}
+          onClick={onRemoveItem.bind(this, i)}
+        >
+          x
+        </span>
+      </div>
+    );
   };
 
-  // const onAddItem = (x, y, w, h) => {
-  //   /*eslint no-console: 0*/
-  //   console.log("adding", "n" + state.newCounter);
-  //   setState({
-  //     // Add a new item. It must have a unique key!
-  //     items: state.items.concat({
-  //       i: "n" + state.newCounter,
-  //       x: x,
-  //       y: y, // puts it at the bottom
-  //       w: w,
-  //       h: h,
-  //     }),
-  //     // Increment the counter to ensure key is always unique.
-  //     newCounter: this.state.newCounter + 1,
-  //   });
-  // };
+  const onAddItem = () => {
+    console.log("adding", "n" + state.newCounter);
+    setState({
+      items: state.items.concat({
+        i: "n" + state.newCounter,
+        x: (state.items.length * 2) % 12,
+        y: Infinity,
+        w: 2,
+        h: 2,
+      }),
+      newCounter: state.newCounter + 1,
+    });
+  };
 
-  // const onDrop = (layout, layoutItem, event) => {
-  //   alert("hi");
-  //   onAddItem(layoutItem.x, layoutItem.y, layoutItem.w, layoutItem.h);
-  //   setState({
-  //     // Add a new item. It must have a unique key!
-  //     items: state.layout.concat({
-  //       i: "n" + state.newCounter,
-  //       x: (this.state.items.length * 2) % (this.state.cols || 12),
-  //       y: Infinity, // puts it at the bottom
-  //       w: 2,
-  //       h: 2,
-  //     }),
-  //     // Increment the counter to ensure key is always unique.
-  //     newCounter: state.newCounter + 1,
-  //   });
-  // };
+  const onRemoveItem = (i) => {
+    console.log("removing", i);
+    setState({ ...state, items: _.reject(state.items, { i: i }) });
+  };
+
   const onDrop = (layout, layoutItem, event) => {
-    console.log(boxes, layout);
-    setLayout(
-      layout.concat({
-        i: "n" + newCounter,
+    console.log("adding", "n" + state.newCounter);
+    console.log(layoutItem);
+    setState({
+      items: state.items.concat({
+        i: "n" + state.newCounter,
         x: layoutItem.x,
         y: layoutItem.y,
-        w: 5,
-        h: 5,
-      })
-    );
-    setBoxes(boxes.concat("n" + newCounter));
-    setNewCounter(newCounter + 1);
+        w: 2,
+        h: 2,
+      }),
+      newCounter: state.newCounter + 1,
+    });
   };
+
   return (
     <div>
-      <div
+      <button
+        onClick={onAddItem}
         className="droppable-element"
         draggable={true}
         unselectable="on"
         onDragStart={(e) => e.dataTransfer.setData("text/plain", "")}
       >
-        Droppable Element (Drag me!)
-      </div>
-
+        Add Item
+      </button>
       <ResponsiveReactGridLayout
-        className="canvas-window"
-        layout={layout}
-        rowHeight={30}
-        width={1200}
-        maxRows={12}
-        compactType={"horizontal"}
+        className="layout"
+        cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
+        rowHeight={100}
         isDroppable={true}
-        autoSize={false}
-        verticalCompact={false}
         onDrop={onDrop}
-        breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
-        cols={{ lg: 20, md: 17, sm: 14, xs: 10, xxs: 5 }}
+        verticalCompact={false}
       >
-        {renderHTML(boxMapper(boxes))}
+        {_.map(state.items, (el) => createElement(el))}
       </ResponsiveReactGridLayout>
     </div>
   );
 }
+// function Canvas() {
+//   const [item, setItem] = useState({
+//     layout: [{ i: "a", x: 6, y: 6, w: 1, h: 2 }],
+//     boxes: ["a"],
+//   });
+//   const [layout, setLayout] = useState([]);
+//   const [newCounter, setNewCounter] = useState(0);
+//   const [boxes, setBoxes] = useState([]);
 
-// class Canvas extends React.Component {
-//   static defaultProps = {
-//     className: "layout",
-//     rowHeight: 30,
-//     onLayoutChange: function () {},
-//     cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 },
-//   };
-//   constructor(props) {
-//     super(props);
+//   const boxMapper = (boxes) => {
+//     let squares = "";
+//     const boxi = boxes.map((box) => `<div key="${box}">${box}</div>`);
 
-//     this.state = {
-//       items: [0, 1, 2, 3, 4].map(function (i, key, list) {
-//         return {
-//           i: i.toString(),
-//           x: i * 2,
-//           y: 0,
-//           w: 2,
-//           h: 2,
-//           add: i === list.length - 1,
-//         };
-//       }),
-//       newCounter: 0,
-//     };
-
-//     this.onAddItem = this.onAddItem.bind(this);
-//     this.onBreakpointChange = this.onBreakpointChange.bind(this);
-//   }
-
-//   createElement(el) {
-//     const removeStyle = {
-//       position: "absolute",
-//       right: "2px",
-//       top: 0,
-//       cursor: "pointer",
-//     };
-//     const i = el.add ? "+" : el.i;
-//     return (
-//       <div className="canvas_item" key={i} data-grid={el}>
-//         {el.add ? (
-//           <span
-//             className="add text"
-//             onClick={this.onAddItem}
-//             title="You can add an item by clicking here, too."
-//           >
-//             Add +
-//           </span>
-//         ) : (
-//           <span className="text">{i}</span>
-//         )}
-//         <span
-//           className="remove"
-//           style={removeStyle}
-//           onClick={this.onRemoveItem.bind(this, i)}
-//         >
-//           <i class="fas fa-times"></i>
-//         </span>
-//       </div>
-//     );
-//   }
-
-//   onAddItem(x, y, w, h) {
-//     /*eslint no-console: 0*/
-//     console.log("adding", "n" + this.state.newCounter);
-//     this.setState({
-//       // Add a new item. It must have a unique key!
-//       items: this.state.items.concat({
-//         i: "n" + this.state.newCounter,
-//         x: x,
-//         y: y, // puts it at the bottom
-//         w: w,
-//         h: h,
-//       }),
-//       // Increment the counter to ensure key is always unique.
-//       newCounter: this.state.newCounter + 1,
-//     });
-//   }
-
-//   onBreakpointChange = (breakpoint) => {
-//     this.setState({
-//       currentBreakpoint: breakpoint,
-//     });
+//     for (const box of boxi) {
+//       squares += box;
+//     }
+//     return squares;
 //   };
 
-//   onRemoveItem(i) {
-//     console.log("removing", i);
-//     this.setState({ items: _.reject(this.state.items, { i: i }) });
-//   }
-
-//   onDrop = (layout, layoutItem, event) => {
-//     this.onAddItem(layoutItem.x, layoutItem.y, layoutItem.w, layoutItem.h);
-//     this.setState({
-//       // Add a new item. It must have a unique key!
-//       items: this.state.items.concat({
-//         i: "n" + this.state.newCounter,
-//         x: (this.state.items.length * 2) % (this.state.cols || 12),
-//         y: Infinity, // puts it at the bottom
-//         w: 2,
-//         h: 2,
-//       }),
-//       // Increment the counter to ensure key is always unique.
-//       newCounter: this.state.newCounter + 1,
-//     });
-//   };
-
-//   render() {
-//     return (
-//       <div className="canvas">
-//         <button
-//           onClick={this.onAddItem}
-//           draggable={true}
-//           onDragStart={(e) => e.dataTransfer.setData("text/plain", "")}
-//           onDrop={this.onDrop}
-//         >
-//           Add Item
-//         </button>
-//         <ResponsiveReactGridLayout
-//           onLayoutChange={this.onLayoutChange}
-//           onBreakpointChange={this.onBreakpointChange}
-//           onDrop={this.onDrop}
-//           isDroppable={true}
-//           {...this.props}
-//         >
-//           {_.map(this.state.items, (el) => this.createElement(el))}
-//         </ResponsiveReactGridLayout>
-//       </div>
-//     );
-//   }
-// }
-
-// function Canvas({}) {
-//   const layout = {};
 //   const onDrop = (layout, layoutItem, event) => {
-//     alert(
-//       `Dropped element props:\n${JSON.stringify(
-//         layoutItem,
-//         ["x", "y", "w", "h"],
-//         2
-//       )}`
+//     console.log(boxes, layout);
+//     setLayout(
+//       layout.concat({
+//         i: "n" + newCounter,
+//         x: layoutItem.x,
+//         y: layoutItem.y,
+//         w: 5,
+//         h: 5,
+//       })
 //     );
+//     setBoxes(boxes.concat("n" + newCounter));
+//     setNewCounter(newCounter + 1);
 //   };
 //   return (
 //     <div>
@@ -260,43 +152,27 @@ function Canvas() {
 //         className="droppable-element"
 //         draggable={true}
 //         unselectable="on"
-//         // this is a hack for firefox
-//         // Firefox requires some kind of initialization
-//         // which we can do by adding this attribute
-//         // @see https://bugzilla.mozilla.org/show_bug.cgi?id=568313
 //         onDragStart={(e) => e.dataTransfer.setData("text/plain", "")}
 //       >
 //         Droppable Element (Drag me!)
 //       </div>
-//       <div>
-//         <ResponsiveGridLayout
-//           className="layout"
-//           layout={layout}
-//           onDrop={onDrop}
-//           breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
-//           cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
-//         >
-//           <div key="1">1</div>
-//           <div key="2">2</div>
-//           <div key="3">3</div>
-//         </ResponsiveGridLayout>
-//       </div>
+
+//       <ResponsiveReactGridLayout
+//         className="canvas-window"
+//         layout={layout}
+//         rowHeight={5}
+//         maxRows={12}
+//         isDroppable={true}
+//         autoSize={false}
+//         onDrop={onDrop}
+//         breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
+//         cols={{ lg: 20, md: 17, sm: 14, xs: 10, xxs: 5 }}
+//       >
+//         {renderHTML(boxMapper(boxes))}
+//       </ResponsiveReactGridLayout>
 //     </div>
 //   );
 // }
-
-//       <div
-//         className="droppable-element"
-//         draggable={true}
-//         unselectable="on"
-//         // this is a hack for firefox
-//         // Firefox requires some kind of initialization
-//         // which we can do by adding this attribute
-//         // @see https://bugzilla.mozilla.org/show_bug.cgi?id=568313
-//         onDragStart={(e) => e.dataTransfer.setData("text/plain", "")}
-//       >
-//         Droppable Element (Drag me!)
-//       </div>
 
 /* <ReactPlayer
             width="100%"

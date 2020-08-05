@@ -12,7 +12,7 @@ function App() {
         <Title text="chiMera" />
       </div>
       <div>
-        <Workspace className="workspace" />
+        <Workspace />
       </div>
       <Row title="Suggested Canvi" fetchUrl={requests.fetchTrending} />
     </div>
