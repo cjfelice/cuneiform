@@ -1,6 +1,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Righteous&display=swap");
+
+$paper: #e0d8c9;
+$texture: url("https://www.transparenttextures.com/patterns/cardboard.png");
+
 * {
   margin: 0;
+  background-color: #7699b3;
+  background-image: url("https://www.transparenttextures.com/patterns/clean-gray-paper.png");
 }
 
 .header {
@@ -37,4 +43,34 @@
     calc(var(--maskX) * 1% + (var(--maskY) -50) * -0.4%) 100%,
     0 100%
   );
+}
+
+.canvas-window {
+  background-color: $paper;
+  background-image: $texture;
+  padding: 20px;
+  margin-bottom: 10px;
+  width: 100%;
+  height: 600px;
+  box-shadow: 5px 5px 8px lightslategray;
+}
+
+.canvas_item {
+  background-color: $paper;
+  background-image: $texture;
+}
+
+.remove {
+  position: "absolute";
+  right: "2px";
+  top: 0;
+  cursor: "pointer";
+  background-color: $paper;
+  background-image: $texture;
+}
+
+.workspace {
+  background-color: lime;
+  max-height: 60px;
+  max-width: 80px;
 }

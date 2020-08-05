@@ -18,7 +18,6 @@ function Row({ title, fetchUrl }) {
 
   return (
     <div className="row">
-      <h2>{title}</h2>
       <div className="row_canvis">
         {canvi.map((canvi) => (
           <img
