@@ -8,13 +8,13 @@ import requests from './requests';
 import './App.scss';
 
 //Component files
-import Canvas from './component/Canvas';
-import './component/Canvas.scss';
+import Panel from './component/Panel';
+import './component/panel.scss';
 import UserAuth from './auth/authUser';
 
 function App() {
-  //sample database inside useState array; sets value to canvas
-  const [canvas, setCanvas] = useState([
+  //sample database inside useState array; sets value to panel
+  const [panel, setPanel] = useState([
     {
       name: 'Test1/rename to title!',
       description: 'Yangmingshan Taipei Chinese Pavilion!',
@@ -113,17 +113,18 @@ function App() {
     ]
   };
   /*
-  suggestion on how to add a newly created canvas to the existing
+  suggestion on how to add a newly created panel to the existing
   const testing = () => {
-    const test5 = [...canvas, test];
+    const test5 = [...panel, test];
     return test5;
   };
 
-  console.log(canvas);
+  console.log(panel);
 
   useEffect(() => {
+  event.prevent.default();
     //onSubmit (probably) do this
-    setCanvas(testing());
+    setPanel(testing());
   }, []);
 */
 
@@ -140,13 +141,13 @@ function App() {
       </div>
       <Row title='Suggested Canvi' fetchUrl={requests.fetchTrending} />
 
-      {/* <div className='canvas_canvis'>
-        {canvas.map((canva) => (
-          <Canvas
-            name={canva.name}
-            description={canva.description}
-            music_id={canva.music_id}
-            media={[...canva.media]}
+      {/* <div className='panel_canvis'>
+        {panel.map((pane) => (
+          <Panel
+            name={pane.name}
+            description={pane.description}
+            music_id={pane.music_id}
+            media={[...pane.media]}
           />
         ))}
         <Workspace />
