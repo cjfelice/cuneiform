@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./react_resizable_styles.scss";
 import "./react_grid_styles.scss";
 import renderHTML from "react-render-html";
+import bounds from "react-bounds";
 import _ from "lodash";
 import "./App.scss";
 import ReactPlayer from "react-player";
@@ -16,7 +17,16 @@ function Canvas() {
   const [newCounter, setNewCounter] = useState(0);
   const [boxes, setBoxes] = useState([]);
 
-  const newFunk = (boxes) => {
+  // const bounds = () => {
+  //   return {
+  //     'bound-name': {
+  //       minWidth: 0,
+  //       maxWidth: 500,
+  //     },
+  //   };
+  // }
+
+  const boxMapper = (boxes) => {
     let squares = "";
     const boxi = boxes.map((box) => `<div key="${box}">${box}</div>`);
 
@@ -63,14 +73,14 @@ function Canvas() {
     console.log(boxes, layout);
     setLayout(
       layout.concat({
-        i: newCounter,
+        i: "n" + newCounter,
         x: layoutItem.x,
         y: layoutItem.y,
         w: 5,
         h: 5,
       })
     );
-    setBoxes(boxes.concat(newCounter));
+    setBoxes(boxes.concat("n" + newCounter));
     setNewCounter(newCounter + 1);
   };
   return (
@@ -89,14 +99,16 @@ function Canvas() {
         layout={layout}
         rowHeight={30}
         width={1200}
+        maxRows={12}
+        compactType={"horizontal"}
         isDroppable={true}
         autoSize={false}
         verticalCompact={false}
         onDrop={onDrop}
         breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
-        cols={{ lg: 60, md: 40, sm: 30, xs: 20, xxs: 10 }}
+        cols={{ lg: 20, md: 17, sm: 14, xs: 10, xxs: 5 }}
       >
-        {renderHTML(newFunk(boxes))}
+        {renderHTML(boxMapper(boxes))}
       </ResponsiveReactGridLayout>
     </div>
   );
