@@ -5,16 +5,6 @@ function Canvas(props) {
   // title = name
   const { name, description, music_id, media } = props;
 
-  // const Media = (item) => {
-  //   return <img src={item} alt='' />;
-  // };
-
-  // const MediaMap = () => {
-  //   media.data.map((item) => {
-  //     return <Media item={item.mediaUrl} />;
-  //   });
-  // };
-
   return (
     <div>
       <div className='canvas'>
