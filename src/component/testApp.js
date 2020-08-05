@@ -1,19 +1,14 @@
 import React, { useState, useEffect, Fragment } from 'react';
-
 import './App.scss';
-import Row from './Row';
-import Workspace from './Workspace';
-import Title from './Title';
-import requests from './requests';
-import './App.scss';
-
-//Component files
+// import Row from '.component/Row';
 import Canvas from './component/Canvas';
 import './component/Canvas.scss';
+
+import Title from './Title';
 import UserAuth from './auth/authUser';
+// import requests from './requests';
 
 function App() {
-  //sample database inside useState array; sets value to canvas
   const [canvas, setCanvas] = useState([
     {
       name: 'Test1/rename to title!',
@@ -96,15 +91,10 @@ function App() {
   return (
     <div className='App'>
       <div className='header'>
-        <div>TEST</div>
         <UserAuth />
+        <div>TEST</div>
         <Title text='chiMera' />
       </div>
-
-      <div>
-        <Workspace className='workspace' />
-      </div>
-      <Row title='Suggested Canvi' fetchUrl={requests.fetchTrending} />
 
       <div className='canvas_canvis'>
         {canvas.map((canva) => (
