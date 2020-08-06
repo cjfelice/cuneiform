@@ -4,7 +4,7 @@ import Canvas from "./Canvas";
 
 function Workspace() {
   return (
-    <div>
+    <div className="workspace">
       <Canvas />
     </div>
   );

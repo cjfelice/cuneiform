@@ -31,14 +31,14 @@ $texture: url('https://www.transparenttextures.com/patterns/cardboard.png');
   --maskY: 50;
 }
 .titleWrapper {
-  color: #d4bbab;
+  color: #f5ba55;
   cursor: pointer;
 }
 .cloneWrapper {
   position: absolute;
   top: 0;
   left: 0;
-  color: #f2dcca;
+  color: #f09741;
   transition: all 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
   clip-path: polygon(
     0 0,
@@ -46,11 +46,4 @@ $texture: url('https://www.transparenttextures.com/patterns/cardboard.png');
     calc(var(--maskX) * 1% + (var(--maskY) -50) * -0.4%) 100%,
     0 100%
   );
-}
-
-.canvas-window {
-  width: 200px;
-  height: 200px;
-  background-color: lime;
-  position: absolute;
 }

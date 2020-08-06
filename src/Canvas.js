@@ -11,7 +11,7 @@ const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 function Canvas() {
   const [state, setState] = useState({
-    items: [0, 1, 2, 3, 4].map(function (i, key, list) {
+    items: [].map(function (i, key, list) {
       return {
         i: i.toString(),
         x: i * 2,
@@ -62,7 +62,7 @@ function Canvas() {
     setState({
       items: state.items.concat({
         i: "n" + state.newCounter,
-        x: (state.items.length * 2) % 12,
+        x: Infinity,
         y: Infinity,
         w: 2,
         h: 2,
@@ -104,10 +104,12 @@ function Canvas() {
       </button>
       <ResponsiveReactGridLayout
         className="layout"
-        cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
-        rowHeight={100}
+        cols={{ lg: 16, md: 12, sm: 10, xs: 8, xxs: 6 }}
+        rowHeight={90}
+        maxRows={6}
         isDroppable={true}
         onDrop={onDrop}
+        preventCollision={true}
         verticalCompact={false}
       >
         {_.map(state.items, (el) => createElement(el))}
