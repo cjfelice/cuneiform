@@ -4,7 +4,9 @@ import "./react_grid_styles.scss";
 import _ from "lodash";
 import "./App.scss";
 import Mediabox from "./Mediabox";
-import ReactPlayer from "react-player";
+import DragIndicatorIcon from "@material-ui/icons/DragIndicator";
+import CloseIcon from "@material-ui/icons/Close";
+import AddIcon from "@material-ui/icons/Add";
 
 import { Responsive, WidthProvider } from "react-grid-layout";
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
@@ -43,7 +45,9 @@ function Canvas() {
             Add +
           </span>
         ) : (
-          <span className="text">{i}</span>
+          <span className="text">
+            <DragIndicatorIcon style={{ color: "white", cursor: "pointer" }} />
+          </span>
         )}
         <Mediabox />
         <span
@@ -51,7 +55,7 @@ function Canvas() {
           style={removeStyle}
           onClick={onRemoveItem.bind(this, i)}
         >
-          x
+          <CloseIcon style={{ color: "white", fontSize: "large" }} />
         </span>
       </div>
     );
@@ -93,15 +97,17 @@ function Canvas() {
 
   return (
     <div>
-      <button
+      <div
         onClick={onAddItem}
         className="droppable-element"
         draggable={true}
         unselectable="on"
         onDragStart={(e) => e.dataTransfer.setData("text/plain", "")}
       >
-        Add Item
-      </button>
+        <AddIcon
+          style={{ color: "white", fontSize: "60px", cursor: "pointer" }}
+        />
+      </div>
       <ResponsiveReactGridLayout
         className="layout"
         cols={{ lg: 16, md: 12, sm: 10, xs: 8, xxs: 6 }}

@@ -2,6 +2,11 @@ import React, { useRef, useState } from "react";
 import "./App.scss";
 import Button from "./Button";
 import ReactPlayer from "react-player";
+import IconButton from "@material-ui/core/Button";
+import ImageIcon from "@material-ui/icons/Image";
+import VideoCallIcon from "@material-ui/icons/VideoCall";
+import AudiotrackIcon from "@material-ui/icons/Audiotrack";
+import TextFieldsIcon from "@material-ui/icons/TextFields";
 
 function Mediabox(props) {
   const [mediaURL, setMediaURL] = useState(props.url || "");
@@ -22,29 +27,20 @@ function Mediabox(props) {
   };
 
   return (
-    <main className="appointment__card appointment__card--create">
-      <section className="appointment__card-left">
-        <form autoComplete="off" onSubmit={(event) => event.preventDefault()}>
-          <input
-            className="appointment__create-input text--semi-bold"
-            name="name"
-            type="text"
-            placeholder="Enter content URL"
-            value={mediaURL}
-            onChange={(event) => setMediaURL(event.target.value)}
-            data-testid="student-name-input"
-          />
-        </form>
-        <section className="appointment__validation">{error}</section>
-      </section>
-      <section className="appointment__card-right">
-        <section className="appointment__actions">
-          <Button onClick={() => validate()} confirm>
-            Save
-          </Button>
-        </section>
-      </section>
-    </main>
+    <div className="selection-box">
+      <IconButton color="primary" aria-label="image">
+        <ImageIcon fontSize="large" />
+      </IconButton>
+      <IconButton color="primary" aria-label="video">
+        <VideoCallIcon fontSize="large" />
+      </IconButton>
+      <IconButton color="primary" aria-label="add an alarm">
+        <AudiotrackIcon fontSize="large" />
+      </IconButton>
+      <IconButton color="primary" aria-label="add an alarm">
+        <TextFieldsIcon fontSize="large" />
+      </IconButton>
+    </div>
   );
 }
 
