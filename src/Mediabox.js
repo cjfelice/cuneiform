@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import "./App.scss";
-import Button from "./Button";
+import Mediaform from "./Mediaform";
 import ReactPlayer from "react-player";
 import IconButton from "@material-ui/core/Button";
 import ImageIcon from "@material-ui/icons/Image";
@@ -11,7 +11,8 @@ import TextFieldsIcon from "@material-ui/icons/TextFields";
 function Mediabox(props) {
   const [mediaURL, setMediaURL] = useState(props.url || "");
   const [error, setError] = useState("");
-  const [contentType, setContentType] = useState(props.contentType || false);
+  const [content, setContent] = useState(props.contentType || "");
+  const [mode, setMode] = useState(props.mode || "EDIT");
 
   const onSave = () => {
     console.log("hi");
@@ -27,20 +28,48 @@ function Mediabox(props) {
   };
 
   return (
-    <div className="selection-box">
-      <IconButton color="primary" aria-label="image">
-        <ImageIcon fontSize="large" />
-      </IconButton>
-      <IconButton color="primary" aria-label="video">
-        <VideoCallIcon fontSize="large" />
-      </IconButton>
-      <IconButton color="primary" aria-label="add an alarm">
-        <AudiotrackIcon fontSize="large" />
-      </IconButton>
-      <IconButton color="primary" aria-label="add an alarm">
-        <TextFieldsIcon fontSize="large" />
-      </IconButton>
-    </div>
+    <React.Fragment>
+      {mode === "EDIT" && (
+        <Mediaform setMode={setMode} setContent={setContent} />
+      )}
+      {mode === "IMAGE" && (
+        <img
+          width="100%"
+          height="100%"
+          src={content}
+          alt={"Try another source"}
+        ></img>
+      )}
+      {mode === "VIDEO" && (
+        <ReactPlayer
+          width="100%"
+          height="100%"
+          url={content}
+          controls
+          muted
+          config={{
+            youtube: {
+              playerVars: { showinfo: 1 },
+            },
+          }}
+        />
+      )}
+      {mode === "AUDIO" && (
+        <ReactPlayer
+          width="100%"
+          height="100%"
+          url={content}
+          controls
+          muted
+          config={{
+            youtube: {
+              playerVars: { showinfo: 1 },
+            },
+          }}
+        />
+      )}
+      {mode === "TEXT" && <div>{content}</div>}
+    </React.Fragment>
   );
 }
 

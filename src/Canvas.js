@@ -13,7 +13,7 @@ const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 function Canvas() {
   const [state, setState] = useState({
-    items: [].map(function (i, key, list) {
+    items: [1].map(function (i, key, list) {
       return {
         i: i.toString(),
         x: i * 2,
@@ -55,7 +55,7 @@ function Canvas() {
           style={removeStyle}
           onClick={onRemoveItem.bind(this, i)}
         >
-          <CloseIcon style={{ color: "white", fontSize: "large" }} />
+          <CloseIcon style={{ color: "white", fontSize: "25" }} />
         </span>
       </div>
     );
@@ -63,11 +63,12 @@ function Canvas() {
 
   const onAddItem = () => {
     console.log("adding", "n" + state.newCounter);
+    console.log(state.items);
     setState({
       items: state.items.concat({
         i: "n" + state.newCounter,
-        x: Infinity,
-        y: Infinity,
+        x: state.newCounter,
+        y: 0,
         w: 2,
         h: 2,
       }),
@@ -105,7 +106,7 @@ function Canvas() {
         onDragStart={(e) => e.dataTransfer.setData("text/plain", "")}
       >
         <AddIcon
-          style={{ color: "white", fontSize: "60px", cursor: "pointer" }}
+          style={{ color: "white", fontSize: "30px", cursor: "pointer" }}
         />
       </div>
       <ResponsiveReactGridLayout
