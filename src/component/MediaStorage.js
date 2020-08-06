@@ -3,57 +3,57 @@ import { Button } from '@material-ui/core';
 import firebase from 'firebase';
 import { db, storage } from '../config/firebase';
 
+// NOT WORKING YET, HAVE TO CHANGE SOME PROPS AND OR VALUES
 function MediaStorage(props) {
   const { title, description, username, mediaUrl, music_id } = props;
-  // const [title, setTitle] = useState('');
-  // const [progress, setProgress] = useState(0);
-  // const [media, setMedia] = useState('');
-  // const [url, setUrl] = useState('');
+  const [title, setTitle] = useState('');
+  const [progress, setProgress] = useState(0);
+  const [media, setMedia] = useState('');
+  const [url, setUrl] = useState('');
 
-  // const handleChange = (e) => {
-  //   if (e.target.files[0]) {
-  //     setMedia(e.target.files[0]);
-  //   }
-  // };
+  const handleChange = (e) => {
+    if (e.target.files[0]) {
+      setMedia(e.target.files[0]);
+    }
+  };
 
   const handleUpload = () => {
-    // const uploadTask = storage.ref(`media/${media.name}`).put(media);
-    // uploadTask.on(
-    //   'state_changed',
-    //   (snapshot) => {
-    //     const progress = Math.round(
-    //       (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-    //     );
-    //     setProgress(progress);
-    //   },
-    //   (error) => {
-    //     console.log(error);
-    //   },
-    //   () => {
-    // storage
-    // .ref('media')
-    // .child(media.name)
-    // .getDownloadUrl()
-    // .then((url) => {
-    db.collection('panels').add({
-      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-      title: title,
-      media: [{ mediaUrl: mediaUrl }],
-      username: username,
-      description: description,
-      music_id: music_id
-    });
-    // setProgress(0);
-    // setTitle('');
-    // setMedia(null);
-    // });
-    // }
-    // );
+    const uploadTask = storage.ref(`panels/${media.name}`).put(media);
+    uploadTask.on(
+      'state_changed',
+      (snapshot) => {
+        const progress = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+        setProgress(progress);
+      },
+      (error) => {
+        console.log(error);
+      },
+      () => {
+        storage
+          .ref('panels')
+          .child(media.name)
+          .getDownloadUrl()
+          .then((url) => {
+            db.collection('panels').add({
+              timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+              title: title,
+              media: [{ mediaUrl: mediaUrl }],
+              username: username
+            });
+            setProgress(0);
+            setTitle('');
+            setMedia(null);
+          });
+      }
+    );
   };
   console.log(mediaUrl, title);
   return (
     <div>
-      {/* <progress value={progress} max='100' /> */}
+      {/* NEED TO WRAP INPUT AND BUTTON ELEMENTS IN FORM ELEMENT */}
+      <progress value={progress} max='100' />
       {/* <input
         type='text'
         placeholder='Enter a title'
@@ -78,8 +78,9 @@ function MediaStorage(props) {
   );
 }
 
+/* CONDITION STATEMENT THAT MAY BE USED FOR ALLOWING EDITING/COMMENTING/LIKING
 {
-  // user ? <MediaStorage username={username} /> : <h3>Please Login to Upload</h3>;
+  user ? <MediaStorage username={username} /> : <h3>Please Login to Upload</h3>;
 }
-
+*/
 export default MediaStorage;
