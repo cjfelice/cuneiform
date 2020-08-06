@@ -6,7 +6,7 @@ import ReactPlayer from "react-player";
 function Mediabox(props) {
   const [mediaURL, setMediaURL] = useState(props.url || "");
   const [error, setError] = useState("");
-  const [contentType, setContentType] = useState(props.contentType);
+  const [contentType, setContentType] = useState(props.contentType || false);
 
   function validate() {
     if (mediaURL === "") {
@@ -14,22 +14,33 @@ function Mediabox(props) {
       return;
     }
     setError("");
-    // onSave(mediaURL);
+    onSave(mediaURL);
   }
 
   return (
-    <ReactPlayer
-      width="100%"
-      height="100%"
-      url="https://www.sciencemag.org/sites/default/files/styles/article_main_large/public/cc_iStock-478639870_16x9.jpg?itok=1-jMc4Xv"
-      controls
-      muted
-      config={{
-        youtube: {
-          playerVars: { showinfo: 1 },
-        },
-      }}
-    />
+    <main className="appointment__card appointment__card--create">
+      <section className="appointment__card-left">
+        <form autoComplete="off" onSubmit={(event) => event.preventDefault()}>
+          <input
+            className="appointment__create-input text--semi-bold"
+            name="name"
+            type="text"
+            placeholder="Enter content URL"
+            value={mediaURL}
+            onChange={(event) => setMediaURL(event.target.value)}
+            data-testid="student-name-input"
+          />
+        </form>
+        <section className="appointment__validation">{error}</section>
+      </section>
+      <section className="appointment__card-right">
+        <section className="appointment__actions">
+          <Button onClick={() => validate()} confirm>
+            Save
+          </Button>
+        </section>
+      </section>
+    </main>
   );
 }
 
