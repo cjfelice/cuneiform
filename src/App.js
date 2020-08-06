@@ -16,26 +16,25 @@ import { db } from './config/firebase';
 function App() {
   //sample database inside useState array; sets value to panels
   const [panels, setPanels] = useState([
-    // {
-    //   user_id: 1,
-    //   name: 'Test1/rename to title!',
-    //   description: 'Yangmingshan Taipei Chinese Pavilion!',
-    //   music_id: '',
-    //   media: [
-    //     {
-    //       mediaUrl:
-    //         'https://p1.pxfuel.com/preview/326/736/1008/people-whimsical-lazy-suit.jpg'
-    //     },
-    //     {
-    //       mediaUrl:
-    //         'https://get.pxhere.com/photo/landscape-nature-grass-branch-light-sky-sun-fog-sunrise-sunset-mist-field-grain-sunlight-morning-dawn-summer-dusk-evening-harvest-autumn-fields-mood-arable-atmospheric-phenomenon-grass-family-642150.jpg'
-    //     },
-    //     {
-    //       mediaUrl:
-    //         'https://static.pexels.com/photos/8486/water-rain-raindrops-drops.jpg'
-    //     }
-    //   ]
-    // },
+    {
+      username: 'Jasper',
+      title: 'Test1/rename to title!',
+      description: 'Yangmingshan Taipei Chinese Pavilion!',
+      music_id: '',
+      media: [
+        {
+          mediaUrl:
+            'https://p1.pxfuel.com/preview/326/736/1008/people-whimsical-lazy-suit.jpg'
+        },
+        {
+          mediaUrl: 'https://www.youtube.com/watch?v=f7T48W0cwXM&t=6269s'
+        },
+        {
+          mediaUrl:
+            'https://static.pexels.com/photos/8486/water-rain-raindrops-drops.jpg'
+        }
+      ]
+    }
     // {
     //   user_id: 2,
     //   name: 'Test2/rename to title!',
@@ -98,12 +97,17 @@ function App() {
     // }
   ]);
 
-  useEffect(() => {
-    db.collection('panels').onSnapshot((snapshot) => {
-      //every time onSnapshot fires from a change in 'images' (collection name in firebase), do this
-      setPanels(snapshot.docs.map((doc) => doc.data()));
-    });
-  }, []);
+  // useEffect(() => {
+  //   db.collection('panels').onSnapshot((snapshot) => {
+  //     //every time onSnapshot fires from a change in 'panels' (collection name in firebase), do this only
+  //     setPanels(
+  //       snapshot.docs.map((doc) => ({
+  //         id: doc.id,
+  //         panel: doc.data()
+  //       }))
+  //     );
+  //   });
+  // }, []);
 
   return (
     <div className='App'>
@@ -119,12 +123,15 @@ function App() {
       <Row title='Suggested Canvi' fetchUrl={requests.fetchTrending} />
 
       <div className='panels_canvis'>
-        {panels.map((pane) => (
+        {/* {panels.map(({ id, panel }) => ( */}
+        {panels.map((panel) => (
           <Panels
-            name={pane.name}
-            description={pane.description}
-            music_id={pane.music_id}
-            media={[...pane.media]}
+            // key={id}
+            username={panel.username}
+            title={panel.title}
+            description={panel.description}
+            music_id={panel.music_id}
+            media={[...panel.media]}
           />
         ))}
       </div>
