@@ -4,14 +4,16 @@ import "./react_grid_styles.scss";
 import _ from "lodash";
 import "./App.scss";
 import Mediabox from "./Mediabox";
-import ReactPlayer from "react-player";
+import DragIndicatorIcon from "@material-ui/icons/DragIndicator";
+import CloseIcon from "@material-ui/icons/Close";
+import AddIcon from "@material-ui/icons/Add";
 
 import { Responsive, WidthProvider } from "react-grid-layout";
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 function Canvas() {
   const [state, setState] = useState({
-    items: [].map(function (i, key, list) {
+    items: [1].map(function (i, key, list) {
       return {
         i: i.toString(),
         x: i * 2,
@@ -43,7 +45,9 @@ function Canvas() {
             Add +
           </span>
         ) : (
-          <span className="text">{i}</span>
+          <span className="text">
+            <DragIndicatorIcon style={{ color: "white", cursor: "pointer" }} />
+          </span>
         )}
         <Mediabox />
         <span
@@ -51,7 +55,7 @@ function Canvas() {
           style={removeStyle}
           onClick={onRemoveItem.bind(this, i)}
         >
-          x
+          <CloseIcon style={{ color: "white", fontSize: "25" }} />
         </span>
       </div>
     );
@@ -59,11 +63,12 @@ function Canvas() {
 
   const onAddItem = () => {
     console.log("adding", "n" + state.newCounter);
+    console.log(state.items);
     setState({
       items: state.items.concat({
         i: "n" + state.newCounter,
-        x: Infinity,
-        y: Infinity,
+        x: state.newCounter,
+        y: 0,
         w: 2,
         h: 2,
       }),
@@ -93,15 +98,17 @@ function Canvas() {
 
   return (
     <div>
-      <button
+      <div
         onClick={onAddItem}
         className="droppable-element"
         draggable={true}
         unselectable="on"
         onDragStart={(e) => e.dataTransfer.setData("text/plain", "")}
       >
-        Add Item
-      </button>
+        <AddIcon
+          style={{ color: "white", fontSize: "30px", cursor: "pointer" }}
+        />
+      </div>
       <ResponsiveReactGridLayout
         className="layout"
         cols={{ lg: 16, md: 12, sm: 10, xs: 8, xxs: 6 }}
