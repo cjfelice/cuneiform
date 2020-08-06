@@ -8,14 +8,18 @@ function Mediabox(props) {
   const [error, setError] = useState("");
   const [contentType, setContentType] = useState(props.contentType || false);
 
-  function validate() {
+  const onSave = () => {
+    console.log("hi");
+  };
+
+  const validate = () => {
     if (mediaURL === "") {
       setError("url cannot be blank");
       return;
     }
     setError("");
     onSave(mediaURL);
-  }
+  };
 
   return (
     <main className="appointment__card appointment__card--create">
