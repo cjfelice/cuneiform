@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import './Panels.scss';
+import ReactPlayer from 'react-player';
 
 function Panels(props) {
   // title = name
@@ -16,9 +17,19 @@ function Panels(props) {
         <div className='panels_canvis'>
           {media.map((item) => {
             return (
-              <Fragment>
-                <img className='panels_media' src={item.mediaUrl} alt='' />
-              </Fragment>
+              <ReactPlayer
+                width='100%'
+                height='100%'
+                url={item.mediaUrl}
+                controls
+                muted
+                config={{
+                  youtube: {
+                    playerVars: { showinfo: 1 }
+                  }
+                }}
+              />
+              // <img className='panels_media' src={item.mediaUrl} alt='' />
             );
           })}
         </div>
