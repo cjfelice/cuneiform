@@ -9,6 +9,8 @@ import './App.scss';
 
 //Component files
 import Panels from './component/Panels';
+import Cards from './component/Cards';
+import MediaStorage from './component/MediaStorage';
 import './component/Panels.scss';
 import UserAuth from './auth/authUser';
 import { db } from './config/firebase';
@@ -16,25 +18,25 @@ import { db } from './config/firebase';
 function App() {
   //sample database inside useState array; sets value to panels
   const [panels, setPanels] = useState([
-    {
-      username: 'Jasper',
-      title: 'Test1/rename to title!',
-      description: 'Yangmingshan Taipei Chinese Pavilion!',
-      music_id: '',
-      media: [
-        {
-          mediaUrl:
-            'https://p1.pxfuel.com/preview/326/736/1008/people-whimsical-lazy-suit.jpg'
-        },
-        {
-          mediaUrl: 'https://www.youtube.com/watch?v=f7T48W0cwXM&t=6269s'
-        },
-        {
-          mediaUrl:
-            'https://static.pexels.com/photos/8486/water-rain-raindrops-drops.jpg'
-        }
-      ]
-    }
+    // {
+    //   username: 'Jasper',
+    //   title: 'Test1/rename to title!',
+    //   description: 'Yangmingshan Taipei Chinese Pavilion!',
+    //   music_id: '',
+    //   media: [
+    //     {
+    //       mediaUrl:
+    //         'https://p1.pxfuel.com/preview/326/736/1008/people-whimsical-lazy-suit.jpg'
+    //     },
+    //     {
+    //       mediaUrl: 'https://www.youtube.com/watch?v=f7T48W0cwXM&t=6269s'
+    //     },
+    //     {
+    //       mediaUrl:
+    //         'https://static.pexels.com/photos/8486/water-rain-raindrops-drops.jpg'
+    //     }
+    //   ]
+    // }
     // {
     //   user_id: 2,
     //   name: 'Test2/rename to title!',
@@ -97,17 +99,17 @@ function App() {
     // }
   ]);
 
-  // useEffect(() => {
-  //   db.collection('panels').onSnapshot((snapshot) => {
-  //     //every time onSnapshot fires from a change in 'panels' (collection name in firebase), do this only
-  //     setPanels(
-  //       snapshot.docs.map((doc) => ({
-  //         id: doc.id,
-  //         panel: doc.data()
-  //       }))
-  //     );
-  //   });
-  // }, []);
+  useEffect(() => {
+    db.collection('panels').onSnapshot((snapshot) => {
+      //every time onSnapshot fires from a change in 'panels' (collection name in firebase), do this only
+      setPanels(
+        snapshot.docs.map((doc) => ({
+          id: doc.id,
+          panel: doc.data()
+        }))
+      );
+    });
+  }, []);
 
   return (
     <div className='App'>
@@ -116,17 +118,16 @@ function App() {
         <UserAuth />
         <Title text='chiMera' />
       </div>
-
       <div>
+        {/* available conditional statement to check if user is signed in or not */}
         <Workspace />
       </div>
       <Row title='Suggested Canvi' fetchUrl={requests.fetchTrending} />
-
+      {/* {panels.map((panel) => ( */}
       <div className='panels_canvis'>
-        {/* {panels.map(({ id, panel }) => ( */}
-        {panels.map((panel) => (
+        {panels.map(({ id, panel }) => (
           <Panels
-            // key={id}
+            key={id}
             username={panel.username}
             title={panel.title}
             description={panel.description}
@@ -134,7 +135,17 @@ function App() {
             media={[...panel.media]}
           />
         ))}
+        <Cards />
       </div>
+      <Fragment>
+        <MediaStorage
+          username='test1'
+          title='Title'
+          mediaUrl='https://p1.pxfuel.com/preview/326/736/1008/people-whimsical-lazy-suit.jpg'
+          music_id=''
+          description='this guy sucks'
+        />
+      </Fragment>
     </div>
   );
 }
