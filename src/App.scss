@@ -1,7 +1,7 @@
-@import url("https://fonts.googleapis.com/css2?family=Righteous&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
 
 $paper: #e0d8c9;
-$texture: url("https://www.transparenttextures.com/patterns/cardboard.png");
+$texture: url('https://www.transparenttextures.com/patterns/cardboard.png');
 
 * {
   margin: 0;
@@ -9,17 +9,17 @@ $texture: url("https://www.transparenttextures.com/patterns/cardboard.png");
 
 .App {
   background-color: #7699b3;
-  background-image: url("https://www.transparenttextures.com/patterns/clean-gray-paper.png");
+  background-image: url('https://www.transparenttextures.com/patterns/clean-gray-paper.png');
 }
 
 .header {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   padding-top: 100px;
 }
 
 .titleContainer {
-  font-family: "Righteous", sans-serif;
+  font-family: 'Righteous', sans-serif;
   width: 40%;
   h1 {
     font-size: 100px;
