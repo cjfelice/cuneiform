@@ -48,12 +48,15 @@ function App() {
       <div>
         {/* available conditional statement to check if user is signed in or not */}
         <Workspace />
-        <Cards />
       </div>
 
       {/* USER COMPLETED PANELS/CARDS OTHER CREATED PANELS */}
       <div>
         <Row title='Suggested Canvi' fetchUrl={requests.fetchTrending} />
+      </div>
+
+      <div className='panels_canvis'>
+        <Cards />
       </div>
 
       {/* the map function commented out below is for use when not using firebase

@@ -65,7 +65,7 @@ export default function Cards() {
       />
       <CardMedia
         className={classes.media}
-        image='/static/images/cards/paella.jpg'
+        image='https://p1.pxfuel.com/preview/326/736/1008/people-whimsical-lazy-suit.jpg'
         title='Paella dish'
       />
       <CardContent>
