@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { forwardRef, useState, useImperativeHandle } from "react";
 import "./react_resizable_styles.scss";
 import "./react_grid_styles.scss";
 import _ from "lodash";
@@ -11,15 +11,15 @@ import AddIcon from "@material-ui/icons/Add";
 import { Responsive, WidthProvider } from "react-grid-layout";
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
-function Canvas() {
+const Canvas = forwardRef((props, ref) => {
   const [state, setState] = useState({
     items: [1].map(function (i, key, list) {
       return {
         i: i.toString(),
         x: i * 2,
         y: 0,
-        w: 2,
-        h: 2,
+        w: 8,
+        h: 8,
         add: i === list.length - 1,
       };
     }),
@@ -69,12 +69,18 @@ function Canvas() {
         i: "n" + state.newCounter,
         x: state.newCounter,
         y: 0,
-        w: 2,
-        h: 2,
+        w: 8,
+        h: 8,
       }),
       newCounter: state.newCounter + 1,
     });
   };
+
+  useImperativeHandle(ref, () => ({
+    passCall() {
+      onAddItem();
+    },
+  }));
 
   const onRemoveItem = (i) => {
     console.log("removing", i);
@@ -89,8 +95,8 @@ function Canvas() {
         i: "n" + state.newCounter,
         x: layoutItem.x,
         y: layoutItem.y,
-        w: 2,
-        h: 2,
+        w: 8,
+        h: 8,
       }),
       newCounter: state.newCounter + 1,
     });
@@ -98,22 +104,11 @@ function Canvas() {
 
   return (
     <div>
-      <div
-        onClick={onAddItem}
-        className="droppable-element"
-        draggable={true}
-        unselectable="on"
-        onDragStart={(e) => e.dataTransfer.setData("text/plain", "")}
-      >
-        <AddIcon
-          style={{ color: "white", fontSize: "30px", cursor: "pointer" }}
-        />
-      </div>
       <ResponsiveReactGridLayout
         className="layout"
-        cols={{ lg: 16, md: 12, sm: 10, xs: 8, xxs: 6 }}
-        rowHeight={90}
-        maxRows={6}
+        cols={{ lg: 64, md: 48, sm: 40, xs: 32, xxs: 24 }}
+        rowHeight={10}
+        maxRows={31}
         isDroppable={true}
         onDrop={onDrop}
         preventCollision={true}
@@ -123,7 +118,7 @@ function Canvas() {
       </ResponsiveReactGridLayout>
     </div>
   );
-}
+});
 
 export default Canvas;
 // function Canvas() {

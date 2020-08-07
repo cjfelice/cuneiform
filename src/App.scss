@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Righteous&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans&display=swap");
 
 $paper: #e0d8c9;
 $texture: url("https://www.transparenttextures.com/patterns/cardboard.png");
@@ -9,20 +10,22 @@ $texture: url("https://www.transparenttextures.com/patterns/cardboard.png");
 
 .App {
   background-color: #7699b3;
+  z-index: -4;
+
   background-image: url("https://www.transparenttextures.com/patterns/clean-gray-paper.png");
 }
 
 .header {
   display: flex;
   justify-content: space-between;
-  padding-top: 100px;
+  padding-top: 120px;
 }
 .selection-box {
   border: dotted;
   border-color: white;
   border-width: thick;
-  width: 93%;
-  height: 90%;
+  width: 98%;
+  height: 93%;
 }
 .titleContainer {
   font-family: "Righteous", sans-serif;
@@ -40,6 +43,7 @@ $texture: url("https://www.transparenttextures.com/patterns/cardboard.png");
   color: #f5ba55;
   cursor: pointer;
 }
+
 .cloneWrapper {
   position: absolute;
   top: 0;
