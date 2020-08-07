@@ -6,6 +6,7 @@ import { Button, Input } from "@material-ui/core";
 import "./authUser.css";
 import { authorize } from "../config/firebase";
 import Title from "../Title";
+// import MediaStorage from '../component/MediaStorage';
 
 function UserAuth() {
   function getModalStyle() {
@@ -34,7 +35,7 @@ function UserAuth() {
   const [modalStyle] = useState(getModalStyle);
   const [open, setOpen] = useState(false);
   const [signIn, setSignIn] = useState(false);
-  const [name, setName] = useState("");
+  const [username, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [user, setUser] = useState(null);
@@ -42,7 +43,6 @@ function UserAuth() {
   useEffect(() => {
     const unsubscribe = authorize.onAuthStateChanged((authUser) => {
       if (authUser) {
-        console.log(authUser);
         setUser(authUser);
       } else {
         setUser(null);
@@ -52,7 +52,7 @@ function UserAuth() {
     return () => {
       unsubscribe();
     };
-  }, [user, name]);
+  }, [user, username]);
 
   const signUp = (event) => {
     event.preventDefault();
@@ -60,7 +60,7 @@ function UserAuth() {
       .createUserWithEmailAndPassword(email, password)
       .then((authUser) => {
         return authUser.user.updateProfile({
-          displayName: name,
+          displayName: username,
         });
       })
       .catch((error) => alert(error.message));
@@ -78,6 +78,7 @@ function UserAuth() {
 
   return (
     <div>
+      {/* {user ? <MediaStorage /> : <h3>Please Login to Upload</h3>} */}
       <Modal open={open} onClose={() => setOpen(false)}>
         <div style={modalStyle} className={classes.paper}>
           <form className="chimera__signup">
@@ -86,8 +87,8 @@ function UserAuth() {
             <Input
               placeholder="username"
               type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              value={username}
+              onChange={(e) => setUserName(e.target.value)}
             />
             <Input
               placeholder="email"
@@ -132,7 +133,7 @@ function UserAuth() {
         </div>
       </Modal>
       <div>
-        <h1>{name}</h1>
+        <h1>{username}</h1>
       </div>
 
       {user ? (
