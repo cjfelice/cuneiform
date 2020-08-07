@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
@@ -12,6 +13,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
+import FavoriteBorderIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
@@ -36,17 +38,23 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     backgroundColor: red[500]
+  },
+  like: {
+    color: red[500]
   }
 }));
 
 export default function Cards() {
   const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
+  const [expanded, setExpanded] = useState(false);
+
+  // ADDED CODE FOR FUNCTIONALITY
+  const [like, setLike] = useState(false);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-
+  console.log(like);
   return (
     <Card className={classes.root}>
       <CardHeader
@@ -68,6 +76,11 @@ export default function Cards() {
         image='https://p1.pxfuel.com/preview/326/736/1008/people-whimsical-lazy-suit.jpg'
         title='Paella dish'
       />
+      {/* <CardMedia
+        className={classes.media}
+        image='https://www.youtube.com/watch?v=ndl1W4ltcmg&t=5s'
+        title='Paella dish'
+      /> */}
       <CardContent>
         <Typography variant='body2' color='textSecondary' component='p'>
           This impressive paella is a perfect party dish and a fun meal to cook
@@ -76,8 +89,16 @@ export default function Cards() {
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
+        {/* IconButton Makes Button clickable */}
         <IconButton aria-label='add to favorites'>
-          <FavoriteIcon />
+          {like ? (
+            <FavoriteIcon onClick={(e) => setLike(false)} />
+          ) : (
+            <FavoriteBorderIcon
+              className={classes.like}
+              onClick={(e) => setLike(true)}
+            />
+          )}
         </IconButton>
         <IconButton aria-label='share'>
           <ShareIcon />
@@ -95,6 +116,7 @@ export default function Cards() {
       </CardActions>
       <Collapse in={expanded} timeout='auto' unmountOnExit>
         <CardContent>
+          <FavoriteIcon />
           <Typography paragraph>Method:</Typography>
           <Typography paragraph>
             Heat 1/2 cup of the broth in a pot until simmering, add saffron and
