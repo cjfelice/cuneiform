@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { Button } from '@material-ui/core';
+import { Button, Input } from '@material-ui/core';
 import firebase from 'firebase';
 import { db, storage } from '../config/firebase';
+import Modal from '@material-ui/core/Modal';
 
 // NOT WORKING YET, HAVE TO CHANGE SOME PROPS AND OR VALUES
 function MediaStorage(props) {
-  const { title, description, username, mediaUrl, music_id } = props;
+  const { username, panel_id } = props;
+  console.log(username);
   const [title, setTitle] = useState('');
   const [progress, setProgress] = useState(0);
   const [media, setMedia] = useState('');
@@ -18,6 +20,7 @@ function MediaStorage(props) {
   };
 
   const handleUpload = () => {
+    //panels/{median.name} is the filename upload to the panels folder in firebase storage
     const uploadTask = storage.ref(`panels/${media.name}`).put(media);
     uploadTask.on(
       'state_changed',
@@ -38,8 +41,8 @@ function MediaStorage(props) {
           .then((url) => {
             db.collection('panels').add({
               timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-              title: title,
-              media: [{ mediaUrl: mediaUrl }],
+              // title: title,
+              media: [{ mediaUrl: url }],
               username: username
             });
             setProgress(0);
@@ -49,33 +52,41 @@ function MediaStorage(props) {
       }
     );
   };
-  console.log(mediaUrl, title);
+
   return (
-    <div>
+    <>
       {/* NEED TO WRAP INPUT AND BUTTON ELEMENTS IN FORM ELEMENT */}
-      <progress value={progress} max='100' />
-      {/* <input
-        type='text'
-        placeholder='Enter a title'
-        onChange={(event) => setTitle(event.target.value)}
-        value={title}
-      />
-      <input
-        type='text'
-        placeholder='Enter media url'
-        onChange={(event) => setMedia(event.target.value)}
-        value={media}
-      /> */}
-      <Button onClick={handleUpload}>Load</Button>
-      {/* <input
-        type='url'
-        placeholder='Enter media link'
-        onChange={(event) => setMedia(event.target.value)}
-        value={media}
-      />
-      <Button onClick={handleUpload}>Add</Button> */}
-    </div>
+      <Modal>
+        <div>
+          <progress value={progress} max='100' />
+          <form>
+            <Input type='file' onChange={handleChange} />
+            <Input
+              placeholder='Load Image'
+              type='text'
+              value={media}
+              onChange={(event) => setMedia(event.target.value)}
+            />
+            <Button type='submit' onClick={handleUpload}>
+              Signup
+            </Button>
+          </form>
+        </div>
+      </Modal>
+    </>
   );
+}
+{
+  /* <Input
+  placeholder='Load file'
+  type='text'
+  value={media}
+  onChange={(event) => setMedia(event.target.value)}
+<Input type='file' onChange={handleChange} />
+<Button type='submit' onClick={handleUpload}>
+  Load
+</Button>
+/> */
 }
 
 /* CONDITION STATEMENT THAT MAY BE USED FOR ALLOWING EDITING/COMMENTING/LIKING
@@ -83,4 +94,18 @@ function MediaStorage(props) {
   user ? <MediaStorage username={username} /> : <h3>Please Login to Upload</h3>;
 }
 */
+
 export default MediaStorage;
+
+{
+  /* <input
+  <input type='file' onChange={handleChange} />
+  type='text'
+  placeholder='Load a file...'
+  value={media}
+  onChange={(event) => setMedia(event.target.value)}
+/>
+<button type='submit' onClick={handleUpload}>
+  Load
+</button> */
+}

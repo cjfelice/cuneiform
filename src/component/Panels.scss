@@ -1,18 +1,47 @@
+* {
+  margin: 0;
+}
+
+// .Card {
+//   max-width: 345px;
+//   max-height: 442.15;
+//   border: 2px solid black;
+//   transition: transform 450ms;
+//   background-color: #424242;
+//   color: #424242;
+// }
+
 .panels {
-  max-width: 400px;
+  max-width: 345px;
+  max-height: 442.15;
   border: 2px solid black;
-  background-color: lavender;
   transition: transform 450ms;
   margin-bottom: 45px;
   margin-right: 10px;
+  transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  color: #424242;
+  box-sizing: border-box;
+  padding: 20px;
 }
 
+// .CardMedia {
+//   display: flex;
+//   overflow-y: hidden;
+//   overflow-x: scroll;
+
+//   padding: 20px;
+// }
 .panels_canvis {
   display: flex;
   overflow-y: hidden;
   overflow-x: scroll;
-
-  padding: 20px;
+}
+.panels_canvi {
+  object-fit: contain;
+  width: 100%;
+  max-height: 250px;
+  margin-right: 10px;
+  transition: transform 450ms;
 }
 
 .panels_header {
@@ -47,4 +76,12 @@
 .panels:hover {
   transform: scale(1.3);
   opacity: 1;
+}
+
+.panels__inputRemark {
+  flex: 1;
+}
+
+.panel__remarkButton {
+  flex: 0;
 }

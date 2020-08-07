@@ -55,9 +55,7 @@ function App() {
         <Row title='Suggested Canvi' fetchUrl={requests.fetchTrending} />
       </div>
 
-      <div className='panels_canvis'>
-        <Cards />
-      </div>
+      <div className='panels_canvis'>{/* <Cards /> */}</div>
 
       {/* the map function commented out below is for use when not using firebase
       {panels.map((panel) => ( */}
@@ -66,14 +64,17 @@ function App() {
         {panels.map(({ id, panel }) => (
           <Panels
             key={id}
+            panel_id={id}
             username={panel.username}
             title={panel.title}
             description={panel.description}
             music_id={panel.music_id}
             media={[...panel.media]}
+            time={panel.timestamp}
           />
         ))}
       </div>
+      <Cards />
     </div>
   );
 }
