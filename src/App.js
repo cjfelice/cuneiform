@@ -1,22 +1,48 @@
 import React, { useState, useEffect, Fragment } from 'react';
-
+import Headroom from 'react-headroom';
 import './App.scss';
 import Row from './Row';
 import Workspace from './Workspace';
+import Navbar from './Navbar';
 import Title from './Title';
 import requests from './requests';
 import './App.scss';
+import Landcard from './Landcard';
+import Workarea from './Workarea';
 
 //Component files
 import Panels from './component/Panels';
-import Cards from './component/Cards';
-// import MediaStorage from './component/doNotUse/MediaStorage';
 import './component/Panels.scss';
-import UserAuth from './auth/authUser';
 import { db } from './config/firebase';
 
+import Cards from './component/Cards';
+// import MediaStorage from './component/doNotUse/MediaStorage';
+import UserAuth from './auth/authUser';
+
 function App() {
-  const [panels, setPanels] = useState([]);
+  const [mode, setMode] = useState('HOME');
+  //sample database inside useState array; sets value to panels
+  const [panels, setPanels] = useState([
+    {
+      username: 'Jasper',
+      title: 'Test1/rename to title!',
+      description: 'Yangmingshan Taipei Chinese Pavilion!',
+      music_id: '',
+      media: [
+        {
+          mediaUrl:
+            'https://p1.pxfuel.com/preview/326/736/1008/people-whimsical-lazy-suit.jpg'
+        },
+        {
+          mediaUrl: 'https://www.youtube.com/watch?v=f7T48W0cwXM&t=6269s'
+        },
+        {
+          mediaUrl:
+            'https://static.pexels.com/photos/8486/water-rain-raindrops-drops.jpg'
+        }
+      ]
+    }
+  ]);
   /*
   - for the time being, panels and cards will be used interchangeably; cards use material ui, panels were created initially for setup and testing. can now use the functional elements of panels and apply them to cards.
   - hardcoded data set is in dummyData.js if required
@@ -36,32 +62,26 @@ function App() {
 
   return (
     <div className='App'>
-      {/* HEADER */}
-      <div className='header'>
-        <div>TEST</div>
-        {/* User Sign-in/Sign-up/Logout */}
-        <UserAuth />
-        <Title text='chiMera' />
-      </div>
+      <Headroom>
+        <div className='header'>
+          <Navbar setMode={setMode} />
+        </div>
+      </Headroom>
+      {mode === 'NEWCANVAS' && (
+        <div>
+          <Workarea />
+        </div>
+      )}
+      {mode === 'HOME' && (
+        <div>
+          <Landcard />
+        </div>
+      )}
+      <Row title='Suggested Canvi' fetchUrl={requests.fetchTrending} />
 
-      {/* CANVAS CREATING AND EDITING */}
-      <div>
-        {/* available conditional statement to check if user is signed in or not */}
-        <Workspace />
-      </div>
-
-      {/* USER COMPLETED PANELS/CARDS OTHER CREATED PANELS */}
-      <div>
-        <Row title='Suggested Canvi' fetchUrl={requests.fetchTrending} />
-      </div>
-
-      <div className='panels_canvis'>{/* <Cards /> */}</div>
-
-      {/* the map function commented out below is for use when not using firebase
-      {panels.map((panel) => ( */}
-      {/* This map function will convert data from db into individual cards/panels */}
       <div className='panels_canvis'>
-        {panels.map(({ id, panel }) => (
+        {/* {panels.map(({ id, panel }) => ( */}
+        {panels.map((panel) => (
           <Panels
             key={id}
             panel_id={id}

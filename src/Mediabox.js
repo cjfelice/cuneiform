@@ -2,6 +2,8 @@ import React, { useRef, useState } from "react";
 import "./App.scss";
 import Mediaform from "./Mediaform";
 import ReactPlayer from "react-player";
+import Image from "./Image";
+import Video from "./Video";
 import IconButton from "@material-ui/core/Button";
 import ImageIcon from "@material-ui/icons/Image";
 import VideoCallIcon from "@material-ui/icons/VideoCall";
@@ -11,7 +13,7 @@ import TextFieldsIcon from "@material-ui/icons/TextFields";
 function Mediabox(props) {
   const [mediaURL, setMediaURL] = useState(props.url || "");
   const [error, setError] = useState("");
-  const [content, setContent] = useState(props.contentType || "");
+  const [content, setContent] = useState(props.content || "");
   const [mode, setMode] = useState(props.mode || "EDIT");
 
   const onSave = () => {
@@ -32,28 +34,8 @@ function Mediabox(props) {
       {mode === "EDIT" && (
         <Mediaform setMode={setMode} setContent={setContent} />
       )}
-      {mode === "IMAGE" && (
-        <img
-          width="100%"
-          height="100%"
-          src={content}
-          alt={"Try another source"}
-        ></img>
-      )}
-      {mode === "VIDEO" && (
-        <ReactPlayer
-          width="100%"
-          height="100%"
-          url={content}
-          controls
-          muted
-          config={{
-            youtube: {
-              playerVars: { showinfo: 1 },
-            },
-          }}
-        />
-      )}
+      {mode === "IMAGE" && <Image content={content} />}
+      {mode === "VIDEO" && <Video content={content} />}
       {mode === "AUDIO" && (
         <ReactPlayer
           width="100%"

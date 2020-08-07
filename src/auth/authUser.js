@@ -5,9 +5,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Button, Input } from '@material-ui/core';
 import './authUser.css';
 import { authorize } from '../config/firebase';
-
 import Title from '../Title';
-import MediaStorage from '../component/MediaStorage';
+// import MediaStorage from '../component/MediaStorage';
 
 function UserAuth() {
   function getModalStyle() {
@@ -78,11 +77,12 @@ function UserAuth() {
 
   return (
     <div>
+      {/* {user ? <MediaStorage /> : <h3>Please Login to Upload</h3>} */}
       <Modal open={open} onClose={() => setOpen(false)}>
         <div style={modalStyle} className={classes.paper}>
-          <Title text='chiMera' />
-
           <form className='chimera__signup'>
+            <Title text='chiMera' />
+
             <Input
               placeholder='username'
               type='text'
@@ -107,23 +107,7 @@ function UserAuth() {
           </form>
         </div>
       </Modal>
-      <Modal>
-        <div>
-          <form>
-            <Input
-              placeholder='Load Image'
-              type='file'
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <Button type='submit' onClick={signUp}>
-              Signup
-            </Button>
-          </form>
-        </div>
-      </Modal>
 
-      <MediaStorage username={user} />
       <Modal open={signIn} onClose={() => setSignIn(false)}>
         <div style={modalStyle} className={classes.paper}>
           <form className='chimera__signup'>
@@ -156,7 +140,7 @@ function UserAuth() {
       ) : (
         <div className='chimera__loginContainer'>
           <Button onClick={() => setSignIn(true)}>Sign In</Button>
-          <Button onClick={() => setOpen(true)}>Sign Up!</Button>
+          <Button onClick={() => setOpen(true)}>Register</Button>
         </div>
       )}
     </div>
