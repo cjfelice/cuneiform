@@ -139,6 +139,28 @@ function Panels(props) {
           {description}
         </Typography>
       </CardContent>
+      <CardContent>
+        <div>
+          <div className='panels'>
+            <div className='panels_header'>
+              <h1 className='panels_title'>{title}</h1>
+
+              <h1 className='panels_user'>{username}</h1>
+            </div>
+            <div className='panels_canvis'>
+              {media.map((item) => {
+                return (
+                  <img className='panels_media' src={item.mediaUrl} alt='' />
+                );
+              })}
+            </div>
+
+            <h4 className='panels_user'>{description}</h4>
+            {/* h1 and h4 tags are only placeholders here */}
+          </div>
+        </div>
+        );
+      </CardContent>
 
       <CardActions disableSpacing>
         {/* IconButton Makes Button clickable */}
@@ -153,9 +175,9 @@ function Panels(props) {
           )}
         </IconButton>
 
-        {/* <IconButton aria-label='share'>
+        <IconButton aria-label='share'>
           <ShareIcon />
-        </IconButton> */}
+        </IconButton>
 
         <IconButton
           className={clsx(classes.expand, {
@@ -186,7 +208,7 @@ function Panels(props) {
               </button>
             </form>
             <form>
-              <MediaStorage username={username} panel_i={panel_id} />
+              <MediaStorage username={username} panel_id={panel_id} />
             </form>
           </>
         )}
@@ -194,10 +216,11 @@ function Panels(props) {
           <Typography paragraph>
             {comments.map((comment) => (
               <>
+                <p>{console.log(comment)}</p>
                 <b>{comment.username}</b>
                 <Typography variant='body2' color='textSecondary' component='p'>
                   {comment.remark}
-                  <p>{dateConversion(time)}</p>
+                  <p>{dateConversion(comment.timestamp)}</p>
                 </Typography>
               </>
             ))}
