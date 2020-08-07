@@ -7,7 +7,7 @@ import Modal from '@material-ui/core/Modal';
 // NOT WORKING YET, HAVE TO CHANGE SOME PROPS AND OR VALUES
 function MediaStorage(props) {
   const { username, panel_id } = props;
-  console.log(username);
+
   const [title, setTitle] = useState('');
   const [progress, setProgress] = useState(0);
   const [media, setMedia] = useState('');

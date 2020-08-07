@@ -31,10 +31,12 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import Box from '@material-ui/core/Box';
+import TextInfoContent from '@mui-treasury/components/content/textInfo';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 345,
+    maxHeight: 442,
     color: blueGrey[700]
   },
   media: {
@@ -83,8 +85,8 @@ function Panels(props) {
   const [comments, setComments] = useState([]);
   const [remark, setRemark] = useState('');
   // comment save
-  const saveRemark = (e) => {
-    e.preventDefault();
+  const saveRemark = (event) => {
+    event.preventDefault();
     db.collection('panels').doc(panel_id).collection('comments').add({
       remark: remark,
       username: username,
@@ -94,7 +96,10 @@ function Panels(props) {
   };
   //converts server time to people time
   const dateConversion = (seconds) => {
-    return seconds.toDate().toDateString();
+    if (seconds) {
+      return seconds.toDate().toDateString();
+    }
+    return 0;
   };
   //db update when new comment (onSnapshot)
   useEffect(() => {
@@ -119,11 +124,11 @@ function Panels(props) {
     <Card>
       <CardHeader
         avatar={<Avatar className={classes.avatar}>{username[0]}</Avatar>}
-        // action={
-        //   <IconButton aria-label='settings'>
-        //     <MoreVertIcon />
-        //   </IconButton>
-        // }
+        action={
+          <IconButton aria-label='settings'>
+            <MoreVertIcon />
+          </IconButton>
+        }
         title={title}
         subheader={dateConversion(time)}
       />
@@ -191,32 +196,33 @@ function Panels(props) {
         </IconButton>
       </CardActions>
       <Collapse in={expanded} timeout='auto' unmountOnExit>
-        {!username ? (
-          <UserAuth />
-        ) : (
-          <>
-            <form>
-              <input
-                type='text'
-                placeholder='Add comment'
-                value={remark}
-                onChange={(e) => setRemark(e.target.value)}
-              />
+        <CardContent>
+          {!username ? (
+            <UserAuth />
+          ) : (
+            <>
+              <form>
+                <input
+                  type='text'
+                  placeholder='Add comment'
+                  value={remark}
+                  onChange={(e) => setRemark(e.target.value)}
+                />
 
-              <button type='submit' disabled={!remark} onClick={saveRemark}>
-                Add
-              </button>
-            </form>
-            <form>
-              <MediaStorage username={username} panel_id={panel_id} />
-            </form>
-          </>
-        )}
+                <button type='submit' disabled={!remark} onClick={saveRemark}>
+                  Add
+                </button>
+              </form>
+              <form>
+                <MediaStorage username={username} panel_id={panel_id} />
+              </form>
+            </>
+          )}
+        </CardContent>
         <CardContent>
           <Typography paragraph>
             {comments.map((comment) => (
               <>
-                <p>{console.log(comment)}</p>
                 <b>{comment.username}</b>
                 <Typography variant='body2' color='textSecondary' component='p'>
                   {comment.remark}
