@@ -2,7 +2,8 @@ import React, { useState, useEffect, Fragment } from 'react';
 
 import MediaStorage from './MediaStorage';
 import Cards from './Cards';
-import UserAuth from '../auth/authUser';
+import UserAuth, { currentUser } from '../auth/authUser';
+
 // import Comments from './Comments';
 import './Panels.scss';
 import firebase from 'firebase';
@@ -118,123 +119,129 @@ function Panels(props) {
       done(); //run the 'done' function (see done = db above)
     };
   }, [panel_id]); //reset useEffect so it will run again everytime panel_id changes
-
+  console.log(currentUser);
   return (
-    // <div className='panels'>
-    <Card>
-      <CardHeader
-        avatar={<Avatar className={classes.avatar}>{username[0]}</Avatar>}
-        action={
-          <IconButton aria-label='settings'>
-            <MoreVertIcon />
-          </IconButton>
-        }
-        title={title}
-        subheader={dateConversion(time)}
-      />
+    <div className='panels'>
+      <Card>
+        <CardHeader
+          avatar={<Avatar className={classes.avatar}>{username[0]}</Avatar>}
+          action={
+            <IconButton aria-label='settings'>
+              <MoreVertIcon />
+            </IconButton>
+          }
+          title={title}
+          subheader={dateConversion(time)}
+        />
 
-      <div className='panels_canvis'>
-        {media.map((item) => {
-          return <img className='panels_canvi' image={item.mediaUrl} alt='' />;
-        })}
-      </div>
-
-      <CardContent>
-        <Typography variant='body2' color='textPrimary' component='p'>
-          {description}
-        </Typography>
-      </CardContent>
-      <CardContent>
-        <div>
-          <div className='panels'>
-            <div className='panels_header'>
-              <h1 className='panels_title'>{title}</h1>
-
-              <h1 className='panels_user'>{username}</h1>
-            </div>
-            <div className='panels_canvis'>
-              {media.map((item) => {
-                return (
-                  <img className='panels_media' src={item.mediaUrl} alt='' />
-                );
-              })}
-            </div>
-
-            <h4 className='panels_user'>{description}</h4>
-            {/* h1 and h4 tags are only placeholders here */}
-          </div>
-        </div>
-        );
-      </CardContent>
-
-      <CardActions disableSpacing>
-        {/* IconButton Makes Button clickable */}
-        <IconButton aria-label='add to favorites'>
-          {like ? (
-            <FavoriteIcon onClick={(e) => setLike(false)} />
-          ) : (
-            <FavoriteBorderIcon
-              className={classes.like}
-              onClick={(e) => setLike(true)}
-            />
-          )}
-        </IconButton>
-
-        <IconButton aria-label='share'>
-          <ShareIcon />
-        </IconButton>
-
-        <IconButton
-          className={clsx(classes.expand, {
-            [classes.expandOpen]: expanded
+        <div className='panels_canvis'>
+          {media.map((item) => {
+            return (
+              <img className='panels_canvi' image={item.mediaUrl} alt='' />
+            );
           })}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label='show more'
-        >
-          <ExpandMoreIcon />
-        </IconButton>
-      </CardActions>
-      <Collapse in={expanded} timeout='auto' unmountOnExit>
-        <CardContent>
-          {!username ? (
-            <UserAuth />
-          ) : (
-            <>
-              <form>
-                <input
-                  type='text'
-                  placeholder='Add comment'
-                  value={remark}
-                  onChange={(e) => setRemark(e.target.value)}
-                />
+        </div>
 
-                <button type='submit' disabled={!remark} onClick={saveRemark}>
-                  Add
-                </button>
-              </form>
-              <form>
-                <MediaStorage username={username} panel_id={panel_id} />
-              </form>
-            </>
-          )}
-        </CardContent>
         <CardContent>
-          <Typography paragraph>
-            {comments.map((comment) => (
-              <>
-                <b>{comment.username}</b>
-                <Typography variant='body2' color='textSecondary' component='p'>
-                  {comment.remark}
-                  <p>{dateConversion(comment.timestamp)}</p>
-                </Typography>
-              </>
-            ))}
+          <Typography variant='body2' color='textPrimary' component='p'>
+            {description}
           </Typography>
         </CardContent>
-      </Collapse>
-    </Card>
-    // </div>
+        <CardContent>
+          <div>
+            <div className='panels'>
+              <div className='panels_header'>
+                <h1 className='panels_title'>{title}</h1>
+
+                <h1 className='panels_user'>{username}</h1>
+              </div>
+              <div className='panels_canvis'>
+                {media.map((item) => {
+                  return (
+                    <img className='panels_media' src={item.mediaUrl} alt='' />
+                  );
+                })}
+              </div>
+
+              <h4 className='panels_user'>{description}</h4>
+              {/* h1 and h4 tags are only placeholders here */}
+            </div>
+          </div>
+          );
+        </CardContent>
+
+        <CardActions disableSpacing>
+          {/* IconButton Makes Button clickable */}
+          <IconButton aria-label='add to favorites'>
+            {like ? (
+              <FavoriteIcon onClick={(e) => setLike(false)} />
+            ) : (
+              <FavoriteBorderIcon
+                className={classes.like}
+                onClick={(e) => setLike(true)}
+              />
+            )}
+          </IconButton>
+
+          <IconButton aria-label='share'>
+            <ShareIcon />
+          </IconButton>
+
+          <IconButton
+            className={clsx(classes.expand, {
+              [classes.expandOpen]: expanded
+            })}
+            onClick={handleExpandClick}
+            aria-expanded={expanded}
+            aria-label='show more'
+          >
+            <ExpandMoreIcon />
+          </IconButton>
+        </CardActions>
+        <Collapse in={expanded} timeout='auto' unmountOnExit>
+          <CardContent>
+            {currentUser ? (
+              <UserAuth />
+            ) : (
+              <>
+                <form>
+                  <input
+                    type='text'
+                    placeholder='Add comment'
+                    value={remark}
+                    onChange={(e) => setRemark(e.target.value)}
+                  />
+
+                  <button type='submit' disabled={!remark} onClick={saveRemark}>
+                    Add
+                  </button>
+                </form>
+                <form>
+                  <MediaStorage username={username} panel_id={panel_id} />
+                </form>
+              </>
+            )}
+          </CardContent>
+          <CardContent>
+            <Typography paragraph>
+              {comments.map((comment) => (
+                <>
+                  <b>{comment.username}</b>
+                  <Typography
+                    variant='body2'
+                    color='textSecondary'
+                    component='p'
+                  >
+                    {comment.remark}
+                    <p>{dateConversion(comment.timestamp)}</p>
+                  </Typography>
+                </>
+              ))}
+            </Typography>
+          </CardContent>
+        </Collapse>
+      </Card>
+    </div>
     /*----------------------------*/
   );
 }
