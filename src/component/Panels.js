@@ -1,64 +1,64 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect, Fragment } from "react";
 
-import MediaStorage from './MediaStorage';
-import Cards from './Cards';
-import UserAuth from '../auth/authUser';
+import MediaStorage from "./MediaStorage";
+import Cards from "./Cards";
+import UserAuth from "../auth/authUser";
 // import Comments from './Comments';
-import './Panels.scss';
-import firebase from 'firebase';
+import "./Panels.scss";
+import firebase from "firebase";
 
-import { db } from '../config/firebase';
+import { db } from "../config/firebase";
 
-import ReactPlayer from 'react-player';
+import ReactPlayer from "react-player";
 
-import AddIcon from '@material-ui/icons/Add';
-import { makeStyles } from '@material-ui/core/styles';
-import clsx from 'clsx';
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
-import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
-import Collapse from '@material-ui/core/Collapse';
-import Avatar from '@material-ui/core/Avatar';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import { red, grey, purple, blueGrey } from '@material-ui/core/colors';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import FavoriteBorderIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import TextareaAutosize from '@material-ui/core/TextareaAutosize';
-import Box from '@material-ui/core/Box';
-import TextInfoContent from '@mui-treasury/components/content/textInfo';
+import AddIcon from "@material-ui/icons/Add";
+import { makeStyles } from "@material-ui/core/styles";
+import clsx from "clsx";
+import Card from "@material-ui/core/Card";
+import CardHeader from "@material-ui/core/CardHeader";
+import CardMedia from "@material-ui/core/CardMedia";
+import CardContent from "@material-ui/core/CardContent";
+import CardActions from "@material-ui/core/CardActions";
+import Collapse from "@material-ui/core/Collapse";
+import Avatar from "@material-ui/core/Avatar";
+import IconButton from "@material-ui/core/IconButton";
+import Typography from "@material-ui/core/Typography";
+import { red, grey, purple, blueGrey } from "@material-ui/core/colors";
+import FavoriteIcon from "@material-ui/icons/Favorite";
+import FavoriteBorderIcon from "@material-ui/icons/Favorite";
+import ShareIcon from "@material-ui/icons/Share";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
+import TextareaAutosize from "@material-ui/core/TextareaAutosize";
+import Box from "@material-ui/core/Box";
+import TextInfoContent from "@mui-treasury/components/content/textInfo";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 345,
     maxHeight: 442,
-    color: blueGrey[700]
+    color: blueGrey[700],
   },
   media: {
     height: 0,
-    paddingTop: '56.25%' // 16:9
+    paddingTop: "56.25%", // 16:9
   },
   expand: {
-    transform: 'rotate(0deg)',
-    marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest
-    })
+    transform: "rotate(0deg)",
+    marginLeft: "auto",
+    transition: theme.transitions.create("transform", {
+      duration: theme.transitions.duration.shortest,
+    }),
   },
   expandOpen: {
-    transform: 'rotate(180deg)'
+    transform: "rotate(180deg)",
   },
   avatar: {
-    backgroundColor: purple[900]
+    backgroundColor: purple[900],
   },
   like: {
-    color: red[500]
-  }
+    color: red[500],
+  },
 }));
 
 function Panels(props) {
@@ -71,7 +71,7 @@ function Panels(props) {
     media,
     panel_id,
     username,
-    id
+    id,
   } = props;
 
   const [like, setLike] = useState(false);
@@ -83,16 +83,16 @@ function Panels(props) {
   };
   // comments state
   const [comments, setComments] = useState([]);
-  const [remark, setRemark] = useState('');
+  const [remark, setRemark] = useState("");
   // comment save
   const saveRemark = (event) => {
     event.preventDefault();
-    db.collection('panels').doc(panel_id).collection('comments').add({
+    db.collection("panels").doc(panel_id).collection("comments").add({
       remark: remark,
       username: username,
-      timestamp: firebase.firestore.FieldValue.serverTimestamp()
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
     });
-    setRemark('');
+    setRemark("");
   };
   //converts server time to people time
   const dateConversion = (seconds) => {
@@ -106,9 +106,9 @@ function Panels(props) {
     let done;
     if (panel_id) {
       done = db
-        .collection('panels') //reference to firebase collection name
+        .collection("panels") //reference to firebase collection name
         .doc(panel_id) //the panel id in firebase
-        .collection('comments') //the comments section (collection in firebase speak) in the panels collection
+        .collection("comments") //the comments section (collection in firebase speak) in the panels collection
         .onSnapshot((snapshot) => {
           //everytime there is a change in the db, setComments state to the values mapped back locally
           setComments(snapshot.docs.map((doc) => doc.data()));
@@ -125,7 +125,7 @@ function Panels(props) {
       <CardHeader
         avatar={<Avatar className={classes.avatar}>{username[0]}</Avatar>}
         action={
-          <IconButton aria-label='settings'>
+          <IconButton aria-label="settings">
             <MoreVertIcon />
           </IconButton>
         }
@@ -133,34 +133,34 @@ function Panels(props) {
         subheader={dateConversion(time)}
       />
 
-      <div className='panels_canvis'>
+      <div className="panels_canvis">
         {media.map((item) => {
-          return <img className='panels_canvi' image={item.mediaUrl} alt='' />;
+          return <img className="panels_canvi" image={item.mediaUrl} alt="" />;
         })}
       </div>
 
       <CardContent>
-        <Typography variant='body2' color='textPrimary' component='p'>
+        <Typography variant="body2" color="textPrimary" component="p">
           {description}
         </Typography>
       </CardContent>
       <CardContent>
         <div>
-          <div className='panels'>
-            <div className='panels_header'>
-              <h1 className='panels_title'>{title}</h1>
+          <div className="panels">
+            <div className="panels_header">
+              <h1 className="panels_title">{title}</h1>
 
-              <h1 className='panels_user'>{username}</h1>
+              <h1 className="panels_user">{username}</h1>
             </div>
-            <div className='panels_canvis'>
+            <div className="panels_canvis">
               {media.map((item) => {
                 return (
-                  <img className='panels_media' src={item.mediaUrl} alt='' />
+                  <img className="panels_media" src={item.mediaUrl} alt="" />
                 );
               })}
             </div>
 
-            <h4 className='panels_user'>{description}</h4>
+            <h4 className="panels_user">{description}</h4>
             {/* h1 and h4 tags are only placeholders here */}
           </div>
         </div>
@@ -169,7 +169,7 @@ function Panels(props) {
 
       <CardActions disableSpacing>
         {/* IconButton Makes Button clickable */}
-        <IconButton aria-label='add to favorites'>
+        <IconButton aria-label="add to favorites">
           {like ? (
             <FavoriteIcon onClick={(e) => setLike(false)} />
           ) : (
@@ -180,22 +180,22 @@ function Panels(props) {
           )}
         </IconButton>
 
-        <IconButton aria-label='share'>
+        <IconButton aria-label="share">
           <ShareIcon />
         </IconButton>
 
         <IconButton
           className={clsx(classes.expand, {
-            [classes.expandOpen]: expanded
+            [classes.expandOpen]: expanded,
           })}
           onClick={handleExpandClick}
           aria-expanded={expanded}
-          aria-label='show more'
+          aria-label="show more"
         >
           <ExpandMoreIcon />
         </IconButton>
       </CardActions>
-      <Collapse in={expanded} timeout='auto' unmountOnExit>
+      <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
           {!username ? (
             <UserAuth />
@@ -203,13 +203,13 @@ function Panels(props) {
             <>
               <form>
                 <input
-                  type='text'
-                  placeholder='Add comment'
+                  type="text"
+                  placeholder="Add comment"
                   value={remark}
                   onChange={(e) => setRemark(e.target.value)}
                 />
 
-                <button type='submit' disabled={!remark} onClick={saveRemark}>
+                <button type="submit" disabled={!remark} onClick={saveRemark}>
                   Add
                 </button>
               </form>
@@ -224,7 +224,7 @@ function Panels(props) {
             {comments.map((comment) => (
               <>
                 <b>{comment.username}</b>
-                <Typography variant='body2' color='textSecondary' component='p'>
+                <Typography variant="body2" color="textSecondary" component="p">
                   {comment.remark}
                   <p>{dateConversion(comment.timestamp)}</p>
                 </Typography>

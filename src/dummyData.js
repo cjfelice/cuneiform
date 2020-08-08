@@ -80,3 +80,10 @@
   
 
   
+
+    media: [
+      {mediaBox_id:1,
+        mediaUrl:
+          'https://p1.pxfuel.com/preview/326/736/1008/people-whimsical-lazy-suit.jpg',
+          mediaType:"VIDEO"
+      },
