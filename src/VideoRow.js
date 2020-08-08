@@ -120,15 +120,15 @@ function VideoRow(props) {
       <div className="row">
         <div className="row_canvis">
           {canvi.map((canvi) => (
-            <div
-              className="row_vidi"
-              onClick={() => {
-                props.setContent(canvi.contentUrl);
-                props.submitUrl();
-              }}
-              draggable={true}
-            >
-              <Button>Select</Button>
+            <div className="row_vidi">
+              <Button
+                onClick={() => {
+                  props.setContent(canvi.contentUrl);
+                  props.submitUrl();
+                }}
+              >
+                Select
+              </Button>
               <ReactPlayer
                 width="100%"
                 height="100%"
