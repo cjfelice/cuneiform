@@ -92,6 +92,8 @@ const Canvas = forwardRef((props, ref) => {
   const onRemoveItem = (i) => {
     console.log("removing", i);
     setState({ ...state, items: _.reject(state.items, { i: i }) });
+    const newMediaInfo = mediaInfo.filter((x) => x.mediaBox_id !== i);
+    setMediaInfo(newMediaInfo);
   };
 
   const onDrop = (layout, layoutItem, event) => {
