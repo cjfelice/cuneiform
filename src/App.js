@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState, useEffect, Fragment } from 'react';
 import Headroom from 'react-headroom';
 import './App.scss';
@@ -9,6 +10,20 @@ import requests from './requests';
 import './App.scss';
 import Landcard from './Landcard';
 import Workarea from './Workarea';
+=======
+import React, { useState, useEffect, Fragment } from "react";
+import Headroom from "react-headroom";
+import "./App.scss";
+import Row from "./Row";
+import Workspace from "./Workspace";
+import Navbar from "./Navbar";
+import Title from "./Title";
+import requests from "./requests";
+import "./App.scss";
+import Landcard from "./Landcard";
+import Workarea from "./Workarea";
+import ImageRow from "./ImageRow";
+>>>>>>> master
 
 //Component files
 import Panels from './component/Panels';
