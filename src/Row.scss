@@ -17,6 +17,20 @@
   transition: transform 450ms;
 }
 
+.row_vidi {
+  object-fit: contain;
+  width: 100%;
+  min-width: 250px;
+  max-height: 250px;
+  margin-right: 10px;
+  transition: transform 450ms;
+}
+
+.row_vidi:hover {
+  transform: scale(1.09);
+  opacity: 1;
+}
+
 .row_canvi:hover {
   transform: scale(1.09);
   opacity: 1;

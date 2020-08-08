@@ -9,6 +9,7 @@ import requests from "./requests";
 import "./App.scss";
 import Landcard from "./Landcard";
 import Workarea from "./Workarea";
+import ImageRow from "./ImageRow";
 
 //Component files
 import Panels from "./component/Panels";

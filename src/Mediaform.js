@@ -12,6 +12,8 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import ImageRow from "./ImageRow";
+import VideoRow from "./VideoRow";
 
 const Mediaform = (props) => {
   const [open, setOpen] = useState(false);
@@ -78,23 +80,17 @@ const Mediaform = (props) => {
         aria-labelledby="form-dialog-title"
       >
         {type === "IMAGE" && (
-          <DialogTitle id="form-dialog-title">Add an Image</DialogTitle>
-        )}
-        {type === "AUDIO" && (
-          <DialogTitle id="form-dialog-title">Add Audio</DialogTitle>
+          <ImageRow setContent={props.setContent} submitUrl={submitURL} />
         )}
         {type === "VIDEO" && (
-          <DialogTitle id="form-dialog-title">Add a Video</DialogTitle>
-        )}
-        {type === "TEXT" && (
-          <DialogTitle id="form-dialog-title">Add Text</DialogTitle>
+          <VideoRow setContent={props.setContent} submitUrl={submitURL} />
         )}
         <DialogContent>
           {type === "IMAGE" && (
             <DialogContentText>
-              You can add an image from anywhere on the internet. Just copy and
-              paste the source url. (Right click on the image and click "Copy
-              image address" then paste it below.)
+              Search and select an image above or add an image from anywhere on
+              the internet by copy/pasting the source url. (Right click on the
+              image and click "Copy image address" then paste it below.)
             </DialogContentText>
           )}
           {type === "VIDEO" && (
@@ -123,13 +119,13 @@ const Mediaform = (props) => {
             onChange={(event) => props.setContent(event.target.value)}
             fullWidth
           />
+          <Button onClick={submitURL} color="primary">
+            Submit
+          </Button>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
             Cancel
-          </Button>
-          <Button onClick={submitURL} color="primary">
-            Submit
           </Button>
         </DialogActions>
       </Dialog>
