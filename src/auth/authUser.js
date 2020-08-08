@@ -8,6 +8,8 @@ import { authorize } from '../config/firebase';
 import Title from '../Title';
 // import MediaStorage from '../component/MediaStorage';
 
+let currentUser;
+
 function UserAuth() {
   function getModalStyle() {
     const top = 50;
@@ -39,12 +41,16 @@ function UserAuth() {
   const [password, setPassword] = useState('');
   const [user, setUser] = useState(null);
 
+  // currentUser = user;
+
   useEffect(() => {
     const unsubscribe = authorize.onAuthStateChanged((authUser) => {
       if (authUser) {
         setUser(authUser);
+        currentUser = user.displayName;
       } else {
         setUser(null);
+        currentUser = null;
       }
     });
 
@@ -147,4 +153,5 @@ function UserAuth() {
   );
 }
 
+export { currentUser };
 export default UserAuth;
