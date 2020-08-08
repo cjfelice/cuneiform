@@ -134,7 +134,7 @@ function VideoRow(props) {
                 height="100%"
                 url={canvi.contentUrl}
                 controls
-                muted="false"
+                muted
                 config={{
                   youtube: {
                     playerVars: { showinfo: 1 },
