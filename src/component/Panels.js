@@ -56,7 +56,6 @@ const useStyles = makeStyles((theme) => ({
   expandOpen: {
     transform: 'rotate(180deg)'
   },
-
   like: {
     color: red[500]
   }

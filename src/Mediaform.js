@@ -30,6 +30,7 @@ const Mediaform = (props) => {
   const submitURL = () => {
     setOpen(false);
     props.setMode(type);
+    props.fireTrigger("!");
   };
 
   return (

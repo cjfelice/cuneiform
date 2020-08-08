@@ -12,19 +12,30 @@ import { Responsive, WidthProvider } from "react-grid-layout";
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 const Canvas = forwardRef((props, ref) => {
+  const [mediaInfo, setMediaInfo] = useState([]);
+
   const [state, setState] = useState({
-    items: [1].map(function (i, key, list) {
+    items: [0].map(function (i, key, list) {
       return {
-        i: i.toString(),
+        i: "n" + i.toString(),
         x: i * 2,
         y: 0,
         w: 8,
         h: 8,
-        add: i === list.length - 1,
       };
     }),
-    newCounter: 0,
+    newCounter: 1,
   });
+
+  const createMediaObject = (id, mediaUrl, mediaType) => {
+    const newMediaObject = {
+      mediaBox_id: id,
+      mediaUrl: mediaUrl,
+      mediaType: mediaType,
+    };
+    setMediaInfo([...mediaInfo, newMediaObject]);
+    console.log(mediaInfo);
+  };
 
   const createElement = (el) => {
     const removeStyle = {
@@ -33,23 +44,19 @@ const Canvas = forwardRef((props, ref) => {
       top: 0,
       cursor: "pointer",
     };
-    const i = el.add ? "+" : el.i;
+    const i = el.i;
     return (
       <div key={i} data-grid={el}>
-        {el.add ? (
-          <span
-            className="add text"
-            onClick={onAddItem}
-            title="You can add an item by clicking here, too."
-          >
-            Add +
-          </span>
-        ) : (
+        {
           <span className="text">
             <DragIndicatorIcon style={{ color: "white", cursor: "pointer" }} />
           </span>
-        )}
-        <Mediabox />
+        }
+        <Mediabox
+          mediaObject={mediaInfo.find((x) => x.mediaBox_id === i)}
+          createObject={createMediaObject}
+          boxID={i}
+        />
         <span
           className="remove"
           style={removeStyle}
@@ -89,7 +96,7 @@ const Canvas = forwardRef((props, ref) => {
 
   const onDrop = (layout, layoutItem, event) => {
     console.log("adding", "n" + state.newCounter);
-    console.log(layoutItem);
+    console.log(state);
     setState({
       items: state.items.concat({
         i: "n" + state.newCounter,
