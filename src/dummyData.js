@@ -2,8 +2,7 @@
       username: 'Jasper',
       title: 'Test1/rename to title!',
       description: 'Yangmingshan Taipei Chinese Pavilion!',
-      music_id: '',
-      media: [
+      canvas: [
         {
           mediaUrl:
             'https://p1.pxfuel.com/preview/326/736/1008/people-whimsical-lazy-suit.jpg'
@@ -16,7 +15,7 @@
             'https://static.pexels.com/photos/8486/water-rain-raindrops-drops.jpg'
         }
       ]
-    }
+    },
     {
       user_id: 2,
       name: 'Test2/rename to title!',
