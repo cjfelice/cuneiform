@@ -2,7 +2,7 @@
       username: 'Jasper',
       title: 'Test1/rename to title!',
       description: 'Yangmingshan Taipei Chinese Pavilion!',
-      canvas: [
+      media: [
         {
           mediaUrl:
             'https://p1.pxfuel.com/preview/326/736/1008/people-whimsical-lazy-suit.jpg'
@@ -77,7 +77,7 @@
       ]
     }
   
-
+https://www.youtube.com/watch?v=ndl1W4ltcmg
   
 
     media: [

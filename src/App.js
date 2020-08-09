@@ -70,7 +70,8 @@ function App() {
             title={panel.title}
             description={panel.description}
             music_id={panel.music_id}
-            media={[...panel.media]}
+            media={panel.media}
+            mediaBox={panel.mediaBox}
             time={panel.timestamp}
           />
         ))}
