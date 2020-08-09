@@ -19,6 +19,7 @@
     "react": "^16.13.1",
     "react-bounds": "^0.3.1",
     "react-dom": "^16.13.1",
+    "react-flip-move": "^3.0.4",
     "react-grid-layout": "^1.0.0",
     "react-headroom": "^3.0.0",
     "react-player": "^2.6.0",
