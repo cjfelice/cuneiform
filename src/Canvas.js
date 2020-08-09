@@ -25,7 +25,7 @@ const ResponsiveReactGridLayout = WidthProvider(Responsive);
 let saveMedia = {};
 
 const Canvas = forwardRef((props, ref) => {
-  // const { } = props;
+  const { media, mediaBox } = props;
 
   const [mediaInfo, setMediaInfo] = useState([]);
 
