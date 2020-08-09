@@ -10,7 +10,7 @@ import ReactPlayer from "react-player";
 import Button from "@material-ui/core/Button";
 import "./Row.scss";
 
-const API_KEY = process.env.REACT_APP_AZURE_API_KEY;
+const API_KEY = process.env.REACT_APP_GOOGLE_API_KEY;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -67,20 +67,19 @@ function VideoRow(props) {
     if (term !== "") {
       async function fetchData() {
         const request = await axios.get(
-          "https://api.cognitive.microsoft.com/bing/v7.0/videos/search",
+          "https://www.googleapis.com/youtube/v3/search",
           {
-            headers: {
-              "Ocp-Apim-Subscription-Key": API_KEY,
-            },
             params: {
-              count: 20,
-              mkt: "en-US",
+              key: API_KEY,
+              maxResults: 20,
+              type: "video",
               q: term,
+              videoEmbeddable: true,
             },
           }
         );
         console.log(request);
-        setCanvi(request.data.value);
+        setCanvi(request.data.items);
         return request;
       }
       fetchData();
@@ -123,7 +122,9 @@ function VideoRow(props) {
             <div className="row_vidi">
               <Button
                 onClick={() => {
-                  props.setContent(canvi.contentUrl);
+                  props.setContent(
+                    `https://www.youtube.com/embed/${canvi.id.videoId}`
+                  );
                   props.submitUrl();
                 }}
               >
@@ -132,7 +133,7 @@ function VideoRow(props) {
               <ReactPlayer
                 width="100%"
                 height="100%"
-                url={canvi.contentUrl}
+                url={`https://www.youtube.com/embed/${canvi.id.videoId}`}
                 controls
                 muted
                 config={{

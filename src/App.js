@@ -61,7 +61,7 @@ function App() {
       <Row title="Suggested Canvi" fetchUrl={requests.fetchTrending} />
 
       {/* {panels.map((panel) => ( */}
-      <div className="panels_canvis">
+      <div>
         {panels.map(({ id, panel }) => (
           <Panels
             key={id}
