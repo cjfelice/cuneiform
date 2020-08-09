@@ -13,7 +13,7 @@ const ReactGridLayout = WidthProvider(RGL);
 
 let saveMedia = {};
 
-const Canvas = forwardRef((props, ref) => {
+const GalleryCanvas = forwardRef((props, ref) => {
   const { media, mediaBox } = props;
 
   const [mediaInfo, setMediaInfo] = useState(props.media || []);
@@ -29,8 +29,8 @@ const Canvas = forwardRef((props, ref) => {
               w: i.w,
               h: i.h,
               isBounded: false,
-              isDraggable: true,
-              isResizable: true,
+              isDraggable: false,
+              isResizable: false,
               maxH: 1000,
               maxW: 1000,
             };
@@ -46,8 +46,8 @@ const Canvas = forwardRef((props, ref) => {
               w: 8,
               h: 8,
               isBounded: false,
-              isDraggable: true,
-              isResizable: true,
+              isDraggable: false,
+              isResizable: false,
               maxH: 1000,
               maxW: 1000,
               minH: 1,
@@ -85,76 +85,8 @@ const Canvas = forwardRef((props, ref) => {
           createObject={createMediaObject}
           boxID={i}
         />
-        <span className="text">
-          <DragIndicatorIcon style={{ color: "white", cursor: "pointer" }} />
-        </span>
-        <span
-          className="remove"
-          style={removeStyle}
-          onClick={onRemoveItem.bind(this, i)}
-        >
-          <CloseIcon style={{ color: "white", fontSize: "25" }} />
-        </span>
       </div>
     );
-  };
-
-  const onAddItem = () => {
-    console.log("adding", "n" + state.newCounter);
-    console.log(state.items);
-    setState({
-      items: state.items.concat({
-        i: "n" + state.newCounter,
-        x: state.newCounter,
-        y: 0,
-        w: 8,
-        h: 8,
-        isBounded: false,
-        isDraggable: true,
-        isResizable: true,
-        maxH: 1000,
-        maxW: 1000,
-        minH: 1,
-        minW: 1,
-      }),
-      newCounter: state.newCounter + 1,
-    });
-  };
-
-  useImperativeHandle(ref, () => ({
-    passCall() {
-      onAddItem();
-    },
-  }));
-
-  const onRemoveItem = (i) => {
-    console.log("removing", i);
-    setState({ ...state, items: _.reject(state.items, { i: i }) });
-    const newMediaInfo = mediaInfo.filter((x) => x.mediaBox_id !== i);
-    setMediaInfo(newMediaInfo);
-  };
-
-  const onDrop = (layout, layoutItem, event) => {
-    console.log("layout:", layout, "layoutItem:", layoutItem, "event:", event);
-    console.log("adding", "n" + state.newCounter);
-    console.log(state);
-    setState({
-      items: state.items.concat({
-        i: "n" + state.newCounter,
-        x: layoutItem.x,
-        y: layoutItem.y,
-        w: 8,
-        h: 8,
-        isBounded: false,
-        isDraggable: true,
-        isResizable: true,
-        maxH: 1000,
-        maxW: 1000,
-        minH: 1,
-        minW: 1,
-      }),
-      newCounter: state.newCounter + 1,
-    });
   };
 
   return (
@@ -165,16 +97,9 @@ const Canvas = forwardRef((props, ref) => {
           cols={20}
           rowHeight={10}
           maxRows={31}
-          isDroppable={true}
-          onDrop={onDrop}
           preventCollision={true}
           verticalCompact={false}
-          onResizeStop={(layout) => {
-            console.log("STATE:", state);
-            setState({ ...state, items: layout });
-            console.log("STATE:", state);
-          }}
-          onDragStop={(layout) => {
+          onResize={(layout) => {
             console.log("STATE:", state);
             setState({ ...state, items: layout });
             console.log("STATE:", state);
@@ -188,4 +113,4 @@ const Canvas = forwardRef((props, ref) => {
 });
 
 export { saveMedia };
-export default Canvas;
+export default GalleryCanvas;

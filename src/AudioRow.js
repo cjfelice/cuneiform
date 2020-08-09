@@ -1,11 +1,13 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, Fragment } from "react";
 import axios from "./axios";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import SearchIcon from "@material-ui/icons/Search";
 import InputBase from "@material-ui/core/InputBase";
 import IconButton from "@material-ui/core/Button";
+import querystring from "querystring";
 import Switch from "@material-ui/core/Switch";
 import PageviewIcon from "@material-ui/icons/Pageview";
+import Button from "@material-ui/core/Button";
 import "./Row.scss";
 
 const API_KEY = process.env.REACT_APP_SPOTIFY_API_KEY;
@@ -71,25 +73,45 @@ function AudioRow(props) {
   const searchRef = useRef("");
   useEffect(() => {
     if (term !== "") {
-      axios({
-        url: "https://accounts.spotify.com/api/token",
-        method: "post",
-        params: {
-          grant_type: "client_credentials",
-        },
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        auth: {
-          username: "abe89ada33324c6090f59e5f84994ecc",
-          password: "6fd83f21bc9a4e66a1bc2323c5d5d078",
-        },
-      })
-        .then(function (response) {
-          console.log(response);
+      axios
+        .post(
+          "https://accounts.spotify.com/api/token",
+          querystring.stringify({
+            grant_type: "client_credentials",
+          }),
+          {
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+              Authorization:
+                "Basic " +
+                new Buffer(`${API_KEY}:${API_SECRET}`).toString("base64"),
+            },
+          }
+        )
+        .then((res) => {
+          console.log("TOKENRES:", res.data.access_token);
+          axios
+            .get(
+              `https://api.spotify.com/v1/search?q=${term}&type=track,artist,album`,
+              {
+                headers: {
+                  Authorization: `Bearer ${res.data.access_token}`,
+                  "Content-Type": "application/json",
+                  Accept: "application/json",
+                },
+              }
+            )
+            .then((res) => {
+              console.log(res);
+              setCanvi(res.data.tracks.items);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
         })
-        .catch(function (error) {});
+        .catch((error) => {
+          console.log(error);
+        });
     }
   }, [term, state.checkedB]);
 
@@ -134,18 +156,26 @@ function AudioRow(props) {
       <div className="row">
         <div className="row_canvis">
           {canvi.map((canvi) => (
-            <img
-              key={canvi.imageId}
-              className="row_canvi"
-              src={canvi.contentUrl}
-              style={{ cursor: "pointer" }}
-              onError={(i) => (i.target.style.display = "none")}
-              alt={canvi.name}
-              onClick={() => {
-                props.setContent(canvi.contentUrl);
-                props.submitUrl();
-              }}
-            />
+            <Fragment>
+              <Button
+                onClick={() => {
+                  props.setContent(
+                    `https://open.spotify.com/embed/track/${canvi.id}`
+                  );
+                  props.submitUrl();
+                }}
+              >
+                Select
+              </Button>
+              <iframe
+                src={`https://open.spotify.com/embed/track/${canvi.id}`}
+                width="300"
+                height="380"
+                frameborder="0"
+                allowtransparency="true"
+                allow="encrypted-media"
+              ></iframe>
+            </Fragment>
           ))}
         </div>
       </div>

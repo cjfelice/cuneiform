@@ -4,10 +4,25 @@ $texture: url("https://www.transparenttextures.com/patterns/cardboard.png");
 @import url("https://fonts.googleapis.com/css2?family=Ibarra+Real+Nova&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Baloo+Tamma+2&family=Ibarra+Real+Nova&display=swap");
 .workspace {
-  max-width: 80%;
   max-height: 650px;
   width: 400em;
   height: 680em;
+  max-width: 90%;
+  background-image: $texture;
+  background-color: $paper;
+  box-shadow: 7px 7px 8px #888888;
+  margin: auto;
+  margin-bottom: 30px;
+  margin-top: 10px;
+  border-radius: 6px;
+  padding: 1px;
+}
+
+.workspace-two {
+  max-height: 325px;
+  width: 400em;
+  height: 680em;
+  max-width: 40%;
   background-image: $texture;
   background-color: $paper;
   box-shadow: 7px 7px 8px #888888;
