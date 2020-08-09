@@ -12,20 +12,22 @@ import { Responsive, WidthProvider } from "react-grid-layout";
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 const Canvas = forwardRef((props, ref) => {
-  const [mediaInfo, setMediaInfo] = useState([]);
+  const [mediaInfo, setMediaInfo] = useState(props.mediaInfo || []);
 
-  const [state, setState] = useState({
-    items: [0].map(function (i, key, list) {
-      return {
-        i: "n" + i.toString(),
-        x: i * 2,
-        y: 0,
-        w: 8,
-        h: 8,
-      };
-    }),
-    newCounter: 1,
-  });
+  const [state, setState] = useState(
+    props.state || {
+      items: [0].map(function (i, key, list) {
+        return {
+          i: "n" + i.toString(),
+          x: i * 2,
+          y: 0,
+          w: 8,
+          h: 8,
+        };
+      }),
+      newCounter: 1,
+    }
+  );
 
   const createMediaObject = (id, mediaUrl, mediaType) => {
     const newMediaObject = {
