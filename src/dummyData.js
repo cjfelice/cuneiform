@@ -2,6 +2,7 @@
       username: 'Jasper',
       title: 'Test1/rename to title!',
       description: 'Yangmingshan Taipei Chinese Pavilion!',
+      music_id: '',
       media: [
         {
           mediaUrl:
@@ -15,7 +16,7 @@
             'https://static.pexels.com/photos/8486/water-rain-raindrops-drops.jpg'
         }
       ]
-    },
+    }
     {
       user_id: 2,
       name: 'Test2/rename to title!',
@@ -77,12 +78,26 @@
       ]
     }
   
-https://www.youtube.com/watch?v=ndl1W4ltcmg
+
   
 
     media: [
-      {mediaBox_id:1,
+      // {mediaBox_id:1,
+        mediaUrl:
+          'https://p1.pxfuel.com/preview/326/736/1008/people-whimsical-lazy-suit.jpg',
+          mediaType:"IMAGE"
+      }, {mediaBox_id:2,
+        mediaUrl:
+          'https://p1.pxfuel.com/preview/326/736/1008/people-whimsical-lazy-suit.jpg',
+          mediaType:"AUDIO"
+      }, {mediaBox_id:3,
+        mediaUrl:
+          'https://p1.pxfuel.com/preview/326/736/1008/people-whimsical-lazy-suit.jpg',
+          mediaType:"SPOTIFY",
+          spotify:[{},{},{}]
+      }, {mediaBox_id:4,
         mediaUrl:
           'https://p1.pxfuel.com/preview/326/736/1008/people-whimsical-lazy-suit.jpg',
           mediaType:"VIDEO"
-      },
+      }];
+

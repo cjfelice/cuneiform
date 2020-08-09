@@ -24,7 +24,8 @@
     "react-headroom": "^3.0.0",
     "react-player": "^2.6.0",
     "react-render-html": "^0.6.0",
-    "react-scripts": "3.4.1"
+    "react-scripts": "3.4.1",
+    "react-summernote": "^2.0.2"
   },
   "scripts": {
     "start": "react-scripts start",

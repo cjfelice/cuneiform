@@ -92,7 +92,7 @@ function AudioRow(props) {
           console.log("TOKENRES:", res.data.access_token);
           axios
             .get(
-              `https://api.spotify.com/v1/search?q=${term}&type=track,artist,album`,
+              `https://api.spotify.com/v1/search?q=${term}&type=track,artist,album,playlist`,
               {
                 headers: {
                   Authorization: `Bearer ${res.data.access_token}`,
@@ -103,7 +103,9 @@ function AudioRow(props) {
             )
             .then((res) => {
               console.log(res);
-              setCanvi(res.data.tracks.items);
+              state.checkedB === false
+                ? setCanvi(res.data.tracks.items)
+                : setCanvi(res.data.playlists.items);
             })
             .catch((error) => {
               console.log(error);
@@ -135,7 +137,7 @@ function AudioRow(props) {
           }}
           inputProps={{ "aria-label": "search" }}
         />
-        GIF:
+        PLAYLISTS:
         <Switch
           checked={state.checkedB}
           onChange={handleChange}
@@ -159,16 +161,24 @@ function AudioRow(props) {
             <Fragment>
               <Button
                 onClick={() => {
-                  props.setContent(
-                    `https://open.spotify.com/embed/track/${canvi.id}`
-                  );
+                  state.checkedB === false
+                    ? props.setContent(
+                        `https://open.spotify.com/embed/track/${canvi.id}`
+                      )
+                    : props.setContent(
+                        `https://open.spotify.com/embed/playlist/${canvi.id}`
+                      );
                   props.submitUrl();
                 }}
               >
                 Select
               </Button>
               <iframe
-                src={`https://open.spotify.com/embed/track/${canvi.id}`}
+                src={
+                  state.checkedB === false
+                    ? `https://open.spotify.com/embed/track/${canvi.id}`
+                    : `https://open.spotify.com/embed/playlist/${canvi.id}`
+                }
                 width="300"
                 height="380"
                 frameborder="0"

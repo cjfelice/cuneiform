@@ -52,7 +52,7 @@ function Mediabox(props) {
       )}
       {mode === "IMAGE" && <Image content={content} />}
       {mode === "VIDEO" && <Video content={content} />}
-      {mode === "AUDIO" && <Audio content={content} />},
+      {mode === "AUDIO" && <Audio content={content} />}
       {mode === "TEXT" && <div>{content}</div>}
     </React.Fragment>
   );
