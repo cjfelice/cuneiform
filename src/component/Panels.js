@@ -69,6 +69,7 @@ function Panels(props) {
     music_id,
     time,
     media,
+    mediaBox,
     panel_id,
     username,
     id
@@ -83,18 +84,13 @@ function Panels(props) {
     setExpanded(!expanded);
   };
 
-  console.log(currentUser);
-
   return (
     <Card className='panels'>
       <PanelsHeader username={username} title={title} time={time} />
 
       {/* Canvas will go here */}
       <CardContent className='panels_canvis'>
-        {media.map((item) => {
-          return <img className='panels_media' src={item.mediaUrl} alt='' />;
-        })}
-        {/* <Canvas /> */}
+        <Canvas mediaBox={mediaBox} media={media} />
       </CardContent>
 
       <CardContent>

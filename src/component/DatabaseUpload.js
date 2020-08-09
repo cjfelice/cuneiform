@@ -2,30 +2,85 @@ import React, { useState, useEffect } from 'react';
 
 import firebase from 'firebase';
 import { db } from '../config/firebase';
+import { currentUser } from '../auth/authUser';
 
-import { Button } from '@material-ui/core';
+import Title from '../Title';
+
+import { makeStyles } from '@material-ui/core/styles';
+import { Button, Input, Modal } from '@material-ui/core';
+
+import { saveMedia } from '../Canvas';
 
 function DatabaseUpload(props) {
-  const { title, description, username, mediaUrl, music_id } = props;
+  const { media, music_id } = props;
+
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+
+  console.log(saveMedia);
+
+  function getModalStyle() {
+    const top = 50;
+    const left = 50;
+    return {
+      top: `${top}%`,
+      left: `${left}%`,
+      transform: `translate(-${top}%, -${left}%)`
+    };
+  }
+  const useStyles = makeStyles((theme) => ({
+    paper: {
+      position: 'absolute',
+      width: 400,
+      backgroundColor: theme.palette.background.paper,
+      border: '2px solid #000',
+      boxShadow: theme.shadows[5],
+      padding: theme.spacing(2, 4, 3)
+    }
+  }));
+
+  const classes = useStyles();
+  const [modalStyle] = useState(getModalStyle);
+  const [open, setOpen] = useState(false);
 
   const handleUpload = () => {
     db.collection('panels').add({
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       title: title,
-      media: [...mediaUrl],
-      username: username,
+      mediaBox: [...saveMedia[0].items],
+      media: [...saveMedia[1]],
+      username: currentUser,
       description: description,
-      music_id: music_id
+      music_id: ''
     });
   };
+  console.log('\n\nsaveMedia:>>', saveMedia);
 
   return (
-    <div>
-      {/* FORM ELEMENT MAY NOT BE NECESSARY FOR BUTTON */}
-      <form>
-        <Button onClick={handleUpload}>SAVE</Button>
-      </form>
-    </div>
+    <>
+      <Modal open={open} onClose={() => setOpen(false)}>
+        <div style={modalStyle} className={classes.paper}>
+          <form className='chimera__signup'>
+            <Title text='chiMera' />
+
+            <Input
+              placeholder='Title'
+              type='text'
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+            <Input
+              placeholder='Description'
+              type='text'
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
+            <Button onClick={handleUpload}>Publish!</Button>
+          </form>
+        </div>
+      </Modal>
+      <Button onClick={() => setOpen(true)}>SAVE</Button>
+    </>
   );
 }
 

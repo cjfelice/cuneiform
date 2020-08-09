@@ -14,6 +14,7 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import ImageRow from "./ImageRow";
 import VideoRow from "./VideoRow";
+import AudioRow from "./AudioRow";
 
 const Mediaform = (props) => {
   const [open, setOpen] = useState(false);
@@ -85,6 +86,9 @@ const Mediaform = (props) => {
         )}
         {type === "VIDEO" && (
           <VideoRow setContent={props.setContent} submitUrl={submitURL} />
+        )}
+        {type === "AUDIO" && (
+          <AudioRow setContent={props.setContent} submitUrl={submitURL} />
         )}
         <DialogContent>
           {type === "IMAGE" && (
