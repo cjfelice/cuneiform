@@ -7,6 +7,7 @@ import UserAuth, { currentUser } from '../auth/authUser';
 import Comments from './Comments';
 import Canvas from '../Canvas';
 import PanelsHeader from './PanelsHeader';
+
 import './Panels.scss';
 import firebase from 'firebase';
 
@@ -17,23 +18,30 @@ import ReactPlayer from 'react-player';
 import AddIcon from '@material-ui/icons/Add';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
-import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
-import Collapse from '@material-ui/core/Collapse';
-import Avatar from '@material-ui/core/Avatar';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
+
+import {
+  Card,
+  CardContent,
+  CardActions,
+  Collapse,
+  Avatar,
+  IconButton,
+  Typography,
+  CardMedia,
+  CardHeader,
+  TextareaAutosize,
+  Box
+} from '@material-ui/core';
+
 import { red, grey, purple, blueGrey } from '@material-ui/core/colors';
+
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import TextareaAutosize from '@material-ui/core/TextareaAutosize';
-import Box from '@material-ui/core/Box';
+// import TextareaAutosize from '@material-ui/core/TextareaAutosize';
+// import Box from '@material-ui/core/Box';
 import TextInfoContent from '@mui-treasury/components/content/textInfo';
 
 const useStyles = makeStyles((theme) => ({
