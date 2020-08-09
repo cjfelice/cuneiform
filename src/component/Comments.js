@@ -75,9 +75,6 @@ function Comments(props) {
             Add
           </button>
         </form>
-        <form>
-          <MediaStorage username={username} panel_id={panel_id} />
-        </form>
       </CardContent>
 
       <CardContent>
