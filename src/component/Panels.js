@@ -85,60 +85,63 @@ function Panels(props) {
   console.log('\n\nmediaBox:>>', mediaBox);
 
   return (
-    <Card className={classes.root}>
-      <PanelsHeader username={username} title={title} time={time} />
+    <div className='panels'>
+      <Card className={classes.root}>
+        <PanelsHeader username={username} title={title} time={time} />
 
-      {/* Canvas will go here */}
-      <Box color='white'>
-        <CardContent>
-          <PanelMedia media={media} mediaBox={mediaBox} />
-        </CardContent>
-      </Box>
+        {/* Canvas will go here */}
+        <Box color='white' className='panels_canvi'>
+          <CardContent>
+            <PanelMedia media={media} mediaBox={mediaBox} />
+          </CardContent>
+        </Box>
+        <div className={classes.media}>
+          <CardContent>
+            <Typography variant='body2' color='textPrimary' component='p'>
+              {description}
+            </Typography>
+          </CardContent>
 
-      <CardContent>
-        <Typography variant='body2' color='textPrimary' component='p'>
-          {description}
-        </Typography>
-      </CardContent>
+          <CardActions disableSpacing>
+            {/* IconButton Makes Button clickable */}
+            {like ? (
+              <IconButton
+                aria-label='add to favorites'
+                onClick={(e) => setLike(false)}
+              >
+                <FavoriteIcon />
+              </IconButton>
+            ) : (
+              <IconButton
+                aria-label='add to favorites'
+                onClick={(e) => setLike(true)}
+              >
+                <FavoriteBorderIcon className={classes.like} />
+              </IconButton>
+            )}
 
-      <CardActions disableSpacing>
-        {/* IconButton Makes Button clickable */}
-        {like ? (
-          <IconButton
-            aria-label='add to favorites'
-            onClick={(e) => setLike(false)}
-          >
-            <FavoriteIcon />
-          </IconButton>
-        ) : (
-          <IconButton
-            aria-label='add to favorites'
-            onClick={(e) => setLike(true)}
-          >
-            <FavoriteBorderIcon className={classes.like} />
-          </IconButton>
-        )}
+            <IconButton aria-label='share'>
+              <ShareIcon />
+            </IconButton>
 
-        <IconButton aria-label='share'>
-          <ShareIcon />
-        </IconButton>
+            <IconButton
+              className={clsx(classes.expand, {
+                [classes.expandOpen]: expanded
+              })}
+              onClick={handleExpandClick}
+              aria-expanded={expanded}
+              aria-label='show more'
+            >
+              <ExpandMoreIcon />
+            </IconButton>
+          </CardActions>
+        </div>
 
-        <IconButton
-          className={clsx(classes.expand, {
-            [classes.expandOpen]: expanded
-          })}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label='show more'
-        >
-          <ExpandMoreIcon />
-        </IconButton>
-      </CardActions>
-
-      <Collapse in={expanded} timeout='auto' unmountOnExit>
-        <Comments username={username} panel_id={panel_id} />
-      </Collapse>
-    </Card>
+        <Collapse in={expanded} timeout='auto' unmountOnExit>
+          <Comments username={username} panel_id={panel_id} />
+        </Collapse>
+      </Card>
+    </div>
   );
 }
 

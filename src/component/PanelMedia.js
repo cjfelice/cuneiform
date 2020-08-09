@@ -34,10 +34,14 @@ function PanelMedia(props) {
   const useStyles = makeStyles((theme) => ({
     root: {
       maxWidth: 345,
-      maxHeight: 442,
+      maxHeight: '50%',
       color: blueGrey[700]
     },
     media: {
+      height: 0,
+      paddingTop: '5%' // 16:9
+    },
+    description: {
       height: 0,
       paddingTop: '56.25%' // 16:9
     },
@@ -69,7 +73,7 @@ function PanelMedia(props) {
 
   return (
     <>
-      <Container>
+      <Container className={classes.media}>
         <GridList cols={20} rows={31} cellHeight={10}>
           {media.map(({ mediaUrl, mediaType, mediaBox_id, length }) =>
             mediaBox.map(({ i, h, w, x, y }) => {
