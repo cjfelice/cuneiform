@@ -12,23 +12,42 @@ import PanelMedia from './PanelMedia';
 import './Panels.scss';
 import '../Workspace.scss';
 
-import { makeStyles } from '@material-ui/core/styles';
+import {
+  CardContent,
+  GridList,
+  GridListTile,
+  Container
+} from '@material-ui/core';
+import { makeStyles, StylesProvider } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
-import CardContent from '@material-ui/core/CardContent';
+
 import CardActions from '@material-ui/core/CardActions';
 import Collapse from '@material-ui/core/Collapse';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import { red, grey, purple, blueGrey } from '@material-ui/core/colors';
+import {
+  red,
+  blue,
+  white,
+  grey,
+  purple,
+  blueGrey
+} from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+
+import GridListTileBar from '@material-ui/core/GridListTileBar';
+
+import StarBorderIcon from '@material-ui/icons/StarBorder';
 
 import Box from '@material-ui/core/Box';
 import TextInfoContent from '@mui-treasury/components/content/textInfo';
@@ -42,17 +61,19 @@ function Panels(props) {
     time,
     media,
     mediaBox,
+    mediaCounter,
     panel_id,
     username,
     id
   } = props;
+
   const useStyles = makeStyles((theme) => ({
     root: {
-      minWidth: 345,
       maxWidth: 345,
+      // maxHeight: 442,
       minHeight: 442,
-      maxHeight: 442,
-      color: blueGrey[700]
+      color: '#fff',
+      padding: '10'
     },
     media: {
       height: 0,
@@ -70,13 +91,38 @@ function Panels(props) {
     },
     like: {
       color: red[500]
+    },
+    root_grid: {
+      flexGrow: 1
+    },
+    paper: {
+      color: theme.palette.text.secondary
+    },
+    gridlist__root: {
+      display: 'flex',
+      flexWrap: 'wrap',
+      justifyContent: 'space-around',
+      overflow: 'hidden'
+    },
+    gridList: {
+      flexWrap: 'nowrap',
+      transform: 'translateZ(0)'
+    },
+    gridlist__title: {
+      color: theme.palette.primary.light
+    },
+    gridlist__titleBar: {
+      background:
+        'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)'
     }
   }));
 
   //Cards material ui
   const [like, setLike] = useState(false);
+
   const [expanded, setExpanded] = useState(false);
   const classes = useStyles();
+
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
@@ -85,25 +131,33 @@ function Panels(props) {
   console.log('\n\nmediaBox:>>', mediaBox);
 
   return (
-    <div className='panels'>
-      <Card className={classes.root}>
-        <PanelsHeader username={username} title={title} time={time} />
+    <Paper className={(classes.paper, classes.root)}>
+      <GridList
+        cellHeight='auto'
+        rows={12}
+        cols={1}
+        className={classes.gridlist}
+      >
+        <GridListTile rows={2} cols={1}>
+          <PanelsHeader username={username} title={title} time={time} />
+        </GridListTile>
 
-        {/* Canvas will go here */}
-        <Box color='white' className='panels_canvi'>
-          <CardContent>
-            <PanelMedia media={media} mediaBox={mediaBox} />
-          </CardContent>
-        </Box>
-        <div className={classes.media}>
-          <CardContent>
-            <Typography variant='body2' color='textPrimary' component='p'>
-              {description}
-            </Typography>
-          </CardContent>
+        <GridListTile rows={4} cols={1}>
+          <PanelMedia
+            media={media}
+            mediaBox={mediaBox}
+            mediaCounter={mediaCounter}
+          />
+        </GridListTile>
 
+        <GridListTile rows={3} cols={1}>
+          <Typography variant='body2' color='textPrimary' component='p'>
+            {description}
+          </Typography>
+        </GridListTile>
+
+        <GridListTile rows={2} cols={1}>
           <CardActions disableSpacing>
-            {/* IconButton Makes Button clickable */}
             {like ? (
               <IconButton
                 aria-label='add to favorites'
@@ -120,10 +174,6 @@ function Panels(props) {
               </IconButton>
             )}
 
-            <IconButton aria-label='share'>
-              <ShareIcon />
-            </IconButton>
-
             <IconButton
               className={clsx(classes.expand, {
                 [classes.expandOpen]: expanded
@@ -135,13 +185,17 @@ function Panels(props) {
               <ExpandMoreIcon />
             </IconButton>
           </CardActions>
-        </div>
+        </GridListTile>
 
-        <Collapse in={expanded} timeout='auto' unmountOnExit>
-          <Comments username={username} panel_id={panel_id} />
-        </Collapse>
-      </Card>
-    </div>
+        <GridListTile rows={1} cols={1}>
+          <Collapse in={expanded} timeout='auto' unmountOnExit>
+            <Comments username={username} panel_id={panel_id} />
+          </Collapse>
+        </GridListTile>
+
+        {/* </Card> */}
+      </GridList>
+    </Paper>
   );
 }
 

@@ -11,6 +11,7 @@ import './Panels.scss';
 
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
 
 function Comments(props) {
   const { username, panel_id } = props;
@@ -64,6 +65,7 @@ function Comments(props) {
   return (
     <>
       <CardContent>
+        <Divider />
         <form>
           <input
             type='text'
@@ -82,6 +84,7 @@ function Comments(props) {
         <Typography>
           {comments.map((comment) => (
             <>
+              <Divider />
               <b>{comment.username}</b>
               <Typography variant='body2' color='textSecondary' component='p'>
                 {comment.remark}

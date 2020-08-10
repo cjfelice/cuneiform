@@ -1,27 +1,27 @@
-import React, { useState, useEffect, Fragment } from "react";
-import Headroom from "react-headroom";
-import "./App.scss";
-import Row from "./Row";
-import Workspace from "./Workspace";
-import Navbar from "./Navbar";
-import Title from "./Title";
-import requests from "./requests";
-import "./App.scss";
-import Landcard from "./Landcard";
-import Workarea from "./Workarea";
-import ImageRow from "./ImageRow";
+import React, { useState, useEffect, Fragment } from 'react';
+import Headroom from 'react-headroom';
+import './App.scss';
+import Row from './Row';
+import Workspace from './Workspace';
+import Navbar from './Navbar';
+import Title from './Title';
+import requests from './requests';
+import './App.scss';
+import Landcard from './Landcard';
+import Workarea from './Workarea';
+import ImageRow from './ImageRow';
 
 //Component files
-import Panels from "./component/Panels";
-import "./component/Panels.scss";
-import { db } from "./config/firebase";
+import Panels from './component/Panels';
+import './component/Panels.scss';
+import { db } from './config/firebase';
 
-import Cards from "./component/Cards";
+import Cards from './component/Cards';
 // import MediaStorage from './component/doNotUse/MediaStorage';
-import UserAuth from "./auth/authUser";
+import UserAuth from './auth/authUser';
 
 function App() {
-  const [mode, setMode] = useState("HOME");
+  const [mode, setMode] = useState('HOME');
   //sample database inside useState array; sets value to panels
   const [panels, setPanels] = useState([]);
   /*
@@ -30,35 +30,35 @@ function App() {
 */
 
   useEffect(() => {
-    db.collection("panels").onSnapshot((snapshot) => {
+    db.collection('panels').onSnapshot((snapshot) => {
       //every time onSnapshot fires from a change in 'panels' (collection name in firebase), do this only
       setPanels(
         snapshot.docs.map((doc) => ({
           id: doc.id,
-          panel: doc.data(),
+          panel: doc.data()
         }))
       );
     });
   }, []);
 
   return (
-    <div className="App">
+    <div className='App'>
       <Headroom>
-        <div className="header">
+        <div className='header'>
           <Navbar setMode={setMode} />
         </div>
       </Headroom>
-      {mode === "NEWCANVAS" && (
+      {mode === 'NEWCANVAS' && (
         <div>
           <Workarea />
         </div>
       )}
-      {mode === "HOME" && (
+      {mode === 'HOME' && (
         <div>
           <Landcard />
         </div>
       )}
-      <Row title="Suggested Canvi" fetchUrl={requests.fetchTrending} />
+      <Row title='Suggested Canvi' fetchUrl={requests.fetchTrending} />
 
       {/* {panels.map((panel) => ( */}
       <div>
@@ -72,6 +72,7 @@ function App() {
             music_id={panel.music_id}
             media={panel.media}
             mediaBox={panel.mediaBox}
+            mediaCounter={panel.mediaCounter}
             time={panel.timestamp}
           />
         ))}
