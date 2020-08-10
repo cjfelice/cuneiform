@@ -1,14 +1,9 @@
 import React, { useState, useEffect, Fragment } from 'react';
-
-import MediaStorage from './MediaStorage';
-import Cards from './Cards';
-
 import firebase from 'firebase';
 
-import Comments from './Comments';
-import Canvas from '../Canvas';
-import PanelsHeader from './PanelsHeader';
 import PanelMedia from './PanelMedia';
+import PanelsHeader from './PanelsHeader';
+import Comments from './Comments';
 import Row from '../Row';
 
 import './Panels.scss';
@@ -18,41 +13,19 @@ import {
   CardContent,
   GridList,
   GridListTile,
-  Container
+  CardActions,
+  Collapse,
+  IconButton,
+  Paper
 } from '@material-ui/core';
+
 import { makeStyles, StylesProvider } from '@material-ui/core/styles';
 import clsx from 'clsx';
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
 
-import CardActions from '@material-ui/core/CardActions';
-import Collapse from '@material-ui/core/Collapse';
-import Avatar from '@material-ui/core/Avatar';
-import IconButton from '@material-ui/core/IconButton';
-import Divider from '@material-ui/core/Divider';
-import Typography from '@material-ui/core/Typography';
-import {
-  red,
-  blue,
-  white,
-  grey,
-  purple,
-  blueGrey
-} from '@material-ui/core/colors';
+import { red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
-
-import GridListTileBar from '@material-ui/core/GridListTileBar';
-
-import StarBorderIcon from '@material-ui/icons/StarBorder';
-
-import Box from '@material-ui/core/Box';
 
 import TextInfoContent from '@mui-treasury/components/content/textInfo';
 import { useN01TextInfoContentStyles } from '@mui-treasury/styles/textInfoContent/n01';
@@ -62,7 +35,6 @@ function Panels(props) {
   const {
     title,
     description,
-    music_id,
     time,
     media,
     mediaBox,
@@ -206,9 +178,9 @@ function Panels(props) {
           <GridListTile rows={1} cols={1}>
             <Collapse in={expanded} timeout='auto' unmountOnExit>
               {!user ? (
-                <h3>Sign In to Join Us!</h3>
+                <h6>Sign In to Join Us!</h6>
               ) : (
-                <Comments username={username} panel_id={panel_id} />
+                <Comments username={username} panel_id={panel_id} key={id} />
               )}
             </Collapse>
           </GridListTile>

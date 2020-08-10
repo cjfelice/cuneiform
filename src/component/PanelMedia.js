@@ -8,19 +8,9 @@ import '../Workspace.scss';
 
 import ReactPlayer from 'react-player';
 
-import AddIcon from '@material-ui/icons/Add';
 import { makeStyles } from '@material-ui/core/styles';
-import Box from '@material-ui/core/Box';
-
-import { red, grey, purple, blueGrey } from '@material-ui/core/colors';
-
-import {
-  GridList,
-  GridListTile,
-  Container,
-  Grid,
-  CardContent
-} from '@material-ui/core';
+import { red } from '@material-ui/core/colors';
+import { GridList, GridListTile, Box } from '@material-ui/core';
 
 function PanelMedia(props) {
   const {

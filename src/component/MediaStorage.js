@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 import firebase from 'firebase';
 import { db, storage } from '../config/firebase';
+import './MediaStorage.css';
 
 import Title from '../Title';
 import { makeStyles } from '@material-ui/core/styles';
@@ -10,6 +11,7 @@ import { Button, Input } from '@material-ui/core';
 
 // NOT WORKING YET, HAVE TO CHANGE SOME PROPS AND OR VALUES
 function MediaStorage(props) {
+  const user = firebase.auth().currentUser;
   const { username, panel_id } = props;
 
   const [title, setTitle] = useState('');
@@ -18,21 +20,6 @@ function MediaStorage(props) {
   const [url, setUrl] = useState('');
   const [open, setOpen] = useState(false);
   const [modalStyle] = useState(getModalStyle);
-
-  const user = firebase.auth().currentUser;
-  console.log(user);
-  if (user) {
-    // User is signed in.
-  } else {
-    // No user is signed in.
-  }
-
-  console.log(user);
-  if (user) {
-    // User is signed in.
-  } else {
-    // No user is signed in.
-  }
 
   function getModalStyle() {
     const top = 50;
@@ -162,12 +149,7 @@ export default MediaStorage;
 /> 
 }
 
-/* CONDITION STATEMENT THAT MAY BE USED FOR ALLOWING EDITING/COMMENTING/LIKING
-{
-  user ? <MediaStorage username={username} /> : <h3>Please Login to Upload</h3>;
-}
-*/
-
+/
 /* <input
   <input type='file' onChange={handleChange} />
   type='text'

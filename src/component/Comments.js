@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect, forwardRef } from 'react';
 
 import firebase from 'firebase';
 import { db } from '../config/firebase';
@@ -17,17 +17,11 @@ import Divider from '@material-ui/core/Divider';
 import TextInfoContent from '@mui-treasury/components/content/textInfo';
 import { useN01TextInfoContentStyles } from '@mui-treasury/styles/textInfoContent/n01';
 import { CardActionArea } from '@material-ui/core';
+import FlipMove from 'react-flip-move';
 
-function Comments(props) {
+const Comments = forwardRef((props, ref) => {
   const user = firebase.auth().currentUser;
-
   const [modalStyle] = useState(getModalStyle);
-  console.log(user);
-  if (user) {
-    // User is signed in.
-  } else {
-    // No user is signed in.
-  }
 
   function getModalStyle() {
     const top = 50;
@@ -89,9 +83,10 @@ function Comments(props) {
 
   return (
     <>
-      <CardContent>
+      <CardContent ref={ref}>
+        <MediaStorage />
         <Divider />
-        <form>
+        <form className='comments__form'>
           <input
             type='text'
             placeholder='Add comment'
@@ -106,7 +101,7 @@ function Comments(props) {
       </CardContent>
 
       <CardContent>
-        <Typography>
+        <FlipMove>
           {comments.map((comment) => (
             <>
               <Divider />
@@ -118,58 +113,10 @@ function Comments(props) {
               />
             </>
           ))}
-        </Typography>
+        </FlipMove>
       </CardContent>
     </>
   );
-}
+});
 
 export default Comments;
-
-/*
-
-   <div>
-      <div className='panels'>
-        <div className='panels_header'>
-          <h1 className='panels_title'>{title}</h1>
-
-          <h1 className='panels_user'>{username}</h1>
-        </div>
-        <div className='panels_canvis'>
-          {media.map((item) => {
-            return <img className='panels_media' src={item.mediaUrl} alt='' />;
-          })}
-        </div>
-
-        <h4 className='panels_user'>{description}</h4>
-         h1 and h4 tags are only placeholders here 
-        <form>
-          <Typography paragraph>
-            <TextareaAutosize
-              aria-label='empty textarea'
-              placeholder='Add comment'
-              value={remark}
-              onChange={(e) => setRemark(e.target.value)}
-            />
-          </Typography>
-          <IconButton className='panel__remarkButton'>
-            <AddIcon disabled={!remark} type='submit' onClick={saveRemark}>
-              Add
-            </AddIcon>
-          </IconButton>
-        </form>
-        <div>
-          {comments.map((comment) => (
-            <>
-              <b>{comment.username}</b>
-              <Typography variant='body2' color='textSecondary' component='p'>
-                {comment.remark}
-              </Typography>
-            </>
-          ))}
-        </div>
-      </div>
-    </div >
-
-          
-           */
