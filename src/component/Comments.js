@@ -5,6 +5,8 @@ import { db } from '../config/firebase';
 
 import MediaStorage from './MediaStorage';
 
+import { makeStyles } from '@material-ui/core/styles';
+
 // import Comments from './Comments';
 import './Panels.scss';
 
@@ -18,11 +20,23 @@ import { CardActionArea } from '@material-ui/core';
 
 function Comments(props) {
   const user = firebase.auth().currentUser;
+
+  const [modalStyle] = useState(getModalStyle);
   console.log(user);
   if (user) {
     // User is signed in.
   } else {
     // No user is signed in.
+  }
+
+  function getModalStyle() {
+    const top = 50;
+    const left = 50;
+    return {
+      top: `${top}%`,
+      left: `${left}%`,
+      transform: `translate(-${top}%, -${left}%)`
+    };
   }
 
   const { panel_id } = props;
@@ -92,7 +106,6 @@ function Comments(props) {
       </CardContent>
 
       <CardContent>
-        <MediaStorage />
         <Typography>
           {comments.map((comment) => (
             <>
@@ -103,12 +116,6 @@ function Comments(props) {
                 heading={comment.username}
                 body={comment.remark}
               />
-
-              {/* <b>{comment.username}</b>
-              <Typography variant='body2' color='textSecondary' component='p'>
-                {comment.remark}
-                <p>{dateConversion(comment.timestamp)}</p>
-              </Typography> */}
             </>
           ))}
         </Typography>

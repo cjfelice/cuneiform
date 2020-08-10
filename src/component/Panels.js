@@ -30,6 +30,7 @@ import CardActions from '@material-ui/core/CardActions';
 import Collapse from '@material-ui/core/Collapse';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
+import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import {
   red,
@@ -142,6 +143,8 @@ function Panels(props) {
   return (
     <GridListTile className='panels'>
       <Paper>
+        <MediaStorage username={user.displayName} panel_id={panel_id} />
+
         <GridList
           cellHeight='auto'
           rows={12}
