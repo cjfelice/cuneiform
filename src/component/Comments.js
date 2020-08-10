@@ -42,6 +42,7 @@ function Comments(props) {
         .collection('panels') //reference to firebase collection name
         .doc(panel_id) //the panel id in firebase
         .collection('comments') //the comments section (collection in firebase speak) in the panels collection
+        .orderBy('timestamp', 'desc')
         .onSnapshot((snapshot) => {
           //everytime there is a change in the db, setComments state to the values mapped back locally
           setComments(snapshot.docs.map((doc) => doc.data()));

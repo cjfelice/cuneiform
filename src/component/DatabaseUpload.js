@@ -12,7 +12,7 @@ import { Button, Input, Modal } from '@material-ui/core';
 import { saveMedia } from '../Canvas';
 
 function DatabaseUpload(props) {
-  const { media, music_id } = props;
+  const { media, music_id, likes } = props;
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
