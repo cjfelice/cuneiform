@@ -84,7 +84,6 @@ const Comments = forwardRef((props, ref) => {
   return (
     <>
       <CardContent ref={ref}>
-        <MediaStorage />
         <Divider />
         <form className='comments__form'>
           <input

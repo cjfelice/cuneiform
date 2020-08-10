@@ -2,15 +2,6 @@
   margin: 0;
 }
 
-// .Card {
-//   max-width: 345px;
-//   max-height: 442.15;
-//   border: 2px solid black;
-//   transition: transform 450ms;
-//   background-color: #424242;
-//   color: #424242;
-// }
-
 .panels {
   max-width: 335px;
   max-height: 442.15;
@@ -19,9 +10,10 @@
   margin-bottom: 45px;
   margin-right: 10px;
 
-  border-radius: 35px;
   box-sizing: border-box;
   padding: 20px;
+  background-color: #7699b3;
+  background-image: url('https://www.transparenttextures.com/patterns/clean-gray-paper.png');
 }
 
 .panels_canvis {
@@ -38,20 +30,14 @@
   transition: transform 450ms;
 }
 
-.panels_header {
-  display: flex;
-  align-items: center;
-  padding: 20px;
-}
-
-.panels_title {
-  padding: 20px;
-}
 .panels_user {
-  margin-right: 20px;
+  display: flex;
+  padding: 0 60px, 0, 30px;
+  background-color: #7699b3;
+  background-image: url('https://www.transparenttextures.com/patterns/clean-gray-paper.png');
 }
 
-.panels_canvis::-webkit-scrollbar {
+.panels_user::-webkit-scrollbar {
   display: none;
 }
 
@@ -63,12 +49,8 @@
   transition: transform 450ms;
 }
 
-// .panels_media:hover {
-//   transform: scale(1.5);
-//   opacity: 1;
-// }
-.panels:hover {
-  transform: scale(1);
+.panels_user:hover {
+  transform: scale(1.2);
   opacity: 1;
 }
 
@@ -80,15 +62,7 @@
   flex: 0;
 }
 
-.row_canvi {
-  object-fit: contain;
-  width: 100%;
-  max-height: 250px;
-  margin-right: 10px;
-  transition: transform 450ms;
-}
-
-.row_canvi:hover {
-  transform: scale(1.09);
-  opacity: 1;
+Grid {
+  color: #7699b3;
+  background-image: url('https://www.transparenttextures.com/patterns/clean-gray-paper.png');
 }
