@@ -18,6 +18,10 @@ $texture: url("https://www.transparenttextures.com/patterns/cardboard.png");
   padding: 1px;
 }
 
+.egClass:focus {
+  outline: none !important;
+}
+
 .workspace-two {
   max-height: 325px;
   width: 400em;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.scss";
 import IconButton from "@material-ui/core/Button";
 import ImageIcon from "@material-ui/icons/Image";
@@ -23,6 +23,12 @@ const Mediaform = (props) => {
   const handleClickOpen = () => {
     setOpen(true);
   };
+
+  useEffect(() => {
+    if (type === "TEXT") {
+      props.setMode(type);
+    }
+  }, [type]);
 
   const handleClose = () => {
     setOpen(false);
@@ -70,7 +76,6 @@ const Mediaform = (props) => {
         color="primary"
         aria-label="text"
         onClick={() => {
-          handleClickOpen();
           setType("TEXT");
         }}
       >
@@ -108,11 +113,6 @@ const Mediaform = (props) => {
             <DialogContentText>
               You can add audio from anywhere on the internet. Just copy and
               paste the audio source url.
-            </DialogContentText>
-          )}
-          {type === "TEXT" && (
-            <DialogContentText>
-              Add some text to your Canvas. Give it a try, type something below.
             </DialogContentText>
           )}
           <TextField

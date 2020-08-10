@@ -9,6 +9,7 @@ import requests from "./requests";
 import "./App.scss";
 import Landcard from "./Landcard";
 import Workarea from "./Workarea";
+import PresentCanvas from "./PresentCanvas";
 import ImageRow from "./ImageRow";
 
 //Component files
@@ -24,6 +25,10 @@ function App() {
   const [mode, setMode] = useState("HOME");
   //sample database inside useState array; sets value to panels
   const [panels, setPanels] = useState([]);
+  const [media, setMedia] = useState();
+  const [mediaBox, setMediaBox] = useState();
+  const [openModal, setOpenModal] = useState(false);
+
   /*
   - for the time being, panels and cards will be used interchangeably; cards use material ui, panels were created initially for setup and testing. can now use the functional elements of panels and apply them to cards.
   - hardcoded data set is in dummyData.js if required
@@ -40,6 +45,12 @@ function App() {
       );
     });
   }, []);
+
+  const createModal = (media, mediaBox) => {
+    setMedia(media);
+    setMediaBox(mediaBox);
+    setOpenModal(true);
+  };
 
   return (
     <div className="App">
@@ -58,6 +69,12 @@ function App() {
           <Landcard />
         </div>
       )}
+      <PresentCanvas
+        media={media}
+        mediaBox={mediaBox}
+        openModal={openModal}
+        closeModal={setOpenModal}
+      />
       <Row title="Suggested Canvi" fetchUrl={requests.fetchTrending} />
 
       {/* {panels.map((panel) => ( */}
@@ -73,6 +90,7 @@ function App() {
             media={panel.media}
             mediaBox={panel.mediaBox}
             time={panel.timestamp}
+            createModal={createModal}
           />
         ))}
       </div>

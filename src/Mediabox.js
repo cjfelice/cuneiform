@@ -5,6 +5,7 @@ import ReactPlayer from "react-player";
 import Image from "./Image";
 import Video from "./Video";
 import Audio from "./Audio";
+import Text from "./Text";
 import IconButton from "@material-ui/core/Button";
 import ImageIcon from "@material-ui/icons/Image";
 import VideoCallIcon from "@material-ui/icons/VideoCall";
@@ -53,7 +54,13 @@ function Mediabox(props) {
       {mode === "IMAGE" && <Image content={content} />}
       {mode === "VIDEO" && <Video content={content} />}
       {mode === "AUDIO" && <Audio content={content} />}
-      {mode === "TEXT" && <div>{content}</div>}
+      {mode === "TEXT" && (
+        <Text
+          content={content}
+          boxID={props.boxID}
+          createObject={props.createObject}
+        />
+      )}
     </React.Fragment>
   );
 }
