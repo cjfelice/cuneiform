@@ -11,6 +11,8 @@ import Landcard from './Landcard';
 import Workarea from './Workarea';
 import ImageRow from './ImageRow';
 
+import Box from '@material-ui/core/Box';
+
 //Component files
 import Panels from './component/Panels';
 import './component/Panels.scss';
@@ -19,6 +21,7 @@ import { db } from './config/firebase';
 import Cards from './component/Cards';
 // import MediaStorage from './component/doNotUse/MediaStorage';
 import UserAuth from './auth/authUser';
+import { GridList } from '@material-ui/core';
 
 function App() {
   const [mode, setMode] = useState('HOME');
@@ -61,7 +64,8 @@ function App() {
       <Row title='Suggested Canvi' fetchUrl={requests.fetchTrending} />
 
       {/* {panels.map((panel) => ( */}
-      <div>
+
+      <GridList className='row'>
         {panels.map(({ id, panel }) => (
           <Panels
             key={id}
@@ -76,7 +80,8 @@ function App() {
             time={panel.timestamp}
           />
         ))}
-      </div>
+      </GridList>
+
       <Cards />
       <Cards />
       <Cards />

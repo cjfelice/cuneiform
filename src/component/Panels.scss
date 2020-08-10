@@ -24,13 +24,6 @@
   padding: 20px;
 }
 
-// .CardMedia {
-//   display: flex;
-//   overflow-y: hidden;
-//   overflow-x: scroll;
-
-//   padding: 20px;
-// }
 .panels_canvis {
   display: flex;
   overflow-y: hidden;
@@ -38,7 +31,7 @@
 }
 .panels_canvi {
   object-fit: contain;
-  width: 100%;
+  min-width: 345px;
   height: 100%;
   // max-height: 30%;
   margin: 0;

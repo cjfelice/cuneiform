@@ -8,6 +8,7 @@ import Comments from './Comments';
 import Canvas from '../Canvas';
 import PanelsHeader from './PanelsHeader';
 import PanelMedia from './PanelMedia';
+import Row from '../Row';
 
 import './Panels.scss';
 import '../Workspace.scss';
@@ -127,75 +128,74 @@ function Panels(props) {
     setExpanded(!expanded);
   };
 
-  console.log('\n\nmedia:>>', media);
-  console.log('\n\nmediaBox:>>', mediaBox);
-
   return (
-    <Paper className={(classes.paper, classes.root)}>
-      <GridList
-        cellHeight='auto'
-        rows={12}
-        cols={1}
-        className={classes.gridlist}
-      >
-        <GridListTile rows={2} cols={1}>
-          <PanelsHeader username={username} title={title} time={time} />
-        </GridListTile>
+    <GridListTile className='panels'>
+      <Paper>
+        <GridList
+          cellHeight='auto'
+          rows={12}
+          cols={1}
+          className={classes.gridlist}
+        >
+          <GridListTile rows={2} cols={1}>
+            <PanelsHeader username={username} title={title} time={time} />
+          </GridListTile>
 
-        <GridListTile rows={4} cols={1}>
-          <PanelMedia
-            media={media}
-            mediaBox={mediaBox}
-            mediaCounter={mediaCounter}
-          />
-        </GridListTile>
+          <GridListTile rows={4} cols={1}>
+            <PanelMedia
+              media={media}
+              mediaBox={mediaBox}
+              mediaCounter={mediaCounter}
+            />
+          </GridListTile>
 
-        <GridListTile rows={3} cols={1}>
-          <Typography variant='body2' color='textPrimary' component='p'>
-            {description}
-          </Typography>
-        </GridListTile>
+          <GridListTile rows={3} cols={1}>
+            <Typography variant='body2' color='textPrimary' component='p'>
+              {description}
+            </Typography>
+          </GridListTile>
 
-        <GridListTile rows={2} cols={1}>
-          <CardActions disableSpacing>
-            {like ? (
+          <GridListTile rows={2} cols={1}>
+            <CardActions disableSpacing>
+              {like ? (
+                <IconButton
+                  aria-label='add to favorites'
+                  onClick={(e) => setLike(false)}
+                >
+                  <FavoriteIcon />
+                </IconButton>
+              ) : (
+                <IconButton
+                  aria-label='add to favorites'
+                  onClick={(e) => setLike(true)}
+                >
+                  <FavoriteBorderIcon className={classes.like} />
+                </IconButton>
+              )}
+
               <IconButton
-                aria-label='add to favorites'
-                onClick={(e) => setLike(false)}
+                className={clsx(classes.expand, {
+                  [classes.expandOpen]: expanded
+                })}
+                onClick={handleExpandClick}
+                aria-expanded={expanded}
+                aria-label='show more'
               >
-                <FavoriteIcon />
+                <ExpandMoreIcon />
               </IconButton>
-            ) : (
-              <IconButton
-                aria-label='add to favorites'
-                onClick={(e) => setLike(true)}
-              >
-                <FavoriteBorderIcon className={classes.like} />
-              </IconButton>
-            )}
+            </CardActions>
+          </GridListTile>
 
-            <IconButton
-              className={clsx(classes.expand, {
-                [classes.expandOpen]: expanded
-              })}
-              onClick={handleExpandClick}
-              aria-expanded={expanded}
-              aria-label='show more'
-            >
-              <ExpandMoreIcon />
-            </IconButton>
-          </CardActions>
-        </GridListTile>
+          <GridListTile rows={1} cols={1}>
+            <Collapse in={expanded} timeout='auto' unmountOnExit>
+              <Comments username={username} panel_id={panel_id} />
+            </Collapse>
+          </GridListTile>
 
-        <GridListTile rows={1} cols={1}>
-          <Collapse in={expanded} timeout='auto' unmountOnExit>
-            <Comments username={username} panel_id={panel_id} />
-          </Collapse>
-        </GridListTile>
-
-        {/* </Card> */}
-      </GridList>
-    </Paper>
+          {/* </Card> */}
+        </GridList>
+      </Paper>
+    </GridListTile>
   );
 }
 

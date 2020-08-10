@@ -11,7 +11,7 @@
 
 .row_canvi {
   object-fit: contain;
-  width: 100%;
+  min-width: 345px;
   max-height: 250px;
   margin-right: 10px;
   transition: transform 450ms;

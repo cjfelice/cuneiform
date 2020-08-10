@@ -5,9 +5,6 @@ import Video from '../Video';
 
 import './Panels.scss';
 import '../Workspace.scss';
-import firebase from 'firebase';
-
-import { db } from '../config/firebase';
 
 import ReactPlayer from 'react-player';
 
@@ -41,8 +38,12 @@ function PanelMedia(props) {
 
   const useStyles = makeStyles((theme) => ({
     root: {
-      maxWidth: 345,
-      maxHeight: '30%'
+      // maxWidth: 345,
+      // maxHeight: '30%',
+      display: 'flex',
+      flexWrap: 'wrap',
+      justifyContent: 'space-around',
+      overflow: 'hidden'
     },
     media: {
       // height: 0,
@@ -66,6 +67,13 @@ function PanelMedia(props) {
     },
     like: {
       color: red[500]
+    },
+    gridList: {
+      width: 500,
+      height: 350,
+
+      transform: 'translateZ(0)',
+      backgroundColor: '#424242'
     }
   }));
 
@@ -77,22 +85,38 @@ function PanelMedia(props) {
     setExpanded(!expanded);
   };
 
-  console.log('\n\nmedia:>>', media);
-  console.log('\n\nmediaBox:>>', mediaBox);
-
-  console.log(mediaCounter);
+  //set the height of each cell in grid list
+  let cell = 175;
 
   return (
     <Box className={classes.root}>
-      <GridList cols={20} rows={31} cellHeight={10} className={classes.media}>
+      <GridList cellHeight='auto' spacing={0} className={classes.gridList}>
         {media.map(({ mediaUrl, mediaType, mediaBox_id, length }) =>
           mediaBox.map(({ i, h, w, x, y }) => {
             if (mediaBox_id === i) {
-              // let width = Math.floor((w / 20) * 100);
+              let width = Math.floor((w / 20) * 12);
               // let height = Math.floor((h / 31) * 100);
 
+              let wide = w > h * 1.1 ? 2 : 1;
+              let height = h > w ? 2 : 1;
+
+              if (mediaCounter % 2 !== 0) {
+                wide = 2;
+                height = 2;
+              }
+
+              if (mediaCounter === 1) {
+                width = 12;
+                wide = 2;
+              }
+
               return (
-                <GridListTile key={mediaBox_id} cols={w} rows={h}>
+                <GridListTile
+                  key={mediaBox_id}
+                  xs={width}
+                  cols={wide}
+                  rows={height}
+                >
                   {mediaType === 'TEXT' && <div>{mediaUrl}</div>}
                   {mediaType === 'VIDEO' && <Video content={mediaUrl} />}
 
@@ -122,3 +146,7 @@ function PanelMedia(props) {
 }
 
 export default PanelMedia;
+
+{
+  /* <GridListTile key={mediaBox_id} cols={w} rows={h}></GridListTile> */
+}
