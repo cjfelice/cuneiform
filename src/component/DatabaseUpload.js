@@ -54,6 +54,7 @@ function DatabaseUpload(props) {
       description: description,
       music_id: ''
     });
+    setOpen(false);
   };
   console.log('\n\nsaveMedia:>>', saveMedia);
 
