@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 
 import firebase from 'firebase';
 import { db } from '../config/firebase';
-import { currentUser } from '../auth/authUser';
 
 import Title from '../Title';
 
@@ -17,7 +16,7 @@ function DatabaseUpload(props) {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
 
-  console.log(saveMedia);
+  const user = firebase.auth().currentUser;
 
   function getModalStyle() {
     const top = 50;
@@ -50,7 +49,7 @@ function DatabaseUpload(props) {
       mediaBox: [...saveMedia[0].items],
       mediaCounter: saveMedia[0].newCounter,
       media: [...saveMedia[1]],
-      username: currentUser,
+      username: user.displayName,
       description: description,
       music_id: ''
     });

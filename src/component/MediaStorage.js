@@ -13,6 +13,14 @@ function MediaStorage(props) {
   const [media, setMedia] = useState('');
   const [url, setUrl] = useState('');
 
+  const user = firebase.auth().currentUser;
+  console.log(user);
+  if (user) {
+    // User is signed in.
+  } else {
+    // No user is signed in.
+  }
+
   const handleChange = (e) => {
     if (e.target.files[0]) {
       setMedia(e.target.files[0]);
@@ -20,7 +28,7 @@ function MediaStorage(props) {
   };
 
   const handleUpload = () => {
-    //panels/{median.name} is the filename upload to the panels folder in firebase storage
+    //panels/{media.name} is the filename upload to the panels folder in firebase storage
     const uploadTask = storage.ref(`panels/${media.name}`).put(media);
     uploadTask.on(
       'state_changed',
@@ -43,7 +51,7 @@ function MediaStorage(props) {
               timestamp: firebase.firestore.FieldValue.serverTimestamp(),
               // title: title,
               media: [{ mediaUrl: url }],
-              username: username
+              username: user.displayName
             });
             setProgress(0);
             setTitle('');
@@ -55,7 +63,6 @@ function MediaStorage(props) {
 
   return (
     <>
-      {/* NEED TO WRAP INPUT AND BUTTON ELEMENTS IN FORM ELEMENT */}
       <Modal>
         <div>
           <progress value={progress} max='100' />

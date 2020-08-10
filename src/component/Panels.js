@@ -2,7 +2,8 @@ import React, { useState, useEffect, Fragment } from 'react';
 
 import MediaStorage from './MediaStorage';
 import Cards from './Cards';
-import UserAuth, { currentUser } from '../auth/authUser';
+
+import firebase from 'firebase';
 
 import Comments from './Comments';
 import Canvas from '../Canvas';
@@ -51,7 +52,9 @@ import GridListTileBar from '@material-ui/core/GridListTileBar';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 
 import Box from '@material-ui/core/Box';
+
 import TextInfoContent from '@mui-treasury/components/content/textInfo';
+import { useN01TextInfoContentStyles } from '@mui-treasury/styles/textInfoContent/n01';
 
 function Panels(props) {
   // title = name
@@ -67,6 +70,14 @@ function Panels(props) {
     username,
     id
   } = props;
+
+  const user = firebase.auth().currentUser;
+  console.log(user);
+  if (user) {
+    // User is signed in.
+  } else {
+    // No user is signed in.
+  }
 
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -150,9 +161,14 @@ function Panels(props) {
           </GridListTile>
 
           <GridListTile rows={3} cols={1}>
-            <Typography variant='body2' color='textPrimary' component='p'>
-              {description}
-            </Typography>
+            <CardContent>
+              <TextInfoContent
+                useStyles={useN01TextInfoContentStyles}
+                overline={''}
+                heading={title}
+                body={description}
+              />
+            </CardContent>
           </GridListTile>
 
           <GridListTile rows={2} cols={1}>
@@ -191,8 +207,6 @@ function Panels(props) {
               <Comments username={username} panel_id={panel_id} />
             </Collapse>
           </GridListTile>
-
-          {/* </Card> */}
         </GridList>
       </Paper>
     </GridListTile>

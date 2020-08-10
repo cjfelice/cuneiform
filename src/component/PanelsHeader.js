@@ -40,7 +40,7 @@ function PanelsHeader(props) {
             <MoreVertIcon />
           </IconButton>
         }
-        title={title}
+        title={username}
         subheader={dateConversion(time)}
       />
     </>

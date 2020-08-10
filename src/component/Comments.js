@@ -4,7 +4,6 @@ import firebase from 'firebase';
 import { db } from '../config/firebase';
 
 import MediaStorage from './MediaStorage';
-import UserAuth, { currentUser } from '../auth/authUser';
 
 // import Comments from './Comments';
 import './Panels.scss';
@@ -13,8 +12,20 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 
+import TextInfoContent from '@mui-treasury/components/content/textInfo';
+import { useN01TextInfoContentStyles } from '@mui-treasury/styles/textInfoContent/n01';
+import { CardActionArea } from '@material-ui/core';
+
 function Comments(props) {
-  const { username, panel_id } = props;
+  const user = firebase.auth().currentUser;
+  console.log(user);
+  if (user) {
+    // User is signed in.
+  } else {
+    // No user is signed in.
+  }
+
+  const { panel_id } = props;
   // comments state
   const [comments, setComments] = useState([]);
   const [remark, setRemark] = useState('');
@@ -29,7 +40,7 @@ function Comments(props) {
     event.preventDefault();
     db.collection('panels').doc(panel_id).collection('comments').add({
       remark: remark,
-      username: username,
+      username: user.displayName,
       timestamp: firebase.firestore.FieldValue.serverTimestamp()
     });
     setRemark('');
@@ -81,15 +92,23 @@ function Comments(props) {
       </CardContent>
 
       <CardContent>
+        <MediaStorage />
         <Typography>
           {comments.map((comment) => (
             <>
               <Divider />
-              <b>{comment.username}</b>
+              <TextInfoContent
+                useStyles={useN01TextInfoContentStyles}
+                overline={dateConversion(comment.timestamp)}
+                heading={comment.username}
+                body={comment.remark}
+              />
+
+              {/* <b>{comment.username}</b>
               <Typography variant='body2' color='textSecondary' component='p'>
                 {comment.remark}
                 <p>{dateConversion(comment.timestamp)}</p>
-              </Typography>
+              </Typography> */}
             </>
           ))}
         </Typography>
