@@ -143,8 +143,6 @@ function Panels(props) {
   return (
     <GridListTile className='panels'>
       <Paper>
-        <MediaStorage username={user.displayName} panel_id={panel_id} />
-
         <GridList
           cellHeight='auto'
           rows={12}
@@ -207,7 +205,11 @@ function Panels(props) {
 
           <GridListTile rows={1} cols={1}>
             <Collapse in={expanded} timeout='auto' unmountOnExit>
-              <Comments username={username} panel_id={panel_id} />
+              {!user ? (
+                <h3>Sign In to Join Us!</h3>
+              ) : (
+                <Comments username={username} panel_id={panel_id} />
+              )}
             </Collapse>
           </GridListTile>
         </GridList>

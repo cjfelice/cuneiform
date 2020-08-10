@@ -1,40 +1,34 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import Headroom from 'react-headroom';
-import './App.scss';
-import Row from './Row';
-import Workspace from './Workspace';
-import Navbar from './Navbar';
-import Title from './Title';
-import requests from './requests';
-import './App.scss';
-import Landcard from './Landcard';
-import Workarea from './Workarea';
-import ImageRow from './ImageRow';
 
-import Box from '@material-ui/core/Box';
+import { db } from './config/firebase';
 
 //Component files
 import Panels from './component/Panels';
+import MediaStorage from './component/MediaStorage';
+import UserAuth from './auth/authUser';
+import Navbar from './Navbar';
+import Row from './Row';
+import Workspace from './Workspace';
+import requests from './requests';
+import Workarea from './Workarea';
+import Landcard from './Landcard';
+import Title from './Title';
+import ImageRow from './ImageRow';
+
+import './App.scss';
 import './component/Panels.scss';
-import { db } from './config/firebase';
 
 import Cards from './component/Cards';
-// import MediaStorage from './component/doNotUse/MediaStorage';
-import UserAuth from './auth/authUser';
-import { GridList } from '@material-ui/core';
+import { GridList, Box } from '@material-ui/core';
 
 function App() {
   const [mode, setMode] = useState('HOME');
-  //sample database inside useState array; sets value to panels
+
   const [panels, setPanels] = useState([]);
-  /*
-  - for the time being, panels and cards will be used interchangeably; cards use material ui, panels were created initially for setup and testing. can now use the functional elements of panels and apply them to cards.
-  - hardcoded data set is in dummyData.js if required
-*/
 
   useEffect(() => {
     db.collection('panels').onSnapshot((snapshot) => {
-      //every time onSnapshot fires from a change in 'panels' (collection name in firebase), do this only
       setPanels(
         snapshot.docs.map((doc) => ({
           id: doc.id,
@@ -63,8 +57,6 @@ function App() {
       )}
       <Row title='Suggested Canvi' fetchUrl={requests.fetchTrending} />
 
-      {/* {panels.map((panel) => ( */}
-
       <GridList className='row'>
         {panels.map(({ id, panel }) => (
           <Panels
@@ -81,10 +73,6 @@ function App() {
           />
         ))}
       </GridList>
-
-      <Cards />
-      <Cards />
-      <Cards />
     </div>
   );
 }

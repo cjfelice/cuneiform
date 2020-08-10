@@ -126,7 +126,7 @@ function MediaStorage(props) {
 }
 export default MediaStorage;
 
-/* <Modal open={open} onClose={() => setOpen(false)}>
+/*
         <div style={modalStyle} className={classes.paper}>
           <form className='chimera__signup'>
             <Title text='chiMera' />
