@@ -1,62 +1,84 @@
 import React, { useState, useEffect, Fragment } from "react";
+import firebase from "firebase";
 
-import MediaStorage from "./MediaStorage";
-import Cards from "./Cards";
-import UserAuth, { currentUser } from "../auth/authUser";
-
-import Comments from "./Comments";
-import Canvas from "../Canvas";
-import PanelsHeader from "./PanelsHeader";
 import PanelMedia from "./PanelMedia";
+import PanelsHeader from "./PanelsHeader";
+import Comments from "./Comments";
+import Row from "../Row";
 
 import "./Panels.scss";
 import "../Workspace.scss";
 
-import { makeStyles } from "@material-ui/core/styles";
-import clsx from "clsx";
-import Card from "@material-ui/core/Card";
-import CardHeader from "@material-ui/core/CardHeader";
-import CardMedia from "@material-ui/core/CardMedia";
-import CardContent from "@material-ui/core/CardContent";
-import CardActions from "@material-ui/core/CardActions";
-import Collapse from "@material-ui/core/Collapse";
-import Avatar from "@material-ui/core/Avatar";
-import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
-import { red, grey, purple, blueGrey } from "@material-ui/core/colors";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import FavoriteBorderIcon from "@material-ui/icons/Favorite";
-import ShareIcon from "@material-ui/icons/Share";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
+import {
+  CardContent,
+  GridList,
+  Card,
+  CardMedia,
+  CardHeader,
+  Avatar,
+  GridListTile,
+  Button,
+  Menu,
+  CardActions,
+  Collapse,
+  MenuItem,
+  IconButton,
+  Typography,
+  Paper,
+} from "@material-ui/core";
 
-import Box from "@material-ui/core/Box";
+import { makeStyles, StylesProvider } from "@material-ui/core/styles";
+import clsx from "clsx";
+
+import { red } from "@material-ui/core/colors";
+import FavoriteIcon from "@material-ui/icons/Favorite";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
+import ShareIcon from "@material-ui/icons/Share";
+import FavoriteBorderIcon from "@material-ui/icons/Favorite";
+import CommentIcon from "@material-ui/icons/Comment";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import VisibilityIcon from "@material-ui/icons/Visibility";
+
 import TextInfoContent from "@mui-treasury/components/content/textInfo";
+import { useN01TextInfoContentStyles } from "@mui-treasury/styles/textInfoContent/n01";
 
 function Panels(props) {
   // title = name
   const {
     title,
     description,
-    music_id,
     time,
     media,
     mediaBox,
+    mediaCounter,
     panel_id,
     username,
     id,
   } = props;
+
+  const user = firebase.auth().currentUser;
+  console.log(user);
+  if (user) {
+    // User is signed in.
+  } else {
+    // No user is signed in.
+  }
+
   const useStyles = makeStyles((theme) => ({
     root: {
       minWidth: 345,
-      maxWidth: 345,
-      minHeight: 442,
-      maxHeight: 442,
-      color: blueGrey[700],
+      // maxHeight: 442,
+      // minHeight: 442,
+      // color: "#fff",
+      // padding: "10",
+      backgroundColor: "#ffffff",
+      backgroundImage: `url("https://www.transparenttextures.com/patterns/beige-paper.png")`,
     },
     media: {
-      height: 0,
-      paddingTop: "56.25%",
+      height: 250,
+      width: "100%",
+      maxHeight: 250,
+      objectFit: "cover",
     },
     expand: {
       transform: "rotate(0deg)",
@@ -68,85 +90,192 @@ function Panels(props) {
     expandOpen: {
       transform: "rotate(180deg)",
     },
+    avatar: {
+      backgroundColor: red[500],
+    },
     like: {
       color: red[500],
+    },
+    root_grid: {
+      flexGrow: 1,
+    },
+    paper: {
+      color: theme.palette.text.secondary,
+    },
+    gridlist__root: {
+      display: "flex",
+      flexWrap: "wrap",
+      justifyContent: "space-around",
+      overflow: "hidden",
+    },
+    gridList: {
+      flexWrap: "nowrap",
+      transform: "translateZ(0)",
+    },
+    gridlist__title: {
+      color: theme.palette.primary.light,
+    },
+    gridlist__titleBar: {
+      background:
+        "linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)",
     },
   }));
 
   //Cards material ui
   const [like, setLike] = useState(false);
+
   const [expanded, setExpanded] = useState(false);
   const classes = useStyles();
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
-  console.log("\n\nmedia:>>", media);
-  console.log("\n\nmediaBox:>>", mediaBox);
-
   return (
-    <div className="panels">
-      <Card className={classes.root}>
-        <PanelsHeader username={username} title={title} time={time} />
+    <Card className={classes.root}>
+      <PanelsHeader username={username} title={title} time={time} />
+      <div className="card-grid-display">
+        <PanelMedia
+          media={media}
+          mediaBox={mediaBox}
+          mediaCounter={mediaCounter}
+        />
+      </div>
+      <CardContent>
+        <TextInfoContent
+          useStyles={useN01TextInfoContentStyles}
+          overline={""}
+          heading={title}
+          body={description}
+        />
+      </CardContent>
+      <CardActions disableSpacing>
+        {like ? (
+          <IconButton
+            aria-label="add to favorites"
+            onClick={(e) => setLike(false)}
+          >
+            <FavoriteIcon />
+          </IconButton>
+        ) : (
+          <IconButton
+            aria-label="add to favorites"
+            onClick={(e) => setLike(true)}
+          >
+            <FavoriteBorderIcon className={classes.like} />
+          </IconButton>
+        )}
+        <IconButton
+          aria-label="share"
+          onClick={() => props.openModal(media, mediaBox)}
+        >
+          <VisibilityIcon />
+        </IconButton>
+        <IconButton
+          className={clsx(classes.expand, {
+            [classes.expandOpen]: expanded,
+          })}
+          onClick={handleClick}
+          aria-expanded={expanded}
+          aria-label="show more"
+        >
+          <CommentIcon />
+        </IconButton>
+      </CardActions>
+      <Menu
+        id="simple-menu"
+        anchorEl={anchorEl}
+        keepMounted
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+      >
+        {!user ? (
+          <h6>Sign In to Join Us!</h6>
+        ) : (
+          <Comments username={username} panel_id={panel_id} key={id} />
+        )}
+      </Menu>
+    </Card>
+    // <GridListTile className="panels">
+    //   <Paper>
+    //     <GridList
+    //       cellHeight="auto"
+    //       rows={12}
+    //       cols={1}
+    //       className={classes.gridlist}
+    //     >
+    //       <GridListTile rows={2} cols={1}>
+    //         <PanelsHeader username={username} title={title} time={time} />
+    //       </GridListTile>
 
-        {/* Canvas will go here */}
-        <Box color="white" className="panels_canvi">
-          <CardContent>
-            <PanelMedia media={media} mediaBox={mediaBox} />
-          </CardContent>
-        </Box>
-        <div className={classes.media}>
-          <CardContent>
-            <Typography variant="body2" color="textPrimary" component="p">
-              {description}
-            </Typography>
-          </CardContent>
+    //       <GridListTile rows={4} cols={1}>
 
-          <CardActions disableSpacing>
-            {/* IconButton Makes Button clickable */}
-            {like ? (
-              <IconButton
-                aria-label="add to favorites"
-                onClick={(e) => setLike(false)}
-              >
-                <FavoriteIcon />
-              </IconButton>
-            ) : (
-              <IconButton
-                aria-label="add to favorites"
-                onClick={(e) => setLike(true)}
-              >
-                <FavoriteBorderIcon className={classes.like} />
-              </IconButton>
-            )}
+    // </GridListTile>
 
-            <IconButton
-              aria-label="share"
-              onClick={() => {
-                props.createModal(media, mediaBox);
-              }}
-            >
-              <ShareIcon />
-            </IconButton>
+    // <GridListTile rows={3} cols={1}>
+    //   <CardContent>
+    //     <TextInfoContent
+    //       useStyles={useN01TextInfoContentStyles}
+    //       overline={""}
+    //       heading={title}
+    //       body={description}
+    //     />
+    //   </CardContent>
+    // </GridListTile>
 
-            <IconButton
-              className={clsx(classes.expand, {
-                [classes.expandOpen]: expanded,
-              })}
-              onClick={handleExpandClick}
-              aria-expanded={expanded}
-              aria-label="show more"
-            >
-              <ExpandMoreIcon />
-            </IconButton>
-          </CardActions>
-        </div>
+    // <GridListTile rows={2} cols={1}>
+    //   <CardActions disableSpacing>
+    //     {like ? (
+    //       <IconButton
+    //         aria-label="add to favorites"
+    //         onClick={(e) => setLike(false)}
+    //       >
+    //         <FavoriteIcon />
+    //       </IconButton>
+    //     ) : (
+    //       <IconButton
+    //         aria-label="add to favorites"
+    //         onClick={(e) => setLike(true)}
+    //       >
+    //         <FavoriteBorderIcon className={classes.like} />
+    //       </IconButton>
+    //     )}
 
-        <Collapse in={expanded} timeout="auto" unmountOnExit>
-          <Comments username={username} panel_id={panel_id} />
-        </Collapse>
-      </Card>
-    </div>
+    //     <IconButton
+    //       className={clsx(classes.expand, {
+    //         [classes.expandOpen]: expanded,
+    //       })}
+    //       onClick={handleExpandClick}
+    //       aria-expanded={expanded}
+    //       aria-label="show more"
+    //     >
+    //       <ExpandMoreIcon />
+    //     </IconButton>
+    //   </CardActions>
+    // </GridListTile>
+
+    // <GridListTile rows={1} cols={1}>
+    //   <Collapse in={expanded} timeout="auto" unmountOnExit>
+    //     {!user ? (
+    //       <h6>Sign In to Join Us!</h6>
+    //     ) : (
+    //       <Comments username={username} panel_id={panel_id} key={id} />
+    //           )}
+    //         </Collapse>
+    //       </GridListTile>
+    //     </GridList>
+    //   </Paper>
+    // </GridListTile>
   );
 }
 

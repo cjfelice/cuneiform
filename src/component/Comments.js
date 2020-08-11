@@ -1,19 +1,39 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect, forwardRef } from 'react';
 
 import firebase from 'firebase';
 import { db } from '../config/firebase';
 
 import MediaStorage from './MediaStorage';
-import UserAuth, { currentUser } from '../auth/authUser';
+
+import { makeStyles } from '@material-ui/core/styles';
 
 // import Comments from './Comments';
 import './Panels.scss';
 
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
 
-function Comments(props) {
-  const { username, panel_id } = props;
+import TextInfoContent from '@mui-treasury/components/content/textInfo';
+import { useN01TextInfoContentStyles } from '@mui-treasury/styles/textInfoContent/n01';
+import { CardActionArea } from '@material-ui/core';
+import FlipMove from 'react-flip-move';
+
+const Comments = forwardRef((props, ref) => {
+  const user = firebase.auth().currentUser;
+  const [modalStyle] = useState(getModalStyle);
+
+  function getModalStyle() {
+    const top = 50;
+    const left = 50;
+    return {
+      top: `${top}%`,
+      left: `${left}%`,
+      transform: `translate(-${top}%, -${left}%)`
+    };
+  }
+
+  const { panel_id } = props;
   // comments state
   const [comments, setComments] = useState([]);
   const [remark, setRemark] = useState('');
@@ -28,7 +48,7 @@ function Comments(props) {
     event.preventDefault();
     db.collection('panels').doc(panel_id).collection('comments').add({
       remark: remark,
-      username: username,
+      username: user.displayName,
       timestamp: firebase.firestore.FieldValue.serverTimestamp()
     });
     setRemark('');
@@ -42,6 +62,7 @@ function Comments(props) {
         .collection('panels') //reference to firebase collection name
         .doc(panel_id) //the panel id in firebase
         .collection('comments') //the comments section (collection in firebase speak) in the panels collection
+        .orderBy('timestamp', 'desc')
         .onSnapshot((snapshot) => {
           //everytime there is a change in the db, setComments state to the values mapped back locally
           setComments(snapshot.docs.map((doc) => doc.data()));
@@ -62,8 +83,10 @@ function Comments(props) {
 
   return (
     <>
-      <CardContent>
-        <form>
+      <CardContent ref={ref}>
+        <MediaStorage />
+        <Divider />
+        <form className='comments__form'>
           <input
             type='text'
             placeholder='Add comment'
@@ -78,68 +101,22 @@ function Comments(props) {
       </CardContent>
 
       <CardContent>
-        <Typography>
+        <FlipMove>
           {comments.map((comment) => (
             <>
-              <b>{comment.username}</b>
-              <Typography variant='body2' color='textSecondary' component='p'>
-                {comment.remark}
-                <p>{dateConversion(comment.timestamp)}</p>
-              </Typography>
+              <Divider />
+              <TextInfoContent
+                useStyles={useN01TextInfoContentStyles}
+                overline={dateConversion(comment.timestamp)}
+                heading={comment.username}
+                body={comment.remark}
+              />
             </>
           ))}
-        </Typography>
+        </FlipMove>
       </CardContent>
     </>
   );
-}
+});
 
 export default Comments;
-
-/*
-
-   <div>
-      <div className='panels'>
-        <div className='panels_header'>
-          <h1 className='panels_title'>{title}</h1>
-
-          <h1 className='panels_user'>{username}</h1>
-        </div>
-        <div className='panels_canvis'>
-          {media.map((item) => {
-            return <img className='panels_media' src={item.mediaUrl} alt='' />;
-          })}
-        </div>
-
-        <h4 className='panels_user'>{description}</h4>
-         h1 and h4 tags are only placeholders here 
-        <form>
-          <Typography paragraph>
-            <TextareaAutosize
-              aria-label='empty textarea'
-              placeholder='Add comment'
-              value={remark}
-              onChange={(e) => setRemark(e.target.value)}
-            />
-          </Typography>
-          <IconButton className='panel__remarkButton'>
-            <AddIcon disabled={!remark} type='submit' onClick={saveRemark}>
-              Add
-            </AddIcon>
-          </IconButton>
-        </form>
-        <div>
-          {comments.map((comment) => (
-            <>
-              <b>{comment.username}</b>
-              <Typography variant='body2' color='textSecondary' component='p'>
-                {comment.remark}
-              </Typography>
-            </>
-          ))}
-        </div>
-      </div>
-    </div >
-
-          
-           */

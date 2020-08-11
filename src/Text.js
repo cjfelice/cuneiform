@@ -5,6 +5,7 @@ import "react-quill/dist/quill.snow.css";
 function Text(props) {
   const [value, setValue] = useState(props.content || "");
   const [editMode, setEditMode] = useState(props.edit || true);
+  const [content, setContent] = useState(props.content || "");
   const onChange = (content) => {
     console.log("onChange", content);
   };
@@ -24,7 +25,6 @@ function Text(props) {
     <ReactQuill
       theme="snow"
       value={value}
-      onChange={setValue}
       modules={{ toolbar: toolbarOptions }}
     />
   );

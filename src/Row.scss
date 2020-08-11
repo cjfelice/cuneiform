@@ -1,6 +1,6 @@
 .row_canvis {
   display: flex;
-  overflow-y: hidden;
+  // overflow-y: hidden;
   overflow-x: scroll;
   padding: 20px;
 }
@@ -16,6 +16,11 @@
   margin-right: 10px;
   transition: transform 450ms;
 }
+.row_div {
+  object-fit: contain;
+  margin-right: 20px;
+  transition: transform 450ms;
+}
 
 .row_vidi {
   object-fit: contain;
@@ -26,12 +31,17 @@
   transition: transform 450ms;
 }
 
-.row_vidi:hover {
-  transform: scale(1.09);
+.row_canvi:hover {
+  transform: scale(1.07);
+  opacity: 1;
+}
+
+.row_div:hover {
+  transform: scale(1.07);
   opacity: 1;
 }
 
 .row_canvi:hover {
-  transform: scale(1.09);
+  transform: scale(1.07);
   opacity: 1;
 }

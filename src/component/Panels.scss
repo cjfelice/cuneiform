@@ -12,25 +12,18 @@
 // }
 
 .panels {
-  max-width: 345px;
+  max-width: 335px;
   max-height: 442.15;
-  border: 2px solid black;
+  border: 2px;
 
   margin-bottom: 45px;
   margin-right: 10px;
 
-  color: #424242;
+  border-radius: 35px;
   box-sizing: border-box;
   padding: 20px;
 }
 
-// .CardMedia {
-//   display: flex;
-//   overflow-y: hidden;
-//   overflow-x: scroll;
-
-//   padding: 20px;
-// }
 .panels_canvis {
   display: flex;
   overflow-y: hidden;
@@ -38,9 +31,10 @@
 }
 .panels_canvi {
   object-fit: contain;
-  width: 100%;
-  max-height: 250px;
-  margin-right: 10px;
+  min-width: 345px;
+  height: 100%;
+  // max-height: 30%;
+  margin: 0;
   transition: transform 450ms;
 }
 
@@ -48,6 +42,11 @@
   display: flex;
   align-items: center;
   padding: 20px;
+}
+
+.card-grid-display {
+  height: 100%;
+  overflow: scroll;
 }
 
 .panels_title {
@@ -84,4 +83,17 @@
 
 .panel__remarkButton {
   flex: 0;
+}
+
+.row_canvi {
+  object-fit: contain;
+  width: 100%;
+  max-height: 250px;
+  margin-right: 10px;
+  transition: transform 450ms;
+}
+
+.row_canvi:hover {
+  transform: scale(1.09);
+  opacity: 1;
 }

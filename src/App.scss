@@ -1,8 +1,8 @@
-@import url("https://fonts.googleapis.com/css2?family=Righteous&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Open+Sans&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
 
 $paper: #e0d8c9;
-$texture: url("https://www.transparenttextures.com/patterns/cardboard.png");
+$texture: url('https://www.transparenttextures.com/patterns/cardboard.png');
 
 * {
   margin: 0;
@@ -10,7 +10,7 @@ $texture: url("https://www.transparenttextures.com/patterns/cardboard.png");
 
 .App {
   background-color: #7699b3;
-  background-image: url("https://www.transparenttextures.com/patterns/clean-gray-paper.png");
+  background-image: url('https://www.transparenttextures.com/patterns/clean-gray-paper.png');
 }
 
 .header {
@@ -26,7 +26,7 @@ $texture: url("https://www.transparenttextures.com/patterns/cardboard.png");
   height: 93%;
 }
 .titleContainer {
-  font-family: "Righteous", sans-serif;
+  font-family: 'Righteous', sans-serif;
   width: 40%;
   h1 {
     font-size: 100px;
@@ -54,4 +54,18 @@ $texture: url("https://www.transparenttextures.com/patterns/cardboard.png");
     calc(var(--maskX) * 1% + (var(--maskY) -50) * -0.4%) 100%,
     0 100%
   );
+}
+
+.app__panels {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  overflow: hidden;
+  // background-color:
+}
+
+.app__panel-grid-list {
+  flex-wrap: wrap;
+
+  transform: translateZ(0);
 }

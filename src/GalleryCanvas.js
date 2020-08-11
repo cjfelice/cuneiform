@@ -78,6 +78,7 @@ const GalleryCanvas = forwardRef((props, ref) => {
     };
     const i = el.i;
     console.log("i:", i);
+    console.log(mediaInfo);
     return (
       <div key={i} data-grid={el}>
         <Mediabox

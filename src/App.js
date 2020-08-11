@@ -1,29 +1,31 @@
 import React, { useState, useEffect, Fragment } from "react";
 import Headroom from "react-headroom";
-import "./App.scss";
-import Row from "./Row";
-import Workspace from "./Workspace";
-import Navbar from "./Navbar";
-import Title from "./Title";
-import requests from "./requests";
-import "./App.scss";
-import Landcard from "./Landcard";
-import Workarea from "./Workarea";
 import PresentCanvas from "./PresentCanvas";
-import ImageRow from "./ImageRow";
+
+import { db } from "./config/firebase";
 
 //Component files
 import Panels from "./component/Panels";
+import MediaStorage from "./component/MediaStorage";
+import UserAuth from "./auth/authUser";
+import Navbar from "./Navbar";
+import Row from "./Row";
+import Workspace from "./Workspace";
+import requests from "./requests";
+import Workarea from "./Workarea";
+import Landcard from "./Landcard";
+import Title from "./Title";
+import ImageRow from "./ImageRow";
+
+import "./App.scss";
 import "./component/Panels.scss";
-import { db } from "./config/firebase";
 
 import Cards from "./component/Cards";
-// import MediaStorage from './component/doNotUse/MediaStorage';
-import UserAuth from "./auth/authUser";
+import { GridList, Box } from "@material-ui/core";
 
 function App() {
   const [mode, setMode] = useState("HOME");
-  //sample database inside useState array; sets value to panels
+
   const [panels, setPanels] = useState([]);
   const [media, setMedia] = useState();
   const [mediaBox, setMediaBox] = useState();
@@ -36,7 +38,6 @@ function App() {
 
   useEffect(() => {
     db.collection("panels").onSnapshot((snapshot) => {
-      //every time onSnapshot fires from a change in 'panels' (collection name in firebase), do this only
       setPanels(
         snapshot.docs.map((doc) => ({
           id: doc.id,
@@ -75,28 +76,14 @@ function App() {
         openModal={openModal}
         closeModal={setOpenModal}
       />
-      <Row title="Suggested Canvi" fetchUrl={requests.fetchTrending} />
 
-      {/* {panels.map((panel) => ( */}
-      <div>
-        {panels.map(({ id, panel }) => (
-          <Panels
-            key={id}
-            panel_id={id}
-            username={panel.username}
-            title={panel.title}
-            description={panel.description}
-            music_id={panel.music_id}
-            media={panel.media}
-            mediaBox={panel.mediaBox}
-            time={panel.timestamp}
-            createModal={createModal}
-          />
-        ))}
-      </div>
-      <Cards />
-      <Cards />
-      <Cards />
+      <Row
+        title="Suggested Canvi"
+        fetchUrl={requests.fetchTrending}
+        panels={panels}
+        openModal={createModal}
+      />
+      <div style={{ height: 300 }}></div>
     </div>
   );
 }

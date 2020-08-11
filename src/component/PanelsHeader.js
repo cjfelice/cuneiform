@@ -10,6 +10,9 @@ import { purple } from '@material-ui/core/colors';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    color: '#fff'
+  },
   avatar: {
     backgroundColor: purple[900]
   }
@@ -37,7 +40,7 @@ function PanelsHeader(props) {
             <MoreVertIcon />
           </IconButton>
         }
-        title={title}
+        title={username}
         subheader={dateConversion(time)}
       />
     </>
