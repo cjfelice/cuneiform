@@ -153,7 +153,7 @@ function Panels(props) {
       </div>
       <CardContent>
         <TextInfoContent
-          useStyles={useN01TextInfoContentStyles}
+          // useStyles={useN01TextInfoContentStyles}
           overline={""}
           heading={title}
           body={description}

@@ -175,13 +175,14 @@ function Navbar(props) {
               inputProps={{ "aria-label": "search" }}
             />
           </div>
+          <UserAuth />
           {/* <UserAuth style={{ color: "white" }} /> */}
-          <div style={{ marginLeft: "auto", marginRight: 40, marginTop: 26 }}>
-            <Title text={"chiMera"} />
-          </div>
+          <div
+            style={{ marginLeft: "auto", marginRight: 40, marginTop: 26 }}
+          ></div>
+          <Title text={"chiMera"} />
         </Toolbar>
       </AppBar>
-      <UserAuth />
     </div>
   );
 }

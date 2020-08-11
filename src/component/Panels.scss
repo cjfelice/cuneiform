@@ -1,7 +1,11 @@
 * {
   margin: 0;
 }
+@import url("https://fonts.googleapis.com/css2?family=Varela&display=swap");
 
+.card {
+  font-family: Varela;
+}
 .panels {
   max-width: 335px;
   max-height: 442.15;

@@ -1,7 +1,8 @@
 import React, { useState, useEffect, Fragment } from "react";
 import Headroom from "react-headroom";
 import PresentCanvas from "./PresentCanvas";
-
+import { createMuiTheme } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
 import { db } from "./config/firebase";
 
 //Component files
@@ -16,6 +17,7 @@ import Workarea from "./Workarea";
 import Landcard from "./Landcard";
 import Title from "./Title";
 import ImageRow from "./ImageRow";
+import { MuiThemeProvider } from "@material-ui/core/styles";
 
 import "./App.scss";
 import "./component/Panels.scss";
@@ -47,6 +49,12 @@ function App() {
     });
   }, []);
 
+  const theme = createMuiTheme({
+    typography: {
+      fontFamily: "Karla",
+    },
+  });
+
   const createModal = (media, mediaBox) => {
     setMedia(media);
     setMediaBox(mediaBox);
@@ -55,35 +63,37 @@ function App() {
 
   return (
     <div className="App">
-      <Headroom>
-        <div className="header">
-          <Navbar setMode={setMode} />
-        </div>
-      </Headroom>
-      {mode === "NEWCANVAS" && (
-        <div>
-          <Workarea />
-        </div>
-      )}
-      {mode === "HOME" && (
-        <div>
-          <Landcard />
-        </div>
-      )}
-      <PresentCanvas
-        media={media}
-        mediaBox={mediaBox}
-        openModal={openModal}
-        closeModal={setOpenModal}
-      />
+      <MuiThemeProvider theme={theme}>
+        <Headroom>
+          <div className="header">
+            <Navbar setMode={setMode} />
+          </div>
+        </Headroom>
+        {mode === "NEWCANVAS" && (
+          <div>
+            <Workarea />
+          </div>
+        )}
+        {mode === "HOME" && (
+          <div>
+            <Landcard />
+          </div>
+        )}
+        <PresentCanvas
+          media={media}
+          mediaBox={mediaBox}
+          openModal={openModal}
+          closeModal={setOpenModal}
+        />
 
-      <Row
-        title="Suggested Canvi"
-        fetchUrl={requests.fetchTrending}
-        panels={panels}
-        openModal={createModal}
-      />
-      <div style={{ height: 300 }}></div>
+        <Row
+          title="Suggested Canvi"
+          fetchUrl={requests.fetchTrending}
+          panels={panels}
+          openModal={createModal}
+        />
+        <div style={{ height: 300 }}></div>
+      </MuiThemeProvider>
     </div>
   );
 }

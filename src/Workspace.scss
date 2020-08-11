@@ -45,7 +45,7 @@ $texture: url("https://www.transparenttextures.com/patterns/cardboard.png");
   background-image: $texture;
   background-color: rgb(14, 103, 164);
   margin-left: 130px;
-  margin-bottom: 150px;
+  margin-bottom: 170px;
   margin-top: 40px;
   border-radius: 8px;
   font-family: "Montserrat";
@@ -64,7 +64,7 @@ $texture: url("https://www.transparenttextures.com/patterns/cardboard.png");
   position: absolute;
   margin-left: 346px;
   top: 170px;
-  z-index: 1;
+  z-index: 0;
 }
 
 .toolbar {
