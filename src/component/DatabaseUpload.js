@@ -1,20 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 
-import firebase from "firebase";
-import { db } from "../config/firebase";
+import firebase from 'firebase';
+import { db } from '../config/firebase';
 
-import Title from "../Title";
+import Title from '../Title';
 
-import { makeStyles } from "@material-ui/core/styles";
-import { Button, Input, Modal } from "@material-ui/core";
+import { makeStyles } from '@material-ui/core/styles';
+import { Button, Input, Modal } from '@material-ui/core';
 
-import { saveMedia } from "../Canvas";
+import { saveMedia } from '../Canvas';
+import '../auth/authUser.css';
 
 function DatabaseUpload(props) {
   const { media, music_id, likes } = props;
 
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
 
   const user = firebase.auth().currentUser;
 
@@ -24,18 +25,18 @@ function DatabaseUpload(props) {
     return {
       top: `${top}%`,
       left: `${left}%`,
-      transform: `translate(-${top}%, -${left}%)`,
+      transform: `translate(-${top}%, -${left}%)`
     };
   }
   const useStyles = makeStyles((theme) => ({
     paper: {
-      position: "absolute",
+      position: 'absolute',
       width: 400,
       backgroundColor: theme.palette.background.paper,
-      border: "2px solid #000",
+      border: '2px solid #000',
       boxShadow: theme.shadows[5],
-      padding: theme.spacing(2, 4, 3),
-    },
+      padding: theme.spacing(2, 4, 3)
+    }
   }));
 
   const classes = useStyles();
@@ -43,7 +44,7 @@ function DatabaseUpload(props) {
   const [open, setOpen] = useState(false);
 
   const handleUpload = () => {
-    db.collection("panels").add({
+    db.collection('panels').add({
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       title: title,
       mediaBox: [...saveMedia[0].items],
@@ -51,28 +52,27 @@ function DatabaseUpload(props) {
       media: [...saveMedia[1]],
       username: user.displayName,
       description: description,
-      music_id: "",
+      music_id: ''
     });
     setOpen(false);
   };
-  console.log("\n\nsaveMedia:>>", saveMedia);
 
   return (
     <>
       <Modal open={open} onClose={() => setOpen(false)}>
         <div style={modalStyle} className={classes.paper}>
-          <form className="chimera__signup">
-            <Title text="chiMera" />
+          <form className='chimera__signup'>
+            <Title text='chiMera' />
 
             <Input
-              placeholder="Title"
-              type="text"
+              placeholder='Title'
+              type='text'
               value={title}
               onChange={(e) => setTitle(e.target.value)}
             />
             <Input
-              placeholder="Description"
-              type="text"
+              placeholder='Description'
+              type='text'
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
@@ -88,9 +88,9 @@ function DatabaseUpload(props) {
         </div>
       </Modal>
       <Button
-        variant="contained"
-        color="primary"
-        style={{ color: "white", marginLeft: "auto" }}
+        variant='contained'
+        color='primary'
+        style={{ color: 'white', marginLeft: 'auto' }}
         onClick={() => setOpen(true)}
       >
         SAVE
