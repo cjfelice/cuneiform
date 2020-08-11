@@ -13,6 +13,8 @@ import {
   CardContent,
   GridList,
   Card,
+  Container,
+  Box,
   CardMedia,
   CardHeader,
   Avatar,
@@ -142,83 +144,85 @@ function Panels(props) {
   };
 
   return (
-    <Card className={classes.root}>
-      <div
-        onClick={() => props.openModal(media, mediaBox)}
-        style={{ cursor: "pointer" }}
-      >
-        <PanelsHeader username={username} title={title} time={time} />
-      </div>
-      <div className="card-grid-display">
-        <PanelMedia
-          media={media}
-          mediaBox={mediaBox}
-          mediaCounter={mediaCounter}
-        />
-      </div>
-      <div style={{ backgroundColor: "#5B84B1FF", color: "white" }}>
-        <CardContent
-          style={{
-            "padding-left": "16px",
-            "padding-top": "10px",
-            "padding-bottom": "0px",
-          }}
+    <Box container>
+      <Card className={classes.root}>
+        <div
+          onClick={() => props.openModal(media, mediaBox)}
+          style={{ cursor: "pointer" }}
         >
-          <Typography>{description}</Typography>
-        </CardContent>
-        <CardActions disableSpacing>
-          {like ? (
+          <PanelsHeader username={username} title={title} time={time} />
+        </div>
+        <div className="card-grid-display">
+          <PanelMedia
+            media={media}
+            mediaBox={mediaBox}
+            mediaCounter={mediaCounter}
+          />
+        </div>
+        <div style={{ backgroundColor: "#5B84B1FF", color: "white" }}>
+          <CardContent
+            style={{
+              "padding-left": "16px",
+              "padding-top": "10px",
+              "padding-bottom": "0px",
+            }}
+          >
+            <Typography>{description}</Typography>
+          </CardContent>
+          <CardActions disableSpacing>
+            {like ? (
+              <IconButton
+                aria-label="add to favorites"
+                onClick={(e) => setLike(false)}
+              >
+                <FavoriteIcon />
+              </IconButton>
+            ) : (
+              <IconButton
+                aria-label="add to favorites"
+                onClick={(e) => setLike(true)}
+              >
+                <FavoriteBorderIcon className={classes.like} />
+              </IconButton>
+            )}
+            <div style={{ color: "white", marginLeft: 4, fontSize: 20 }}>
+              <Button variant="contained" color="primary">
+                {username}
+              </Button>
+            </div>
             <IconButton
-              aria-label="add to favorites"
-              onClick={(e) => setLike(false)}
+              aria-label="share"
+              onClick={() => props.openModal(media, mediaBox)}
             >
-              <FavoriteIcon />
+              <ShareIcon style={{ color: "#f5ba55" }} />
             </IconButton>
+            <IconButton
+              className={clsx(classes.expand, {
+                [classes.expandOpen]: expanded,
+              })}
+              onClick={handleClick}
+              aria-expanded={expanded}
+              aria-label="show more"
+            >
+              <CommentIcon style={{ color: "#f5ba55" }} />
+            </IconButton>
+          </CardActions>
+        </div>
+        <Menu
+          id="simple-menu"
+          anchorEl={anchorEl}
+          keepMounted
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+        >
+          {!user ? (
+            <h6>Sign In to Join Us!</h6>
           ) : (
-            <IconButton
-              aria-label="add to favorites"
-              onClick={(e) => setLike(true)}
-            >
-              <FavoriteBorderIcon className={classes.like} />
-            </IconButton>
+            <Comments username={username} panel_id={panel_id} key={id} />
           )}
-          <div style={{ color: "white", marginLeft: 4, fontSize: 20 }}>
-            <Button variant="contained" color="primary">
-              {username}
-            </Button>
-          </div>
-          <IconButton
-            aria-label="share"
-            onClick={() => props.openModal(media, mediaBox, title)}
-          >
-            <ShareIcon style={{ color: "#f5ba55" }} />
-          </IconButton>
-          <IconButton
-            className={clsx(classes.expand, {
-              [classes.expandOpen]: expanded,
-            })}
-            onClick={handleClick}
-            aria-expanded={expanded}
-            aria-label="show more"
-          >
-            <CommentIcon style={{ color: "#f5ba55" }} />
-          </IconButton>
-        </CardActions>
-      </div>
-      <Menu
-        id="simple-menu"
-        anchorEl={anchorEl}
-        keepMounted
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
-      >
-        {!user ? (
-          <h6>Sign In to Join Us!</h6>
-        ) : (
-          <Comments username={username} panel_id={panel_id} key={id} />
-        )}
-      </Menu>
-    </Card>
+        </Menu>
+      </Card>
+    </Box>
     // <GridListTile className="panels">
     //   <Paper>
     //     <GridList

@@ -1,23 +1,23 @@
 * {
   margin: 0;
 }
-@import url("https://fonts.googleapis.com/css2?family=Varela&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Varela&display=swap');
 
 .card {
   font-family: Varela;
 }
 .panels {
   max-width: 335px;
-  max-height: 442.15;
-  border: 2px;
+  // max-height: 442.15;
+  // border: 2px;
 
-  margin-bottom: 45px;
-  margin-right: 10px;
+  // margin-bottom: 45px;
+  // margin-right: 10px;
 
-  box-sizing: border-box;
-  padding: 20px;
-  background-color: #7699b3;
-  background-image: url("https://www.transparenttextures.com/patterns/clean-gray-paper.png");
+  // box-sizing: border-box;
+  // padding: 20px;
+  // background-color: #7699b3;
+  // background-image: url("https://www.transparenttextures.com/patterns/clean-gray-paper.png");
 }
 
 .panels_canvis {
@@ -52,7 +52,7 @@
   display: flex;
   padding: 0 60px, 0, 30px;
   background-color: #7699b3;
-  background-image: url("https://www.transparenttextures.com/patterns/clean-gray-paper.png");
+  background-image: url('https://www.transparenttextures.com/patterns/clean-gray-paper.png');
 }
 
 .panels_user::-webkit-scrollbar {
@@ -82,5 +82,5 @@
 
 Grid {
   color: #7699b3;
-  background-image: url("https://www.transparenttextures.com/patterns/clean-gray-paper.png");
+  background-image: url('https://www.transparenttextures.com/patterns/clean-gray-paper.png');
 }

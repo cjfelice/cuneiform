@@ -32,7 +32,8 @@ function PanelMedia(props) {
       maxWidth: "100%",
       maxHeight: 250,
       minHeight: 250,
-      marginLeft: 5,
+      // marginLeft: 0,
+      // marginRight: 0,
       marginTop: 5,
       display: "flex",
       // flexWrap: "wrap",
@@ -63,7 +64,9 @@ function PanelMedia(props) {
     gridList: {
       width: "100%",
       height: "100%",
-      // backgroundColor: "#424242",
+      marginRight: 0,
+      marginLeft: 10,
+      // backgroundColor: '#424242'
     },
   }));
 
@@ -93,21 +96,28 @@ function PanelMedia(props) {
 
   //set the height of each cell in grid list
   let cell = 175;
+  const space = 0;
   if (media.length === 1) {
     return (
-      <Box className={classes.root}>
-        <GridList cellHeight={245} className={classes.gridList} cols={1}>
+      <Box container className={classes.root}>
+        <GridList cellHeight={250} className={classes.gridList} cols={1}>
           {media.map(({ mediaUrl, mediaType, mediaBox_id, length }) =>
             mediaBox.map(({ i, h, w, x, y }) => {
               if (mediaBox_id === i) {
                 let width = 1;
-                if (w > 8) {
-                  width = 2;
-                }
-                let wide = w > h * 1.1 ? 2 : 1;
+                // if (w > 8) {
+                //   width = 1;
+                // }
+                // let wide = w > h * 1.1 ? 2 : 1;
+                let wide = 1;
 
                 return (
-                  <GridListTile key={mediaBox_id} xs={width} cols={wide}>
+                  <GridListTile
+                    key={mediaBox_id}
+                    xs={width}
+                    cols={wide}
+                    rows={0}
+                  >
                     {mediaType === "TEXT" && <div>{mediaUrl}</div>}
                     {mediaType === "VIDEO" && <Video content={mediaUrl} />}
                     {mediaType === "IMAGE" && <Image content={mediaUrl} />}
@@ -124,8 +134,13 @@ function PanelMedia(props) {
 
   if (media.length === 2) {
     return (
-      <Box className={classes.root}>
-        <GridList cellHeight={120} className={classes.gridList} cols={2}>
+      <Box container className={classes.root}>
+        <GridList
+          cellHeight={120}
+          className={classes.gridList}
+          cols={2}
+          spacing={space}
+        >
           {media.map(({ mediaUrl, mediaType, mediaBox_id, length }) =>
             mediaBox.map(({ i, h, w, x, y }) => {
               if (mediaBox_id === i) {
@@ -149,11 +164,12 @@ function PanelMedia(props) {
   }
 
   return (
-    <Box className={classes.root}>
+    <Box container className={classes.root}>
       <GridList
         cellHeight={120}
         className={classes.gridList}
         cols={media.length > 6 ? 3 : 2}
+        spacing={space}
       >
         {media.map(({ mediaUrl, mediaType, mediaBox_id, length }) =>
           mediaBox.map(({ i, h, w, x, y }) => {
