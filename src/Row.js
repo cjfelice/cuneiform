@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
-import axios from "./axios";
-import "./Row.scss";
-import Panels from "./component/Panels.js";
+import React, { useState, useEffect } from 'react';
+import axios from './axios';
+import './Row.scss';
+import Panels from './component/Panels';
 
-const base_url = "https://image.tmdb.org/t/p/original/";
+const base_url = 'https://image.tmdb.org/t/p/original/';
 
 function Row(props) {
   const [canvi, setCanvi] = useState([]);
@@ -20,10 +20,10 @@ function Row(props) {
   const panels = props.panels;
 
   return (
-    <div className="row">
-      <div className="row_canvis">
+    <div className='row'>
+      <div className='row_canvis'>
         {panels.map(({ id, panel }) => (
-          <div className="row_div">
+          <div className='row_div'>
             <Panels
               key={id}
               panel_id={id}
