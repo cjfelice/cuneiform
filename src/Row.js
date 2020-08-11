@@ -37,6 +37,7 @@ function Row(props) {
               time={panel.timestamp}
               openModal={props.openModal}
               createGallery={props.createGallery}
+              setMode={props.setMode}
             />
           </div>
         ))}

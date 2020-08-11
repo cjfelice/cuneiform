@@ -11,6 +11,7 @@ import { db } from "./config/firebase";
 import Panels from "./component/Panels";
 import Footer from "rc-footer";
 import Toolbar from "./Toolbar";
+import ReactLoading from "react-loading";
 import "rc-footer/assets/index.css"; // import 'rc-footer/asssets/index.less';
 import MediaStorage from "./component/MediaStorage";
 import UserAuth from "./auth/authUser";
@@ -59,12 +60,6 @@ function App() {
     });
   }, []);
 
-  // useEffect(() => {
-  //   if (trigger === true) {
-  //     setMode("CREATEDCANVAS");
-  //   }
-  // }, [trigger]);
-
   const theme = createMuiTheme({
     typography: {
       fontFamily: "Raleway",
@@ -85,6 +80,7 @@ function App() {
     setOpenModal(true);
   };
   const createGallery = (media, mediaBox, title) => {
+    setMode("LOADINGCANVAS");
     setMedia(media);
     setMediaBox(mediaBox);
     setTitle(title);
@@ -107,7 +103,7 @@ function App() {
           <>
             <Toolbar canvasName={title} setMode={setMode} />
             <div className="workspace">
-              <GalleryCanvas media={media} mediaBox={mediaBox} />
+              <GalleryCanvas media={media} mediaBox={mediaBox} mode={mode} />
             </div>
           </>
         )}
@@ -115,6 +111,19 @@ function App() {
           <div>
             <Landcard getStarted={() => setMode("NEWCANVAS")} />
           </div>
+        )}
+        {mode === "LOADINGCANVAS" && (
+          <>
+            <Toolbar canvasName={title} setMode={setMode} />
+            <div className="workspace">
+              <ReactLoading
+                type={"spin"}
+                color={"#ffffff"}
+                height={667}
+                width={375}
+              />
+            </div>
+          </>
         )}
         <PresentCanvas
           media={media}
@@ -128,6 +137,7 @@ function App() {
             fetchUrl={requests.fetchTrending}
             panels={panels}
             openModal={createModal}
+            setMode={setMode}
             createGallery={createGallery}
           />
         )}
