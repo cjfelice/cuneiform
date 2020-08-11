@@ -31,6 +31,7 @@ function Toolbar(props) {
           variant="contained"
           color="primary"
           style={{ color: "white", marginRight: 20 }}
+          onClick={() => props.setMode("NEWCANVAS")}
         >
           DELETE
         </Button>

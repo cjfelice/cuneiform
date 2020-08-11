@@ -90,7 +90,6 @@ function App() {
     setTitle(title);
     setMode("CREATEDCANVAS");
   };
-  console.log("panels:", panels);
   return (
     <div className="App">
       <MuiThemeProvider theme={theme}>
@@ -106,7 +105,7 @@ function App() {
         )}
         {mode === "CREATEDCANVAS" && (
           <>
-            <Toolbar canvasName={title} />
+            <Toolbar canvasName={title} setMode={setMode} />
             <div className="workspace">
               <GalleryCanvas media={media} mediaBox={mediaBox} />
             </div>
@@ -129,6 +128,7 @@ function App() {
             fetchUrl={requests.fetchTrending}
             panels={panels}
             openModal={createModal}
+            createGallery={createGallery}
           />
         )}
         <div style={{ height: 100 }}></div>

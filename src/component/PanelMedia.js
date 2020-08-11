@@ -89,8 +89,6 @@ function PanelMedia(props) {
       wide = w > h * 1.1 ? 2 : 1;
       w > 8 ?? (width = 2);
     }
-    console.log("SIZES:", width, wide);
-    console.log("COUNT in MATH:", sizeCount);
     return { width: width, wide: wide };
   };
 
@@ -175,7 +173,6 @@ function PanelMedia(props) {
           mediaBox.map(({ i, h, w, x, y }) => {
             if (mediaBox_id === i) {
               let dimensions = mathTime(w, h, sizeCount);
-              console.log("COUNT POST MATH", sizeCount);
               count += 1;
               count === 1 && Math.random() < 0.5 && media.length === 3
                 ? (dimensions.wide = 2)
