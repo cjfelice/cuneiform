@@ -75,7 +75,29 @@ $texture: url("https://www.transparenttextures.com/patterns/cardboard.png");
   height: 30px;
   background-image: $texture;
   background-color: rgb(156, 111, 62);
-  font-family: "Montserrat";
+  font-family: "Raleway";
+  font-size: 20px;
+  align: center;
+  font-kerning: normal;
+  position: float;
+  z-index: 9;
+  margin: 0 -15px;
+  color: white;
+  margin-left: 100px;
+  border-radius: 6px;
+  padding: 10px;
+  margin-top: 50px;
+  box-shadow: 7px 7px 8px #888888;
+}
+
+.toolbar2 {
+  display: flex;
+  justify-content: flex-end;
+  width: 80%;
+  height: 30px;
+  background-image: $texture;
+  background-color: rgb(156, 111, 62);
+  font-family: "Raleway";
   font-size: 20px;
   align: center;
   font-kerning: normal;

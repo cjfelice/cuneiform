@@ -189,7 +189,7 @@ function Panels(props) {
           </div>
           <IconButton
             aria-label="share"
-            onClick={() => props.openModal(media, mediaBox)}
+            onClick={() => props.openModal(media, mediaBox, title)}
           >
             <ShareIcon style={{ color: "#f5ba55" }} />
           </IconButton>

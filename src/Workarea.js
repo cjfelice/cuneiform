@@ -18,7 +18,17 @@ function Workarea(props) {
   return (
     <div>
       <div className="toolbar">
-        <Button>Welcome to the Canvas - Click or Drag to add Content</Button>
+        <div
+          style={{
+            color: "white",
+            marginLeft: 5,
+            marginRight: 10,
+            marginTop: 4,
+            fontSize: 18,
+          }}
+        >
+          Click or Drag to add Content to the Canvas
+        </div>
         <div
           onClick={() => refPass.current.passMessage()}
           className="droppable-element"
@@ -27,7 +37,12 @@ function Workarea(props) {
           onDragStart={(e) => e.dataTransfer.setData("text/plain", "")}
         >
           <AddIcon
-            style={{ color: "white", fontSize: "30px", cursor: "pointer" }}
+            style={{
+              color: "white",
+              fontSize: "30px",
+              cursor: "pointer",
+              marginRight: 20,
+            }}
           />
         </div>
         {/* <div className='save'>Save</div> */}

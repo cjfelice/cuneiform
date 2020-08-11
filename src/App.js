@@ -4,10 +4,14 @@ import PresentCanvas from "./PresentCanvas";
 import { createMuiTheme } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Zoom from "@material-ui/core/Zoom";
+import GitHubIcon from "@material-ui/icons/GitHub";
 import { db } from "./config/firebase";
 
 //Component files
 import Panels from "./component/Panels";
+import Footer from "rc-footer";
+import Toolbar from "./Toolbar";
+import "rc-footer/assets/index.css"; // import 'rc-footer/asssets/index.less';
 import MediaStorage from "./component/MediaStorage";
 import UserAuth from "./auth/authUser";
 import Navbar from "./Navbar";
@@ -26,13 +30,14 @@ import "./App.scss";
 import "./component/Panels.scss";
 
 import Cards from "./component/Cards";
-import { GridList, Box } from "@material-ui/core";
+import { GridList, Box, IconButton } from "@material-ui/core";
 import { getThemeProps } from "@material-ui/styles";
 
 function App() {
   const [mode, setMode] = useState("HOME");
   const [panels, setPanels] = useState([]);
   const [media, setMedia] = useState();
+  const [title, setTitle] = useState();
   const [mediaBox, setMediaBox] = useState();
   const [openModal, setOpenModal] = useState(false);
   const [userName, setUserName] = useState("");
@@ -62,7 +67,7 @@ function App() {
 
   const theme = createMuiTheme({
     typography: {
-      fontFamily: "Varela Round",
+      fontFamily: "Raleway",
     },
     overrides: {
       MuiButton: {
@@ -73,14 +78,16 @@ function App() {
     },
   });
 
-  const createModal = (media, mediaBox) => {
+  const createModal = (media, mediaBox, title) => {
     setMedia(media);
     setMediaBox(mediaBox);
+    setTitle(title);
     setOpenModal(true);
   };
-  const createGallery = (media, mediaBox) => {
+  const createGallery = (media, mediaBox, title) => {
     setMedia(media);
     setMediaBox(mediaBox);
+    setTitle(title);
     setMode("CREATEDCANVAS");
   };
   console.log("panels:", panels);
@@ -98,9 +105,12 @@ function App() {
           </div>
         )}
         {mode === "CREATEDCANVAS" && (
-          <div className="workspace">
-            <GalleryCanvas media={media} mediaBox={mediaBox} />
-          </div>
+          <>
+            <Toolbar canvasName={title} />
+            <div className="workspace">
+              <GalleryCanvas media={media} mediaBox={mediaBox} />
+            </div>
+          </>
         )}
         {mode === "HOME" && (
           <div>
@@ -113,7 +123,6 @@ function App() {
           openModal={openModal}
           closeModal={setOpenModal}
         />
-
         {mode !== "NEWCANVAS" && (
           <Row
             title="Suggested Canvi"
@@ -122,7 +131,24 @@ function App() {
             openModal={createModal}
           />
         )}
-        <div style={{ height: 300 }}></div>
+        <div style={{ height: 100 }}></div>
+        <Footer
+          style={{ fontFamily: "Varela Round" }}
+          backgroundColor="transparent"
+          columns={[
+            {
+              icon: (
+                <IconButton style={{ color: "white" }}>
+                  <GitHubIcon />
+                </IconButton>
+              ),
+              url: "https://github.com/cjfelice/cuneiform",
+              openExternal: true,
+            },
+          ]}
+          bottom={`Made for the Lighthouse Bootcamp by Rubin Jhand & Christopher Smith`}
+        />
+        ,
       </MuiThemeProvider>
     </div>
   );

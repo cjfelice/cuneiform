@@ -79,7 +79,7 @@ function DatabaseUpload(props) {
             <Button
               onClick={() => {
                 handleUpload();
-                props.createGallery(saveMedia[1], saveMedia[0].items);
+                props.createGallery(saveMedia[1], saveMedia[0].items, title);
               }}
             >
               Publish!
@@ -87,7 +87,14 @@ function DatabaseUpload(props) {
           </form>
         </div>
       </Modal>
-      <Button onClick={() => setOpen(true)}>SAVE</Button>
+      <Button
+        variant="contained"
+        color="primary"
+        style={{ color: "white", marginLeft: "auto" }}
+        onClick={() => setOpen(true)}
+      >
+        SAVE
+      </Button>
     </>
   );
 }

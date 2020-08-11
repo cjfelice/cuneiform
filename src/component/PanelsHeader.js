@@ -9,6 +9,7 @@ import VisibilityIcon from "@material-ui/icons/Visibility";
 import { Typography } from "@material-ui/core";
 import { purple } from "@material-ui/core/colors";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
+import FullscreenIcon from "@material-ui/icons/Fullscreen";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,7 +40,7 @@ function PanelsHeader(props) {
         // avatar={<Avatar className={classes.avatar}>{username[0]}</Avatar>}
         action={
           <IconButton>
-            <VisibilityIcon styles={{ color: "#5B84B1FF" }} />
+            <FullscreenIcon styles={{ color: "#5B84B1FF" }} />
           </IconButton>
         }
         className="card"
