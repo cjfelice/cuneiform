@@ -1,21 +1,20 @@
 import React, { useState, useEffect, Fragment } from 'react';
-import Headroom from 'react-headroom';
+
+import { db } from './config/firebase';
+
 import PresentCanvas from './PresentCanvas';
 import { createMuiTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Zoom from '@material-ui/core/Zoom';
 import GitHubIcon from '@material-ui/icons/GitHub';
-import { db } from './config/firebase';
 
 //Component files
 import Panels from './component/Panels';
-import Footer from 'rc-footer';
-import Toolbar from './Toolbar';
-import 'rc-footer/assets/index.css'; // import 'rc-footer/asssets/index.less';
-import MediaStorage from './component/MediaStorage';
 import UserAuth from './auth/authUser';
 import Navbar from './Navbar';
+import Toolbar from './Toolbar';
 import GalleryCanvas from './GalleryCanvas';
+import MediaStorage from './component/MediaStorage';
 import Row from './Row';
 import Workspace from './Workspace';
 import requests from './requests';
@@ -23,11 +22,14 @@ import Workarea from './Workarea';
 import Landcard from './Landcard';
 import Title from './Title';
 import ImageRow from './ImageRow';
-import { MuiThemeProvider } from '@material-ui/core/styles';
-import './Workspace.scss';
 
 import './App.scss';
 import './component/Panels.scss';
+import 'rc-footer/assets/index.css'; // import 'rc-footer/asssets/index.less';
+import Headroom from 'react-headroom';
+import Footer from 'rc-footer';
+import { MuiThemeProvider } from '@material-ui/core/styles';
+import './Workspace.scss';
 
 import Cards from './component/Cards';
 import { GridList, Box, IconButton } from '@material-ui/core';
@@ -42,11 +44,6 @@ function App() {
   const [openModal, setOpenModal] = useState(false);
   const [userName, setUserName] = useState('');
   const [trigger, setTrigger] = useState(false);
-
-  /*
-  - for the time being, panels and cards will be used interchangeably; cards use material ui, panels were created initially for setup and testing. can now use the functional elements of panels and apply them to cards.
-  - hardcoded data set is in dummyData.js if required
-*/
 
   useEffect(() => {
     db.collection('panels').onSnapshot((snapshot) => {
@@ -90,7 +87,6 @@ function App() {
     setTitle(title);
     setMode('CREATEDCANVAS');
   };
-  console.log('panels:', panels);
   return (
     <div className='App'>
       <MuiThemeProvider theme={theme}>
@@ -106,7 +102,7 @@ function App() {
         )}
         {mode === 'CREATEDCANVAS' && (
           <>
-            <Toolbar canvasName={title} />
+            <Toolbar canvasName={title} setMode={setMode} />
             <div className='workspace'>
               <GalleryCanvas media={media} mediaBox={mediaBox} />
             </div>
@@ -129,6 +125,7 @@ function App() {
             fetchUrl={requests.fetchTrending}
             panels={panels}
             openModal={createModal}
+            createGallery={createGallery}
           />
         )}
         <div style={{ height: 100 }}></div>

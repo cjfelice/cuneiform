@@ -60,7 +60,7 @@ function Panels(props) {
   } = props;
 
   const user = firebase.auth().currentUser;
-  console.log(user);
+
   if (user) {
     // User is signed in.
   } else {
@@ -149,7 +149,11 @@ function Panels(props) {
       <DeletePanel username={username} panel_id={panel_id} />
       <Card className={classes.root}>
         <div
-          onClick={() => props.openModal(media, mediaBox)}
+          onClick={() => {
+            user.displayName === username
+              ? props.createGallery(media, mediaBox, title)
+              : props.openModal(media, mediaBox, title);
+          }}
           style={{ cursor: 'pointer' }}
         >
           <PanelsHeader username={username} title={title} time={time} />

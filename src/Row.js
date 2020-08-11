@@ -36,6 +36,7 @@ function Row(props) {
               mediaCounter={panel.mediaCounter}
               time={panel.timestamp}
               openModal={props.openModal}
+              createGallery={props.createGallery}
             />
           </div>
         ))}
