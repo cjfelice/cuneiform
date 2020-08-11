@@ -1,17 +1,17 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
-import Image from "../Image";
-import Video from "../Video";
-import Audio from "../Audio";
+import Image from '../Image';
+import Video from '../Video';
+import Audio from '../Audio';
 
-import "./Panels.scss";
-import "../Workspace.scss";
+import './Panels.scss';
+import '../Workspace.scss';
 
-import ReactPlayer from "react-player";
+import ReactPlayer from 'react-player';
 
-import { makeStyles } from "@material-ui/core/styles";
-import { red } from "@material-ui/core/colors";
-import { GridList, GridListTile, Box } from "@material-ui/core";
+import { makeStyles } from '@material-ui/core/styles';
+import { red } from '@material-ui/core/colors';
+import { GridList, GridListTile, Box } from '@material-ui/core';
 
 function PanelMedia(props) {
   const {
@@ -24,47 +24,50 @@ function PanelMedia(props) {
     mediaCounter,
     panel_id,
     username,
-    id,
+    id
   } = props;
 
   const useStyles = makeStyles((theme) => ({
     root: {
-      maxWidth: "100%",
+      maxWidth: '100%',
       maxHeight: 250,
       minHeight: 250,
-      marginLeft: 5,
+      // marginLeft: 0,
+      // marginRight: 0,
       marginTop: 5,
-      display: "flex",
+      display: 'flex'
       // flexWrap: "wrap",
       // justifyContent: "space-around",
       // overflow: "hidden",
     },
     media: {
-      paddingTop: "1%",
-      backgroundColor: "#424242",
+      paddingTop: '1%',
+      backgroundColor: '#424242'
     },
     description: {
       // height: 0,
-      paddingTop: "56.25%",
+      paddingTop: '56.25%'
     },
     expand: {
-      transform: "rotate(0deg)",
-      marginLeft: "auto",
-      transition: theme.transitions.create("transform", {
-        duration: theme.transitions.duration.shortest,
-      }),
+      transform: 'rotate(0deg)',
+      marginLeft: 'auto',
+      transition: theme.transitions.create('transform', {
+        duration: theme.transitions.duration.shortest
+      })
     },
     expandOpen: {
-      transform: "rotate(180deg)",
+      transform: 'rotate(180deg)'
     },
     like: {
-      color: red[500],
+      color: red[500]
     },
     gridList: {
-      width: "100%",
-      height: "100%",
-      // backgroundColor: "#424242",
-    },
+      width: '100%',
+      height: '100%',
+      marginRight: 0,
+      marginLeft: 10
+      // backgroundColor: '#424242'
+    }
   }));
 
   //Cards material ui
@@ -86,32 +89,39 @@ function PanelMedia(props) {
       wide = w > h * 1.1 ? 2 : 1;
       w > 8 ?? (width = 2);
     }
-    console.log("SIZES:", width, wide);
-    console.log("COUNT in MATH:", sizeCount);
+    console.log('SIZES:', width, wide);
+    console.log('COUNT in MATH:', sizeCount);
     return { width: width, wide: wide };
   };
 
   //set the height of each cell in grid list
   let cell = 175;
+  const space = 0;
   if (media.length === 1) {
     return (
-      <Box className={classes.root}>
+      <Box container className={classes.root}>
         <GridList cellHeight={250} className={classes.gridList} cols={1}>
           {media.map(({ mediaUrl, mediaType, mediaBox_id, length }) =>
             mediaBox.map(({ i, h, w, x, y }) => {
               if (mediaBox_id === i) {
                 let width = 1;
-                if (w > 8) {
-                  width = 2;
-                }
-                let wide = w > h * 1.1 ? 2 : 1;
+                // if (w > 8) {
+                //   width = 1;
+                // }
+                // let wide = w > h * 1.1 ? 2 : 1;
+                let wide = 1;
 
                 return (
-                  <GridListTile key={mediaBox_id} xs={width} cols={wide}>
-                    {mediaType === "TEXT" && <div>{mediaUrl}</div>}
-                    {mediaType === "VIDEO" && <Video content={mediaUrl} />}
-                    {mediaType === "IMAGE" && <Image content={mediaUrl} />}
-                    {mediaType === "AUDIO" && <Audio content={mediaUrl} />}
+                  <GridListTile
+                    key={mediaBox_id}
+                    xs={width}
+                    cols={wide}
+                    rows={0}
+                  >
+                    {mediaType === 'TEXT' && <div>{mediaUrl}</div>}
+                    {mediaType === 'VIDEO' && <Video content={mediaUrl} />}
+                    {mediaType === 'IMAGE' && <Image content={mediaUrl} />}
+                    {mediaType === 'AUDIO' && <Audio content={mediaUrl} />}
                   </GridListTile>
                 );
               }
@@ -124,8 +134,13 @@ function PanelMedia(props) {
 
   if (media.length === 2) {
     return (
-      <Box className={classes.root}>
-        <GridList cellHeight={120} className={classes.gridList} cols={2}>
+      <Box container className={classes.root}>
+        <GridList
+          cellHeight={120}
+          className={classes.gridList}
+          cols={2}
+          spacing={space}
+        >
           {media.map(({ mediaUrl, mediaType, mediaBox_id, length }) =>
             mediaBox.map(({ i, h, w, x, y }) => {
               if (mediaBox_id === i) {
@@ -134,10 +149,10 @@ function PanelMedia(props) {
 
                 return (
                   <GridListTile key={mediaBox_id} xs={width} cols={wide}>
-                    {mediaType === "TEXT" && <div>{mediaUrl}</div>}
-                    {mediaType === "VIDEO" && <Video content={mediaUrl} />}
-                    {mediaType === "IMAGE" && <Image content={mediaUrl} />}
-                    {mediaType === "AUDIO" && <Audio content={mediaUrl} />}
+                    {mediaType === 'TEXT' && <div>{mediaUrl}</div>}
+                    {mediaType === 'VIDEO' && <Video content={mediaUrl} />}
+                    {mediaType === 'IMAGE' && <Image content={mediaUrl} />}
+                    {mediaType === 'AUDIO' && <Audio content={mediaUrl} />}
                   </GridListTile>
                 );
               }
@@ -149,17 +164,18 @@ function PanelMedia(props) {
   }
 
   return (
-    <Box className={classes.root}>
+    <Box container className={classes.root}>
       <GridList
         cellHeight={120}
         className={classes.gridList}
         cols={media.length > 6 ? 3 : 2}
+        spacing={space}
       >
         {media.map(({ mediaUrl, mediaType, mediaBox_id, length }) =>
           mediaBox.map(({ i, h, w, x, y }) => {
             if (mediaBox_id === i) {
               let dimensions = mathTime(w, h, sizeCount);
-              console.log("COUNT POST MATH", sizeCount);
+              console.log('COUNT POST MATH', sizeCount);
               count += 1;
               count === 1 && Math.random() < 0.5 && media.length === 3
                 ? (dimensions.wide = 2)
@@ -180,10 +196,10 @@ function PanelMedia(props) {
                   xs={dimensions.width}
                   cols={dimensions.wide}
                 >
-                  {mediaType === "TEXT" && <div>{mediaUrl}</div>}
-                  {mediaType === "VIDEO" && <Video content={mediaUrl} />}
-                  {mediaType === "IMAGE" && <Image content={mediaUrl} />}
-                  {mediaType === "AUDIO" && <Audio content={mediaUrl} />}
+                  {mediaType === 'TEXT' && <div>{mediaUrl}</div>}
+                  {mediaType === 'VIDEO' && <Video content={mediaUrl} />}
+                  {mediaType === 'IMAGE' && <Image content={mediaUrl} />}
+                  {mediaType === 'AUDIO' && <Audio content={mediaUrl} />}
                 </GridListTile>
               );
             }
