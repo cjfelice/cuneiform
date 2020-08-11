@@ -77,8 +77,7 @@ const GalleryCanvas = forwardRef((props, ref) => {
       cursor: "pointer",
     };
     const i = el.i;
-    console.log("i:", i);
-    console.log(mediaInfo);
+
     return (
       <div key={i} data-grid={el}>
         <Mediabox
@@ -101,9 +100,7 @@ const GalleryCanvas = forwardRef((props, ref) => {
           preventCollision={true}
           verticalCompact={false}
           onResize={(layout) => {
-            console.log("STATE:", state);
             setState({ ...state, items: layout });
-            console.log("STATE:", state);
           }}
         >
           {_.map(state.items, (el) => createElement(el))}

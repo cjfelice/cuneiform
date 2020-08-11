@@ -3,6 +3,7 @@ $texture: url("https://www.transparenttextures.com/patterns/cardboard.png");
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Ibarra+Real+Nova&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Baloo+Tamma+2&family=Ibarra+Real+Nova&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Comfortaa&family=Josefin+Sans:ital,wght@0,400;1,500&display=swap");
 .workspace {
   max-height: 650px;
   width: 400em;
@@ -39,7 +40,7 @@ $texture: url("https://www.transparenttextures.com/patterns/cardboard.png");
 
 .landcard {
   max-width: 500px;
-  max-height: 180px;
+  max-height: 190px;
   width: 400em;
   height: 700em;
   background-image: $texture;
@@ -48,7 +49,7 @@ $texture: url("https://www.transparenttextures.com/patterns/cardboard.png");
   margin-bottom: 170px;
   margin-top: 40px;
   border-radius: 8px;
-  font-family: "Montserrat";
+  font-family: "Varela Round";
   font-size: 50px;
   font-kerning: normal;
   position: float;
@@ -62,14 +63,14 @@ $texture: url("https://www.transparenttextures.com/patterns/cardboard.png");
 .chimera {
   max-height: 55%;
   position: absolute;
-  margin-left: 346px;
+  margin-left: 10px;
   top: 170px;
   z-index: 0;
 }
 
 .toolbar {
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
   width: 80%;
   height: 30px;
   background-image: $texture;

@@ -6,9 +6,7 @@ function Text(props) {
   const [value, setValue] = useState(props.content || "");
   const [editMode, setEditMode] = useState(props.edit || true);
   const [content, setContent] = useState(props.content || "");
-  const onChange = (content) => {
-    console.log("onChange", content);
-  };
+  const onChange = (content) => {};
   useEffect(() => {
     props.createObject(props.boxID, value, "TEXT");
   }, [value]);

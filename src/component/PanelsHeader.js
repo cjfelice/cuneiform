@@ -5,13 +5,15 @@ import { makeStyles } from "@material-ui/core/styles";
 import CardHeader from "@material-ui/core/CardHeader";
 import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
+import VisibilityIcon from "@material-ui/icons/Visibility";
+import { Typography } from "@material-ui/core";
 import { purple } from "@material-ui/core/colors";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     maxHeight: 20,
-    color: "#fff",
+    color: "white",
   },
   avatar: {
     backgroundColor: purple[900],
@@ -35,13 +37,14 @@ function PanelsHeader(props) {
     <>
       <CardHeader
         // avatar={<Avatar className={classes.avatar}>{username[0]}</Avatar>}
-        // action={
-        //   <IconButton aria-label="settings">
-        //     <MoreVertIcon />
-        //   </IconButton>
-        // }
+        action={
+          <IconButton>
+            <VisibilityIcon styles={{ color: "#5B84B1FF" }} />
+          </IconButton>
+        }
         className="card"
-        subheader={`${dateConversion(time)} -- ${username}`}
+        title={title}
+        subheader={dateConversion(time)}
       />
     </>
   );

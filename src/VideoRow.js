@@ -78,7 +78,7 @@ function VideoRow(props) {
             },
           }
         );
-        console.log(request);
+
         setCanvi(request.data.items);
         return request;
       }

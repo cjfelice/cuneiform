@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 
 import Modal from "@material-ui/core/Modal";
 import { makeStyles } from "@material-ui/core/styles";
 import { Button, Input } from "@material-ui/core";
 import "./authUser.css";
 import { authorize } from "../config/firebase";
+import firebase from "firebase";
 import Title from "../Title";
 // import MediaStorage from '../component/MediaStorage';
 
-function UserAuth() {
+function UserAuth(props) {
   function getModalStyle() {
     const top = 50;
     const left = 50;
@@ -34,7 +35,7 @@ function UserAuth() {
   const [modalStyle] = useState(getModalStyle);
   const [open, setOpen] = useState(false);
   const [signIn, setSignIn] = useState(false);
-  const [username, setUserName] = useState("");
+  const [username, setUserName] = useState(props.userName || "");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [user, setUser] = useState(null);
@@ -131,12 +132,16 @@ function UserAuth() {
           </form>
         </div>
       </Modal>
-      <div>
-        <h1>{username}</h1>
-      </div>
 
       {user ? (
-        <Button onClick={() => authorize.signOut()}>Sign Out</Button>
+        <>
+          <Button
+            onClick={() => authorize.signOut()}
+            style={{ color: "white", "margin-left": 14, align: "center" }}
+          >
+            {firebase.auth().currentUser.displayName}
+          </Button>
+        </>
       ) : (
         <div className="chimera__loginContainer">
           <Button

@@ -23,10 +23,8 @@ function Mediabox(props) {
     props.mediaObject ? props.mediaObject.mediaType : "EDIT"
   );
 
-  const onSave = () => {
-    console.log("hi");
-  };
-  console.log("content:", content, "mode:", mode);
+  const onSave = () => {};
+
   useEffect(() => {
     if (trigger !== null) {
       props.createObject(props.boxID, content, mode);

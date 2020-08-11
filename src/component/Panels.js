@@ -71,8 +71,8 @@ function Panels(props) {
       // minHeight: 442,
       // color: "#fff",
       // padding: "10",
-      backgroundColor: "#ffffff",
-      backgroundImage: `url("https://www.transparenttextures.com/patterns/beige-paper.png")`,
+      backgroundColor: "white",
+      backgroundImage: `url("https://www.transparenttextures.com/patterns/rice-paper-3.png")`,
     },
     media: {
       height: 250,
@@ -94,7 +94,7 @@ function Panels(props) {
       backgroundColor: red[500],
     },
     like: {
-      color: red[500],
+      color: "#FC766AFF",
     },
     root_grid: {
       flexGrow: 1,
@@ -143,7 +143,12 @@ function Panels(props) {
 
   return (
     <Card className={classes.root}>
-      <PanelsHeader username={username} title={title} time={time} />
+      <div
+        onClick={() => props.openModal(media, mediaBox)}
+        style={{ cursor: "pointer" }}
+      >
+        <PanelsHeader username={username} title={title} time={time} />
+      </div>
       <div className="card-grid-display">
         <PanelMedia
           media={media}
@@ -151,47 +156,55 @@ function Panels(props) {
           mediaCounter={mediaCounter}
         />
       </div>
-      <CardContent>
-        <TextInfoContent
-          // useStyles={useN01TextInfoContentStyles}
-          overline={""}
-          heading={title}
-          body={description}
-        />
-      </CardContent>
-      <CardActions disableSpacing>
-        {like ? (
-          <IconButton
-            aria-label="add to favorites"
-            onClick={(e) => setLike(false)}
-          >
-            <FavoriteIcon />
-          </IconButton>
-        ) : (
-          <IconButton
-            aria-label="add to favorites"
-            onClick={(e) => setLike(true)}
-          >
-            <FavoriteBorderIcon className={classes.like} />
-          </IconButton>
-        )}
-        <IconButton
-          aria-label="share"
-          onClick={() => props.openModal(media, mediaBox)}
+      <div style={{ backgroundColor: "#5B84B1FF", color: "white" }}>
+        <CardContent
+          style={{
+            "padding-left": "16px",
+            "padding-top": "10px",
+            "padding-bottom": "0px",
+          }}
         >
-          <VisibilityIcon />
-        </IconButton>
-        <IconButton
-          className={clsx(classes.expand, {
-            [classes.expandOpen]: expanded,
-          })}
-          onClick={handleClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <CommentIcon />
-        </IconButton>
-      </CardActions>
+          <Typography>{description}</Typography>
+        </CardContent>
+        <CardActions disableSpacing>
+          {like ? (
+            <IconButton
+              aria-label="add to favorites"
+              onClick={(e) => setLike(false)}
+            >
+              <FavoriteIcon />
+            </IconButton>
+          ) : (
+            <IconButton
+              aria-label="add to favorites"
+              onClick={(e) => setLike(true)}
+            >
+              <FavoriteBorderIcon className={classes.like} />
+            </IconButton>
+          )}
+          <div style={{ color: "white", marginLeft: 4, fontSize: 20 }}>
+            <Button variant="contained" color="primary">
+              {username}
+            </Button>
+          </div>
+          <IconButton
+            aria-label="share"
+            onClick={() => props.openModal(media, mediaBox)}
+          >
+            <ShareIcon style={{ color: "#f5ba55" }} />
+          </IconButton>
+          <IconButton
+            className={clsx(classes.expand, {
+              [classes.expandOpen]: expanded,
+            })}
+            onClick={handleClick}
+            aria-expanded={expanded}
+            aria-label="show more"
+          >
+            <CommentIcon style={{ color: "#f5ba55" }} />
+          </IconButton>
+        </CardActions>
+      </div>
       <Menu
         id="simple-menu"
         anchorEl={anchorEl}

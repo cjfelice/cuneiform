@@ -79,6 +79,7 @@ function DatabaseUpload(props) {
             <Button
               onClick={() => {
                 handleUpload();
+                props.createGallery(saveMedia[1], saveMedia[0].items);
               }}
             >
               Publish!

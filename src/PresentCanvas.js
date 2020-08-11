@@ -3,6 +3,7 @@ import Modal from "@material-ui/core/Modal";
 import { makeStyles } from "@material-ui/core/styles";
 import GalleryCanvas from "./GalleryCanvas";
 import { Button, Input, Container } from "@material-ui/core";
+import Zoom from "@material-ui/core/Zoom";
 import "./Workspace.scss";
 
 function PresentCanvas(props) {
@@ -16,7 +17,15 @@ function PresentCanvas(props) {
       padding: theme.spacing(2, 4, 3),
       outline: "none",
     },
+    modal: {
+      outline: 0,
+    },
   }));
+
+  const [checked, setChecked] = useState(false);
+  const handleChange = () => {
+    setChecked((prev) => !prev);
+  };
 
   const classes = useStyles();
 
@@ -28,6 +37,7 @@ function PresentCanvas(props) {
         className="egClass"
         open={props.openModal}
         onClose={() => props.closeModal(false)}
+        className={classes.modal}
       >
         <div className="workspace">
           <GalleryCanvas media={props.media} mediaBox={props.mediaBox} />

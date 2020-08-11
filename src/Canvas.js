@@ -77,7 +77,6 @@ const Canvas = forwardRef((props, ref) => {
       cursor: "pointer",
     };
     const i = el.i;
-    console.log("i:", i);
     return (
       <div key={i} data-grid={el}>
         <Mediabox
@@ -100,13 +99,11 @@ const Canvas = forwardRef((props, ref) => {
   };
 
   const onAddItem = () => {
-    console.log("adding", "n" + state.newCounter);
-    console.log(state.items);
     setState({
       items: state.items.concat({
         i: "n" + state.newCounter,
         x: state.newCounter,
-        y: 0,
+        y: state.newCounter,
         w: 8,
         h: 8,
         isBounded: false,
@@ -128,16 +125,12 @@ const Canvas = forwardRef((props, ref) => {
   }));
 
   const onRemoveItem = (i) => {
-    console.log("removing", i);
     setState({ ...state, items: _.reject(state.items, { i: i }) });
     const newMediaInfo = mediaInfo.filter((x) => x.mediaBox_id !== i);
     setMediaInfo(newMediaInfo);
   };
 
   const onDrop = (layout, layoutItem, event) => {
-    console.log("layout:", layout, "layoutItem:", layoutItem, "event:", event);
-    console.log("adding", "n" + state.newCounter);
-    console.log(state);
     setState({
       items: state.items.concat({
         i: "n" + state.newCounter,
@@ -170,14 +163,10 @@ const Canvas = forwardRef((props, ref) => {
           preventCollision={true}
           verticalCompact={false}
           onResizeStop={(layout) => {
-            console.log("STATE:", state);
             setState({ ...state, items: layout });
-            console.log("STATE:", state);
           }}
           onDragStop={(layout) => {
-            console.log("STATE:", state);
             setState({ ...state, items: layout });
-            console.log("STATE:", state);
           }}
         >
           {_.map(state.items, (el) => createElement(el))}

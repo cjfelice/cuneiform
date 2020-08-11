@@ -89,7 +89,6 @@ function AudioRow(props) {
           }
         )
         .then((res) => {
-          console.log("TOKENRES:", res.data.access_token);
           axios
             .get(
               `https://api.spotify.com/v1/search?q=${term}&type=track,artist,album,playlist`,
@@ -102,7 +101,6 @@ function AudioRow(props) {
               }
             )
             .then((res) => {
-              console.log(res);
               state.checkedB === false
                 ? setCanvi(res.data.tracks.items)
                 : setCanvi(res.data.playlists.items);

@@ -166,6 +166,7 @@ function Navbar(props) {
             <div className={classes.searchIcon}>
               <SearchIcon />
             </div>
+            {props.userName}
             <InputBase
               placeholder="Search…"
               classes={{
@@ -175,7 +176,7 @@ function Navbar(props) {
               inputProps={{ "aria-label": "search" }}
             />
           </div>
-          <UserAuth />
+          <UserAuth userName={props.userName} />
           {/* <UserAuth style={{ color: "white" }} /> */}
           <div
             style={{ marginLeft: "auto", marginRight: 40, marginTop: 26 }}
