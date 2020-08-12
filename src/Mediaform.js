@@ -131,7 +131,8 @@ const Mediaform = (props) => {
             <DialogContent>
               <DialogContentText>
                 You can add video from anywhere on the internet. Just copy and
-                paste the video source url.
+                paste the video source url. Or search for and select one from
+                above.
               </DialogContentText>
               <TextField
                 autoFocus
@@ -158,7 +159,8 @@ const Mediaform = (props) => {
             <DialogContent>
               <DialogContentText>
                 You can add audio from anywhere on the internet. Just copy and
-                paste the audio source url.
+                paste the audio source url. Or search for and select one from
+                above.
               </DialogContentText>
               <TextField
                 autoFocus

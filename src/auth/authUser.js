@@ -66,6 +66,7 @@ function UserAuth(props) {
       .catch((error) => alert(error.message));
 
     setOpen(false);
+    props.menuSelect("HOME");
   };
 
   const enterApp = (event) => {
@@ -74,6 +75,7 @@ function UserAuth(props) {
       .signInWithEmailAndPassword(email, password)
       .catch((error) => alert(error.message));
     setSignIn(false);
+    props.menuSelect("HOME");
   };
 
   return (

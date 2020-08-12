@@ -45,6 +45,8 @@ function TextRow(props) {
         onEditorChange={(e) => setText(e)}
       />
       <Button
+        color="primary"
+        variant="contained"
         onClick={() => {
           props.setContent(text);
           props.submitUrl();

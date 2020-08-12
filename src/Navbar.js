@@ -155,7 +155,14 @@ function Navbar(props) {
                       >
                         New Canvas
                       </MenuItem>
-                      <MenuItem onClick={handleClose}>Explore</MenuItem>
+                      <MenuItem
+                        onClick={(event) => {
+                          handleClose(event);
+                          menuSelect("EXPLORECANVASES");
+                        }}
+                      >
+                        Explore
+                      </MenuItem>
                     </MenuList>
                   </ClickAwayListener>
                 </Paper>
@@ -175,12 +182,12 @@ function Navbar(props) {
               inputProps={{ "aria-label": "search" }}
             />
           </div>
-          <UserAuth userName={props.userName} />
+          <UserAuth userName={props.userName} menuSelect={menuSelect} />
           {/* <UserAuth style={{ color: "white" }} /> */}
           <div
             style={{ marginLeft: "auto", marginRight: 40, marginTop: 26 }}
           ></div>
-          <Title text={"chiMera"} />
+          <Title text={"chiMera"} menuSelect={menuSelect} />
         </Toolbar>
       </AppBar>
     </div>

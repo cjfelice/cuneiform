@@ -1,7 +1,8 @@
 import React, { useRef, useState } from "react";
 import "./App.scss";
+import { getThemeProps } from "@material-ui/styles";
 
-function Title({ text }) {
+function Title(props) {
   const [state, setState] = useState(0);
   const titleContainer = useRef(null);
 
@@ -31,17 +32,21 @@ function Title({ text }) {
 
   return (
     <div
+      onClick={() => props.menuSelect("HOME")}
       className="titleContainer"
       onMouseMove={_onMouseMove}
       // onMouseOut={_onMouseOut}
       ref={titleContainer}
       style={maskStyle}
     >
-      <div className="titleWrapper">
-        <h1> {text} </h1>
+      <div className="titleWrapper" onClick={() => props.menuSelect("HOME")}>
+        <h1> {props.text} </h1>
       </div>
-      <div className="titleWrapper cloneWrapper">
-        <h1> {text} </h1>
+      <div
+        className="titleWrapper cloneWrapper"
+        onClick={() => props.menuSelect("HOME")}
+      >
+        <h1> {props.text} </h1>
       </div>
     </div>
   );

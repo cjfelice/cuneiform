@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     [theme.breakpoints.up("sm")]: {
       marginLeft: theme.spacing(1),
-      width: "auto",
+      width: "100%",
     },
   },
   searchIcon: {
@@ -43,6 +43,7 @@ const useStyles = makeStyles((theme) => ({
   },
   inputRoot: {
     color: "inherit",
+    width: "60%",
   },
   inputInput: {
     padding: theme.spacing(1, 1, 1, 0),
@@ -157,20 +158,23 @@ function AudioRow(props) {
         <div className="row_canvis">
           {canvi.map((canvi) => (
             <Fragment>
-              <Button
-                onClick={() => {
-                  state.checkedB === false
-                    ? props.setContent(
-                        `https://open.spotify.com/embed/track/${canvi.id}`
-                      )
-                    : props.setContent(
-                        `https://open.spotify.com/embed/playlist/${canvi.id}`
-                      );
-                  props.submitUrl();
-                }}
-              >
-                Select
-              </Button>
+              <div>
+                <Button
+                  color="primary"
+                  onClick={() => {
+                    state.checkedB === false
+                      ? props.setContent(
+                          `https://open.spotify.com/embed/track/${canvi.id}`
+                        )
+                      : props.setContent(
+                          `https://open.spotify.com/embed/playlist/${canvi.id}`
+                        );
+                    props.submitUrl();
+                  }}
+                >
+                  Select
+                </Button>
+              </div>
               <iframe
                 src={
                   state.checkedB === false

@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: fade(theme.palette.common.white, 0.25),
     },
     marginLeft: 0,
-    width: "100%",
+    width: "80%",
     [theme.breakpoints.up("sm")]: {
       marginLeft: theme.spacing(1),
       width: "auto",
@@ -121,6 +121,7 @@ function VideoRow(props) {
           {canvi.map((canvi) => (
             <div className="row_vidi">
               <Button
+                color="primary"
                 onClick={() => {
                   props.setContent(
                     `https://www.youtube.com/embed/${canvi.id.videoId}`

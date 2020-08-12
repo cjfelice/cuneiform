@@ -132,6 +132,27 @@ function App() {
             />
           </div>
         )}
+        {mode === "EXPLORECANVASES" && (
+          <div>
+            <div className="title-header">Browse Canvases</div>
+            <Row
+              title="Suggested Canvi"
+              fetchUrl={requests.fetchTrending}
+              panels={panels}
+              openModal={createModal}
+              setMode={setMode}
+              createGallery={createGallery}
+            />
+            <Row
+              title="Suggested Canvi"
+              fetchUrl={requests.fetchTrending}
+              panels={panels}
+              openModal={createModal}
+              setMode={setMode}
+              createGallery={createGallery}
+            />
+          </div>
+        )}
         {mode === "CREATEDCANVAS" && (
           <>
             <Toolbar
@@ -145,12 +166,30 @@ function App() {
             <div className="workspace">
               <GalleryCanvas media={media} mediaBox={mediaBox} />
             </div>
+            <Row
+              title="Suggested Canvi"
+              fetchUrl={requests.fetchTrending}
+              panels={panels}
+              openModal={createModal}
+              setMode={setMode}
+              createGallery={createGallery}
+            />
           </>
         )}
         {mode === "HOME" && (
-          <div>
-            <Landcard getStarted={() => setMode("NEWCANVAS")} />
-          </div>
+          <>
+            <div>
+              <Landcard getStarted={() => setMode("NEWCANVAS")} />
+            </div>
+            <Row
+              title="Suggested Canvi"
+              fetchUrl={requests.fetchTrending}
+              panels={panels}
+              openModal={createModal}
+              setMode={setMode}
+              createGallery={createGallery}
+            />
+          </>
         )}
         {mode === "LOADINGCANVAS" && (
           <>
@@ -165,6 +204,14 @@ function App() {
                 />
               </div>
             </div>
+            <Row
+              title="Suggested Canvi"
+              fetchUrl={requests.fetchTrending}
+              panels={panels}
+              openModal={createModal}
+              setMode={setMode}
+              createGallery={createGallery}
+            />
           </>
         )}
         <PresentCanvas
@@ -173,16 +220,6 @@ function App() {
           openModal={openModal}
           closeModal={setOpenModal}
         />
-        {mode !== "NEWCANVAS" && (
-          <Row
-            title="Suggested Canvi"
-            fetchUrl={requests.fetchTrending}
-            panels={panels}
-            openModal={createModal}
-            setMode={setMode}
-            createGallery={createGallery}
-          />
-        )}
         <div style={{ height: 100 }}></div>
         <Footer
           style={{ fontFamily: "Varela Round" }}
