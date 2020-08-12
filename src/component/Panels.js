@@ -44,6 +44,7 @@ import VisibilityIcon from '@material-ui/icons/Visibility';
 
 import TextInfoContent from '@mui-treasury/components/content/textInfo';
 import { useN01TextInfoContentStyles } from '@mui-treasury/styles/textInfoContent/n01';
+import MediaStorage from './MediaStorage';
 
 function Panels(props) {
   // title = name
@@ -69,6 +70,7 @@ function Panels(props) {
 
   const useStyles = makeStyles((theme) => ({
     root: {
+      // minWidth: 345,
       minWidth: '345',
       // maxHeight: 442,
       // minHeight: 442,
@@ -147,6 +149,7 @@ function Panels(props) {
   return (
     <Box container>
       <DeletePanel username={username} panel_id={panel_id} />
+      <MediaStorage panel_id={panel_id} />
       <Card className={classes.root}>
         <div
           onClick={() => {
@@ -168,9 +171,9 @@ function Panels(props) {
         <div style={{ backgroundColor: '#5B84B1FF', color: 'white' }}>
           <CardContent
             style={{
-              'padding-left': '16px',
-              'padding-top': '10px',
-              'padding-bottom': '0px'
+              paddingLeft: '16px',
+              paddingTop: '10px',
+              paddingBottom: '0px'
             }}
           >
             <Typography>{description}</Typography>
@@ -224,7 +227,12 @@ function Panels(props) {
           {!user ? (
             <h6>Sign In to Join Us!</h6>
           ) : (
-            <Comments username={username} panel_id={panel_id} key={id} />
+            <Comments
+              key={panel_id}
+              username={username}
+              panel_id={panel_id}
+              key={id}
+            />
           )}
         </Menu>
       </Card>

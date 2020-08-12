@@ -43,7 +43,8 @@ function DatabaseUpload(props) {
   const [modalStyle] = useState(getModalStyle);
   const [open, setOpen] = useState(false);
 
-  const handleUpload = () => {
+  const handleUpload = (e) => {
+    e.preventDefault();
     db.collection('panels').add({
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       title: title,
