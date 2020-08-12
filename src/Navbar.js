@@ -166,7 +166,6 @@ function Navbar(props) {
             <div className={classes.searchIcon}>
               <SearchIcon />
             </div>
-            {props.userName}
             <InputBase
               placeholder="Search…"
               classes={{

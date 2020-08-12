@@ -32,9 +32,8 @@ function PresentCanvas(props) {
   useEffect(() => {}, []);
 
   return (
-    <div>
+    <div className={classes.modal}>
       <Modal
-        className="egClass"
         open={props.openModal}
         onClose={() => props.closeModal(false)}
         className={classes.modal}

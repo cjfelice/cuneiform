@@ -8,7 +8,6 @@ function Video(props) {
       height="100%"
       url={props.content}
       controls
-      autoPlay={true}
       muted
       config={{
         youtube: {

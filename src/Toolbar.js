@@ -3,6 +3,7 @@ import Button from "@material-ui/core/Button";
 import { IconButton } from "@material-ui/core";
 import ShareIcon from "@material-ui/icons/Share";
 import "./Workspace.scss";
+import DeletePanel from "./component/DeletePanel";
 
 function Toolbar(props) {
   return (
@@ -27,18 +28,16 @@ function Toolbar(props) {
         >
           EDIT
         </Button>{" "}
-        <Button
-          variant="contained"
-          color="primary"
-          style={{ color: "white", marginRight: 20 }}
-          onClick={() => props.setMode("NEWCANVAS")}
-        >
-          DELETE
-        </Button>
+        <DeletePanel
+          username={props.userName}
+          panel_id={props.panel_id}
+          setMode={props.setMode}
+        />
         <IconButton
           variant="contained"
           color="primary"
           style={{ color: "white" }}
+          onClick={() => alert(props.panel_id)}
         >
           <ShareIcon />
         </IconButton>
