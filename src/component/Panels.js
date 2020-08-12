@@ -153,6 +153,7 @@ function Panels(props) {
       <Card className={classes.root}>
         <div
           onClick={() => {
+            props.setMode("LOADINGCANVAS");
             user.displayName === username
               ? props.createGallery(media, mediaBox, title)
               : props.openModal(media, mediaBox, title);

@@ -1,78 +1,73 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect, Fragment } from "react";
 
-import { db } from './config/firebase';
+import { db } from "./config/firebase";
 
-import PresentCanvas from './PresentCanvas';
-import { createMuiTheme } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import Zoom from '@material-ui/core/Zoom';
-import GitHubIcon from '@material-ui/icons/GitHub';
+import PresentCanvas from "./PresentCanvas";
+import { createMuiTheme } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import Zoom from "@material-ui/core/Zoom";
+import GitHubIcon from "@material-ui/icons/GitHub";
 
 //Component files
-import Panels from './component/Panels';
-import UserAuth from './auth/authUser';
-import Navbar from './Navbar';
-import Toolbar from './Toolbar';
-import GalleryCanvas from './GalleryCanvas';
-import MediaStorage from './component/MediaStorage';
-import Row from './Row';
-import Workspace from './Workspace';
-import requests from './requests';
-import Workarea from './Workarea';
-import Landcard from './Landcard';
-import Title from './Title';
-import ImageRow from './ImageRow';
+import Panels from "./component/Panels";
+import UserAuth from "./auth/authUser";
+import Navbar from "./Navbar";
+import Toolbar from "./Toolbar";
+import ReactLoading from "react-loading";
+import GalleryCanvas from "./GalleryCanvas";
+import MediaStorage from "./component/MediaStorage";
+import Row from "./Row";
+import Workspace from "./Workspace";
+import requests from "./requests";
+import Workarea from "./Workarea";
+import Landcard from "./Landcard";
+import Title from "./Title";
+import ImageRow from "./ImageRow";
 
-import './App.scss';
-import './component/Panels.scss';
-import 'rc-footer/assets/index.css'; // import 'rc-footer/asssets/index.less';
-import Headroom from 'react-headroom';
-import Footer from 'rc-footer';
-import { MuiThemeProvider } from '@material-ui/core/styles';
-import './Workspace.scss';
+import "./App.scss";
+import "./component/Panels.scss";
+import "rc-footer/assets/index.css"; // import 'rc-footer/asssets/index.less';
+import Headroom from "react-headroom";
+import Footer from "rc-footer";
+import { MuiThemeProvider } from "@material-ui/core/styles";
+import "./Workspace.scss";
 
-import Cards from './component/Cards';
-import { GridList, Box, IconButton } from '@material-ui/core';
-import { getThemeProps } from '@material-ui/styles';
+import Cards from "./component/Cards";
+import { GridList, Box, IconButton } from "@material-ui/core";
+import { getThemeProps } from "@material-ui/styles";
 
 function App() {
-  const [mode, setMode] = useState('HOME');
+  const [mode, setMode] = useState("HOME");
   const [panels, setPanels] = useState([]);
   const [media, setMedia] = useState();
   const [title, setTitle] = useState();
   const [mediaBox, setMediaBox] = useState();
   const [openModal, setOpenModal] = useState(false);
-  const [userName, setUserName] = useState('');
+  const [userName, setUserName] = useState("");
   const [trigger, setTrigger] = useState(false);
 
   useEffect(() => {
-    db.collection('panels').onSnapshot((snapshot) => {
+    db.collection("panels").onSnapshot((snapshot) => {
       setPanels(
         snapshot.docs.map((doc) => ({
           id: doc.id,
-          panel: doc.data()
+          panel: doc.data(),
         }))
       );
     });
   }, []);
 
-  // useEffect(() => {
-  //   if (trigger === true) {
-  //     setMode("CREATEDCANVAS");
-  //   }
-  // }, [trigger]);
-
   const theme = createMuiTheme({
     typography: {
-      fontFamily: 'Raleway'
+      fontFamily: "Raleway",
     },
     overrides: {
       MuiButton: {
         raisedPrimary: {
-          color: 'white'
-        }
-      }
-    }
+          color: "white",
+        },
+      },
+    },
   });
 
   const createModal = (media, mediaBox, title) => {
@@ -82,36 +77,50 @@ function App() {
     setOpenModal(true);
   };
   const createGallery = (media, mediaBox, title) => {
+    setMode("LOADINGCANVAS");
     setMedia(media);
     setMediaBox(mediaBox);
     setTitle(title);
-    setMode('CREATEDCANVAS');
+    setMode("CREATEDCANVAS");
   };
   return (
-    <div className='App'>
+    <div className="App">
       <MuiThemeProvider theme={theme}>
         <Headroom>
-          <div className='header'>
+          <div className="header">
             <Navbar setMode={setMode} userName={userName} />
           </div>
         </Headroom>
-        {mode === 'NEWCANVAS' && (
+        {mode === "NEWCANVAS" && (
           <div>
             <Workarea createGallery={createGallery} />
           </div>
         )}
-        {mode === 'CREATEDCANVAS' && (
+        {mode === "CREATEDCANVAS" && (
           <>
             <Toolbar canvasName={title} setMode={setMode} />
-            <div className='workspace'>
+            <div className="workspace">
               <GalleryCanvas media={media} mediaBox={mediaBox} />
             </div>
           </>
         )}
-        {mode === 'HOME' && (
+        {mode === "HOME" && (
           <div>
-            <Landcard getStarted={() => setMode('NEWCANVAS')} />
+            <Landcard getStarted={() => setMode("NEWCANVAS")} />
           </div>
+        )}
+        {mode === "LOADINGCANVAS" && (
+          <>
+            <Toolbar canvasName={title} setMode={setMode} />
+            <div className="workspace">
+              <ReactLoading
+                type={"spin"}
+                color={"#ffffff"}
+                height={667}
+                width={375}
+              />
+            </div>
+          </>
         )}
         <PresentCanvas
           media={media}
@@ -119,29 +128,30 @@ function App() {
           openModal={openModal}
           closeModal={setOpenModal}
         />
-        {mode !== 'NEWCANVAS' && (
+        {mode !== "NEWCANVAS" && (
           <Row
-            title='Suggested Canvi'
+            title="Suggested Canvi"
             fetchUrl={requests.fetchTrending}
             panels={panels}
             openModal={createModal}
+            setMode={setMode}
             createGallery={createGallery}
           />
         )}
         <div style={{ height: 100 }}></div>
         <Footer
-          style={{ fontFamily: 'Varela Round' }}
-          backgroundColor='transparent'
+          style={{ fontFamily: "Varela Round" }}
+          backgroundColor="transparent"
           columns={[
             {
               icon: (
-                <IconButton style={{ color: 'white' }}>
+                <IconButton style={{ color: "white" }}>
                   <GitHubIcon />
                 </IconButton>
               ),
-              url: 'https://github.com/cjfelice/cuneiform',
-              openExternal: true
-            }
+              url: "https://github.com/cjfelice/cuneiform",
+              openExternal: true,
+            },
           ]}
           bottom={`Made for the Lighthouse Bootcamp by Rubin Jhand & Christopher Smith`}
         />
