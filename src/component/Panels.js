@@ -45,6 +45,7 @@ import VisibilityIcon from "@material-ui/icons/Visibility";
 
 import TextInfoContent from "@mui-treasury/components/content/textInfo";
 import { useN01TextInfoContentStyles } from "@mui-treasury/styles/textInfoContent/n01";
+import MediaStorage from "./MediaStorage";
 
 function Panels(props) {
   // title = name
@@ -180,7 +181,7 @@ function Panels(props) {
           />
         </div>
         <div style={{ backgroundColor: "#5B84B1FF", color: "white" }}>
-          <CardContent style={{}}>
+          <CardContent>
             <Typography>{description}</Typography>
           </CardContent>
           <CardActions disableSpacing>
@@ -230,7 +231,12 @@ function Panels(props) {
           {!user ? (
             <h6>Sign In to Join Us!</h6>
           ) : (
-            <Comments username={username} panel_id={panel_id} key={id} />
+            <Comments
+              key={panel_id}
+              username={username}
+              panel_id={panel_id}
+              key={id}
+            />
           )}
         </Menu>
       </Card>

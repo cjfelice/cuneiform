@@ -97,7 +97,7 @@ function PanelMedia(props) {
   const space = 0;
   if (media.length === 1) {
     return (
-      <Box container className={classes.root}>
+      <Box container>
         <GridList cellHeight={250} className={classes.gridList} cols={1}>
           {media.map(({ mediaUrl, mediaType, mediaBox_id }) =>
             mediaBox.map(({ i, h, w, x, y }) => {

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import firebase from 'firebase';
-import { db, storage } from '../config/firebase';
+import { storage } from '../config/firebase';
 import './MediaStorage.css';
 
 import Title from '../Title';
@@ -12,14 +12,15 @@ import { Button, Input } from '@material-ui/core';
 // NOT WORKING YET, HAVE TO CHANGE SOME PROPS AND OR VALUES
 function MediaStorage(props) {
   const user = firebase.auth().currentUser;
-  const { username, panel_id } = props;
 
-  const [title, setTitle] = useState('');
+  const { panel_id } = props;
+
   const [progress, setProgress] = useState(0);
   const [media, setMedia] = useState('');
   const [url, setUrl] = useState('');
   const [open, setOpen] = useState(false);
   const [modalStyle] = useState(getModalStyle);
+  const [error, setError] = useState('');
 
   function getModalStyle() {
     const top = 50;
@@ -39,6 +40,13 @@ function MediaStorage(props) {
       border: '2px solid #000',
       boxShadow: theme.shadows[5],
       padding: theme.spacing(2, 4, 3)
+    },
+    button: {
+      margin: theme.spacing(1)
+    },
+    input: {
+      //   display: 'none',
+      margin: theme.spacing(1)
     }
   }));
 
@@ -49,54 +57,85 @@ function MediaStorage(props) {
       setMedia(e.target.files[0]);
     }
   };
+  console.log(media);
+  // const handleUpload = (e) => {
+  //   e.preventDefault();
 
-  const handleUpload = () => {
-    //panels/{media.name} is the filename upload to the panels folder in firebase storage
-    const uploadTask = storage.ref(`panels/${media.name}`).put(media);
-    uploadTask.on(
-      'state_changed',
-      (snapshot) => {
-        const progress = Math.round(
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        );
-        setProgress(progress);
-      },
-      (error) => {
-        console.log(error);
-      },
-      () => {
-        storage
-          .ref('panels')
-          .child(media.name)
-          .getDownloadUrl()
-          .then((url) => {
-            db.collection('panels').add({
-              timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-              // title: title,
-              media: { mediaUrl: url },
-              username: user.displayName
+  //   const uploadTask = storage.ref(`panels/${media.name}`).put(media);
+  //   uploadTask.on(
+  //     'state_changed',
+  //     (snapshot) => {
+  //       const progress = Math.round(
+  //         (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+  //       );
+  //       setProgress(progress);
+  //     },
+  //     (error) => {
+  //       console.log(error);
+  //     },
+  //     () => {
+  //       storage
+  //         .ref('panels')
+  //         .child(media.name)
+  //         .getDownloadUrl()
+  //         .then((url) => {
+  //           setUrl(url);
+
+  //           setProgress(0);
+  //           setMedia(null);
+  //         });
+  //     }
+  //   );
+  // };
+
+  const handleUpload = (e) => {
+    e.preventDefault();
+
+    if (media) {
+      const uploadTask = storage.ref(`panels/${media.name}`).put(media);
+
+      uploadTask.on(
+        'state_changed',
+        (snapshot) => {
+          const progress = Math.round(
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          );
+          setProgress(progress);
+        },
+        (error) => {
+          setError(error);
+        },
+        () => {
+          storage
+            .ref('panels')
+            .child(media.name)
+            .getDownloadURL()
+            .then((url) => {
+              console.log(url);
+              setUrl(url);
+              setProgress(0);
+              setOpen(false);
             });
-            setProgress(0);
-            setTitle('');
-            setMedia(null);
-          });
-      }
-    );
+        }
+      );
+    } else {
+      setError('Error please choose an media to upload');
+    }
   };
 
+  console.log('\n\nmedia url:>>>:', url);
   return (
     <>
       <Modal open={open} onClose={() => setOpen(false)}>
         <div style={modalStyle} className={classes.paper}>
+          <Title text='chiMera' />
+          <>{progress > 0 ? <progress value={progress} max='100' /> : ''}</>
           <form className='chimera__signup'>
-            <Title text='chiMera' />
-
-            <progress value={progress} max='100' />
             <form>
               <Input type='file' onChange={handleChange} />
               <Input
-                placeholder='Load Image'
-                type='text'
+                placeholder='None'
+                type='hidden'
                 value={media}
                 onChange={(event) => setMedia(event.target.value)}
               />
@@ -107,7 +146,11 @@ function MediaStorage(props) {
           </form>
         </div>
       </Modal>
-      <Button onClick={() => setOpen(true)}>UPLOAD!</Button>
+      {url ? (
+        <a href={url}>{url}</a>
+      ) : (
+        <Button onClick={() => setOpen(true)}>UPLOAD!</Button>
+      )}
     </>
   );
 }
