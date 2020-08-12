@@ -95,7 +95,19 @@ function App() {
             <Workarea createGallery={createGallery} />
           </div>
         )}
-        {mode === "MYCANVASES" && <div></div>}
+        {mode === "MYCANVASES" && (
+          <div>
+            <div className="title-header">My Canvases</div>
+            <Row
+              title="Suggested Canvi"
+              fetchUrl={requests.fetchTrending}
+              panels={panels}
+              openModal={createModal}
+              setMode={setMode}
+              createGallery={createGallery}
+            />
+          </div>
+        )}
         {mode === "CREATEDCANVAS" && (
           <>
             <Toolbar

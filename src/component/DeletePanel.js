@@ -46,6 +46,7 @@ function DeletePanel(props) {
       .catch((error) => {
         console.error("Error removing document: ", error);
       });
+    props.setMode("MYCANVASES");
     setOpen(false);
     props.setMode("MYCANVASES");
   };
