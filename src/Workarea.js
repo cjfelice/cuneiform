@@ -53,6 +53,7 @@ function Workarea(props) {
           <DatabaseUpload
             className="save"
             createGallery={props.createGallery}
+            setMode={props.setMode}
           />
         )}
       </div>

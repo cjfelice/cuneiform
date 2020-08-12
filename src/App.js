@@ -49,7 +49,7 @@ function App() {
   const [trigger, setTrigger] = useState(false);
 
   useEffect(() => {
-    db.collection("panels").onSnapshot((snapshot) => {
+    const unsubscribe = db.collection("panels").onSnapshot((snapshot) => {
       setPanels(
         snapshot.docs.map((doc) => ({
           id: doc.id,
@@ -57,6 +57,9 @@ function App() {
         }))
       );
     });
+    return () => {
+      unsubscribe(); //run the 'done' function (see done = db above)
+    };
   }, []);
 
   const theme = createMuiTheme({
@@ -92,7 +95,7 @@ function App() {
         </Headroom>
         {mode === "NEWCANVAS" && (
           <div>
-            <Workarea createGallery={createGallery} />
+            <Workarea createGallery={createGallery} setMode={setMode} />
           </div>
         )}
         {mode === "MYCANVASES" && (

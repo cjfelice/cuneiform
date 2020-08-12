@@ -57,7 +57,7 @@ function MediaStorage(props) {
       setMedia(e.target.files[0]);
     }
   };
-  console.log(media);
+
   // const handleUpload = (e) => {
   //   e.preventDefault();
 
@@ -123,7 +123,6 @@ function MediaStorage(props) {
     }
   };
 
-  console.log('\n\nmedia url:>>>:', url);
   return (
     <>
       <Modal open={open} onClose={() => setOpen(false)}>

@@ -71,6 +71,7 @@ function Panels(props) {
 
   const useStyles = makeStyles((theme) => ({
     root: {
+      // minWidth: 345,
       minWidth: 345,
       // maxHeight: 442,
       // minHeight: 442,

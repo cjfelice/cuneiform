@@ -15,6 +15,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import ImageRow from "./ImageRow";
 import VideoRow from "./VideoRow";
 import AudioRow from "./AudioRow";
+import TextRow from "./TextRow";
 
 const Mediaform = (props) => {
   const [open, setOpen] = useState(false);
@@ -24,11 +25,11 @@ const Mediaform = (props) => {
     setOpen(true);
   };
 
-  useEffect(() => {
-    if (type === "TEXT") {
-      props.setMode(type);
-    }
-  }, [type]);
+  // useEffect(() => {
+  //   if (type === "TEXT") {
+  //     props.setMode(type);
+  //   }
+  // }, [type]);
 
   const handleClose = () => {
     setOpen(false);
@@ -76,6 +77,7 @@ const Mediaform = (props) => {
         color="primary"
         aria-label="text"
         onClick={() => {
+          handleClickOpen();
           setType("TEXT");
         }}
       >
@@ -114,6 +116,9 @@ const Mediaform = (props) => {
               You can add audio from anywhere on the internet. Just copy and
               paste the audio source url.
             </DialogContentText>
+          )}
+          {type === "TEXT" && (
+            <TextRow setContent={props.setContent} submitUrl={submitURL} />
           )}
           <TextField
             autoFocus

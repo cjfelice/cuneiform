@@ -43,7 +43,13 @@ function DatabaseUpload(props) {
   const [modalStyle] = useState(getModalStyle);
   const [open, setOpen] = useState(false);
 
-  const handleUpload = () => {
+  const handleUpload = (e) => {
+    // e.preventDefault();
+    props.setMode("LOADINGCANVAS");
+    setTimeout(() => {
+      props.setMode("CREATEDCANVAS");
+    }, 3000);
+
     db.collection("panels")
       .add({
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
