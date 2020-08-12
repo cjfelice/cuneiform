@@ -44,36 +44,78 @@ function DatabaseUpload(props) {
   const [open, setOpen] = useState(false);
 
   const handleUpload = (e) => {
-    // e.preventDefault();
-    props.setMode("LOADINGCANVAS");
-    setTimeout(() => {
-      props.setMode("CREATEDCANVAS");
-    }, 3000);
+    console.log(props.mode);
+    console.log(saveMedia);
+    if (props.mode === "EDITCANVAS") {
+      console.log("panel_ID:", props.panel_id);
+      props.setMode("LOADINGCANVAS");
+      db.collection("panels")
+        .doc(props.panel_id)
+        .delete()
+        .then(() => {
+          console.log("Document successfully deleted!");
+        })
+        .then(() => {
+          db.collection("panels")
+            .add({
+              timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+              title: title,
+              mediaBox: [...saveMedia[0].items],
+              mediaCounter: saveMedia[0].newCounter,
+              media: [...saveMedia[1]],
+              username: user.displayName,
+              description: description,
+              music_id: "",
+            })
+            .then(function (docRef) {
+              props.createGallery(
+                saveMedia[1],
+                saveMedia[0].items,
+                title,
+                user.displayName,
+                docRef.id,
+                saveMedia[0].newCounter
+              );
+              props.setMode("CREATEDCANVAS");
+            })
+            .catch(function (error) {
+              console.error("Error adding document: ", error);
+            });
+          setOpen(false);
+        })
+        .catch((error) => {
+          console.error("Error removing document: ", error);
+        });
+    } else {
+      props.setMode("LOADINGCANVAS");
 
-    db.collection("panels")
-      .add({
-        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-        title: title,
-        mediaBox: [...saveMedia[0].items],
-        mediaCounter: saveMedia[0].newCounter,
-        media: [...saveMedia[1]],
-        username: user.displayName,
-        description: description,
-        music_id: "",
-      })
-      .then(function (docRef) {
-        props.createGallery(
-          saveMedia[1],
-          saveMedia[0].items,
-          title,
-          user.displayName,
-          docRef.id
-        );
-      })
-      .catch(function (error) {
-        console.error("Error adding document: ", error);
-      });
-    setOpen(false);
+      db.collection("panels")
+        .add({
+          timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+          title: title,
+          mediaBox: [...saveMedia[0].items],
+          mediaCounter: saveMedia[0].newCounter,
+          media: [...saveMedia[1]],
+          username: user.displayName,
+          description: description,
+          music_id: "",
+        })
+        .then(function (docRef) {
+          props.createGallery(
+            saveMedia[1],
+            saveMedia[0].items,
+            title,
+            user.displayName,
+            docRef.id,
+            saveMedia[0].newCounter
+          );
+          props.setMode("CREATEDCANVAS");
+        })
+        .catch(function (error) {
+          console.error("Error adding document: ", error);
+        });
+      setOpen(false);
+    }
   };
 
   return (

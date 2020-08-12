@@ -16,7 +16,7 @@ let saveMedia = {};
 const Canvas = forwardRef((props, ref) => {
   const { media, mediaBox } = props;
 
-  const [mediaInfo, setMediaInfo] = useState(props.media || []);
+  const [mediaInfo, setMediaInfo] = useState(media || []);
 
   const [state, setState] = useState(
     mediaBox
@@ -33,9 +33,11 @@ const Canvas = forwardRef((props, ref) => {
               isResizable: true,
               maxH: 1000,
               maxW: 1000,
+              minH: 1,
+              minW: 1,
             };
           }),
-          newCounter: mediaBox.newCounter,
+          newCounter: props.counter,
         }
       : {
           items: [0].map(function (i, key, list) {
@@ -43,8 +45,8 @@ const Canvas = forwardRef((props, ref) => {
               i: "n" + i.toString(),
               x: i * 2,
               y: 0,
-              w: 8,
-              h: 8,
+              w: 6,
+              h: 10,
               isBounded: false,
               isDraggable: true,
               isResizable: true,
@@ -104,8 +106,8 @@ const Canvas = forwardRef((props, ref) => {
         i: "n" + state.newCounter,
         x: state.newCounter,
         y: state.newCounter,
-        w: 8,
-        h: 8,
+        w: 4,
+        h: 6,
         isBounded: false,
         isDraggable: true,
         isResizable: true,
@@ -136,8 +138,8 @@ const Canvas = forwardRef((props, ref) => {
         i: "n" + state.newCounter,
         x: layoutItem.x,
         y: layoutItem.y,
-        w: 8,
-        h: 8,
+        w: 4,
+        h: 6,
         isBounded: false,
         isDraggable: true,
         isResizable: true,
@@ -149,6 +151,8 @@ const Canvas = forwardRef((props, ref) => {
       newCounter: state.newCounter + 1,
     });
   };
+  console.log("PROPS.COUNTER:", props.counter);
+  console.log("STATE.newCOUNTER:", state.newCounter);
 
   return (
     <>
@@ -156,8 +160,9 @@ const Canvas = forwardRef((props, ref) => {
         <ReactGridLayout
           className="layout"
           cols={20}
-          rowHeight={10}
+          rowHeight={11}
           maxRows={31}
+          minH={400}
           isDroppable={true}
           onDrop={onDrop}
           preventCollision={true}

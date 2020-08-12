@@ -41,12 +41,14 @@ function App() {
   const [panels, setPanels] = useState([]);
   const [media, setMedia] = useState([]);
   const [title, setTitle] = useState("");
-  const [mediaBox, setMediaBox] = useState([]);
+  const [mediaBox, setMediaBox] = useState();
   const [panelID, setPanelID] = useState("");
   const [openModal, setOpenModal] = useState(false);
   const [userName, setUserName] = useState("");
+  const [counter, setCounter] = useState();
   const [userID, setUserID] = useState("");
   const [trigger, setTrigger] = useState(false);
+  const [edit, setEdit] = useState(false);
 
   useEffect(() => {
     const unsubscribe = db.collection("panels").onSnapshot((snapshot) => {
@@ -77,12 +79,12 @@ function App() {
     setTitle(title);
     setOpenModal(true);
   };
-  const createGallery = (media, mediaBox, title, user, panelID) => {
-    setMode("LOADINGCANVAS");
+  const createGallery = (media, mediaBox, title, user, panelID, newCounter) => {
     setMedia(media);
     setPanelID(panelID);
     setMediaBox(mediaBox);
     setTitle(title);
+    setCounter(newCounter);
     setUserName(user);
   };
   return (
@@ -95,7 +97,26 @@ function App() {
         </Headroom>
         {mode === "NEWCANVAS" && (
           <div>
-            <Workarea createGallery={createGallery} setMode={setMode} />
+            <Workarea
+              createGallery={createGallery}
+              setMode={setMode}
+              media={media}
+              mediaBox={mediaBox}
+              mode={mode}
+            />
+          </div>
+        )}
+        {mode === "EDITCANVAS" && (
+          <div>
+            <Workarea
+              createGallery={createGallery}
+              setMode={setMode}
+              media={media}
+              mediaBox={mediaBox}
+              panel_id={panelID}
+              counter={counter}
+              mode={mode}
+            />
           </div>
         )}
         {mode === "MYCANVASES" && (
@@ -116,8 +137,10 @@ function App() {
             <Toolbar
               canvasName={title}
               setMode={setMode}
+              setEdit={setEdit}
               userName={userName}
               panel_id={panelID}
+              mode={mode}
             />
             <div className="workspace">
               <GalleryCanvas media={media} mediaBox={mediaBox} />

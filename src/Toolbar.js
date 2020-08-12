@@ -13,9 +13,9 @@ function Toolbar(props) {
           style={{
             color: "white",
             marginLeft: 20,
-            marginRight: 400,
+            marginRight: "auto",
             marginTop: 4,
-            fontSize: 18,
+            fontSize: 20,
             fontStyle: "Bold",
           }}
         >
@@ -25,6 +25,9 @@ function Toolbar(props) {
           variant="contained"
           color="primary"
           style={{ color: "white", marginRight: 20 }}
+          onClick={() => {
+            props.setMode("EDITCANVAS");
+          }}
         >
           EDIT
         </Button>{" "}
@@ -32,6 +35,7 @@ function Toolbar(props) {
           username={props.userName}
           panel_id={props.panel_id}
           setMode={props.setMode}
+          mode={props.mode}
         />
         <IconButton
           variant="contained"

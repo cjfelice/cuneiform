@@ -44,7 +44,11 @@ function PanelsHeader(props) {
           </IconButton>
         }
         className="card"
-        title={title}
+        title={
+          <Typography gutterBottom variant="h6" component="h8">
+            {title}
+          </Typography>
+        }
         subheader={dateConversion(time)}
       />
     </>

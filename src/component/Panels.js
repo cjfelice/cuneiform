@@ -159,7 +159,14 @@ function Panels(props) {
               setTimeout(() => {
                 props.setMode("CREATEDCANVAS");
               }, 3000);
-              props.createGallery(media, mediaBox, title, username, panel_id);
+              props.createGallery(
+                media,
+                mediaBox,
+                title,
+                username,
+                panel_id,
+                mediaCounter
+              );
               window.scrollTo({
                 top: 45,
                 left: 0,
@@ -201,15 +208,15 @@ function Panels(props) {
                 <FavoriteBorderIcon className={classes.like} />
               </IconButton>
             )}
+            <IconButton aria-label="share" onClick={() => alert(panel_id)}>
+              <ShareIcon style={{ color: "#f5ba55" }} />
+            </IconButton>
             <div style={{ color: "white", marginLeft: 4, fontSize: 20 }}>
-              <Button variant="contained" color="primary">
+              <Button size="small" variant="contained" color="primary">
                 <PersonIcon />
                 {username}
               </Button>
             </div>
-            <IconButton aria-label="share" onClick={() => alert(panel_id)}>
-              <ShareIcon style={{ color: "#f5ba55" }} />
-            </IconButton>
             <IconButton
               className={clsx(classes.expand, {
                 [classes.expandOpen]: expanded,

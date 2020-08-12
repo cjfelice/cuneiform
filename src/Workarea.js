@@ -54,10 +54,18 @@ function Workarea(props) {
             className="save"
             createGallery={props.createGallery}
             setMode={props.setMode}
+            mode={props.mode}
+            panel_id={props.panel_id}
+            counter={props.counter}
           />
         )}
       </div>
-      <Workspace ref={refPass} />
+      <Workspace
+        ref={refPass}
+        media={props.media}
+        mediaBox={props.mediaBox}
+        counter={props.counter}
+      />
     </div>
   );
 }

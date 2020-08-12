@@ -12,13 +12,17 @@ import "./Row.scss";
 import { Editor } from "@tinymce/tinymce-react";
 
 function TextRow(props) {
-  const [HTML, setHTML] = useState("");
+  const [text, setText] = useState("");
 
-  const API_KEY = process.env.REACT_APP_CLOUD_EDIT_API_KEY;
+  const API_KEY = process.env.REACT_APP_CLOUD_EDIT_KEY;
 
   const handleEditorChange = (content, editor) => {
-    setHTML(content);
+    setText(content);
   };
+
+  // useEffect(() => {
+
+  // }, [trigger])
 
   return (
     <>
@@ -38,13 +42,13 @@ function TextRow(props) {
              alignleft aligncenter alignright alignjustify | \
              bullist numlist outdent indent ",
         }}
-        onEditorChange={handleEditorChange}
+        onEditorChange={(e) => setText(e)}
       />
       <Button
         onClick={() => {
-          props.setContent(HTML);
+          props.setContent(text);
           props.submitUrl();
-          console.log("HTML", HTML);
+          console.log("HTML:", text);
         }}
       >
         Submit
