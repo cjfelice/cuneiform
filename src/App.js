@@ -39,11 +39,13 @@ import { getThemeProps } from "@material-ui/styles";
 function App() {
   const [mode, setMode] = useState("HOME");
   const [panels, setPanels] = useState([]);
-  const [media, setMedia] = useState();
-  const [title, setTitle] = useState();
-  const [mediaBox, setMediaBox] = useState();
+  const [media, setMedia] = useState([]);
+  const [title, setTitle] = useState("");
+  const [mediaBox, setMediaBox] = useState([]);
+  const [panelID, setPanelID] = useState("");
   const [openModal, setOpenModal] = useState(false);
   const [userName, setUserName] = useState("");
+  const [userID, setUserID] = useState("");
   const [trigger, setTrigger] = useState(false);
 
   useEffect(() => {
@@ -62,11 +64,7 @@ function App() {
       fontFamily: "Raleway",
     },
     overrides: {
-      MuiButton: {
-        raisedPrimary: {
-          color: "white",
-        },
-      },
+      MuiButton: {},
     },
   });
 
@@ -76,12 +74,13 @@ function App() {
     setTitle(title);
     setOpenModal(true);
   };
-  const createGallery = (media, mediaBox, title) => {
+  const createGallery = (media, mediaBox, title, user, panelID) => {
     setMode("LOADINGCANVAS");
     setMedia(media);
+    setPanelID(panelID);
     setMediaBox(mediaBox);
     setTitle(title);
-    setMode("CREATEDCANVAS");
+    setUserName(user);
   };
   return (
     <div className="App">
@@ -96,9 +95,15 @@ function App() {
             <Workarea createGallery={createGallery} />
           </div>
         )}
+        {mode === "MYCANVASES" && <div></div>}
         {mode === "CREATEDCANVAS" && (
           <>
-            <Toolbar canvasName={title} setMode={setMode} />
+            <Toolbar
+              canvasName={title}
+              setMode={setMode}
+              userName={userName}
+              panel_id={panelID}
+            />
             <div className="workspace">
               <GalleryCanvas media={media} mediaBox={mediaBox} />
             </div>
@@ -111,14 +116,16 @@ function App() {
         )}
         {mode === "LOADINGCANVAS" && (
           <>
-            <Toolbar canvasName={title} setMode={setMode} />
-            <div className="workspace">
-              <ReactLoading
-                type={"spin"}
-                color={"#ffffff"}
-                height={667}
-                width={375}
-              />
+            <Toolbar canvasName={title} setMode={setMode} panelID={panelID} />
+            <div className="workspace" style={{ textAlign: "center" }}>
+              <div style={{ display: "inline-block", marginTop: 200 }}>
+                <ReactLoading
+                  type={"balls"}
+                  color={"#5B84B1FF"}
+                  height={200}
+                  width={200}
+                />
+              </div>
             </div>
           </>
         )}
