@@ -36,13 +36,6 @@ import Cards from './component/Cards';
 import { GridList, Box, IconButton } from '@material-ui/core';
 import { getThemeProps } from '@material-ui/styles';
 
-db.collection('panels')
-  .doc()
-  .onSnapshot(function (doc) {
-    const source = doc.metadata.hasPendingWrites ? 'Local' : 'Server';
-    console.log(source, ' data: ', doc.data());
-  });
-
 function App() {
   const [mode, setMode] = useState('HOME');
   const [panels, setPanels] = useState([]);
