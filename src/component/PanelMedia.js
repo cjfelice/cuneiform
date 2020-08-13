@@ -37,8 +37,8 @@ function PanelMedia(props) {
       // marginRight: 0,
       marginTop: 5,
       display: "flex",
-      // flexWrap: "wrap",
-      // justifyContent: "space-around",
+      flexWrap: "wrap",
+      justifyContent: "space-around",
       // overflow: "hidden",
     },
     media: {
@@ -65,6 +65,7 @@ function PanelMedia(props) {
     gridList: {
       width: "100%",
       height: "100%",
+      overflow: "scroll",
       marginRight: 0,
       marginLeft: 10,
       // backgroundColor: '#424242'
@@ -99,7 +100,7 @@ function PanelMedia(props) {
   if (media.length === 1) {
     return (
       <Box container>
-        <GridList cellHeight={250} className={classes.gridList} cols={1}>
+        <GridList cellHeight={255} className={classes.gridList} cols={1}>
           {media.map(({ mediaUrl, mediaType, mediaBox_id }) =>
             mediaBox.map(({ i, h, w, x, y }) => {
               if (mediaBox_id === i) {
@@ -135,7 +136,7 @@ function PanelMedia(props) {
     return (
       <Box container className={classes.root}>
         <GridList
-          cellHeight={120}
+          cellHeight={125}
           className={classes.gridList}
           cols={2}
           spacing={space}
@@ -165,7 +166,7 @@ function PanelMedia(props) {
   return (
     <Box container className={classes.root}>
       <GridList
-        cellHeight={120}
+        cellHeight={125}
         className={classes.gridList}
         cols={media.length > 6 ? 3 : 2}
         spacing={space}

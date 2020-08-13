@@ -12,6 +12,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import MediaStorage from "./component/MediaStorage";
 import ImageRow from "./ImageRow";
 import VideoRow from "./VideoRow";
 import AudioRow from "./AudioRow";
@@ -118,6 +119,10 @@ const Mediaform = (props) => {
               <Button onClick={submitURL} color="primary">
                 Submit
               </Button>
+              <MediaStorage
+                setContent={props.setContent}
+                submitURL={submitURL}
+              />
             </DialogContent>
             <DialogActions>
               <Button onClick={handleClose} color="primary">

@@ -10,7 +10,11 @@ function Landcard(props) {
       Welcome to Chimera.
       <div>Create something.</div>Create something... weird.
       <Button
-        onClick={() => props.getStarted()}
+        onClick={() => {
+          props.getStarted();
+          props.setMedia([]);
+          props.setMediaBox();
+        }}
         style={{ marginLeft: 180 }}
         variant="contained"
         color="secondary"

@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-import firebase from 'firebase';
-import { storage } from '../config/firebase';
-import './MediaStorage.css';
+import firebase from "firebase";
+import { storage } from "../config/firebase";
+import "./MediaStorage.css";
 
-import Title from '../Title';
-import { makeStyles } from '@material-ui/core/styles';
-import Modal from '@material-ui/core/Modal';
-import { Button, Input } from '@material-ui/core';
-
+import Title from "../Title";
+import { makeStyles } from "@material-ui/core/styles";
+import Modal from "@material-ui/core/Modal";
+import { Button, Input } from "@material-ui/core";
+import "../App.scss";
 // NOT WORKING YET, HAVE TO CHANGE SOME PROPS AND OR VALUES
 function MediaStorage(props) {
   const user = firebase.auth().currentUser;
@@ -16,11 +16,11 @@ function MediaStorage(props) {
   const { panel_id } = props;
 
   const [progress, setProgress] = useState(0);
-  const [media, setMedia] = useState('');
-  const [url, setUrl] = useState('');
+  const [media, setMedia] = useState("");
+  const [url, setUrl] = useState("");
   const [open, setOpen] = useState(false);
   const [modalStyle] = useState(getModalStyle);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   function getModalStyle() {
     const top = 50;
@@ -28,26 +28,26 @@ function MediaStorage(props) {
     return {
       top: `${top}%`,
       left: `${left}%`,
-      transform: `translate(-${top}%, -${left}%)`
+      transform: `translate(-${top}%, -${left}%)`,
     };
   }
 
   const useStyles = makeStyles((theme) => ({
     paper: {
-      position: 'absolute',
+      position: "absolute",
       width: 400,
       backgroundColor: theme.palette.background.paper,
-      border: '2px solid #000',
+      border: "2px solid #000",
       boxShadow: theme.shadows[5],
-      padding: theme.spacing(2, 4, 3)
+      padding: theme.spacing(2, 4, 3),
     },
     button: {
-      margin: theme.spacing(1)
+      margin: theme.spacing(1),
     },
     input: {
       //   display: 'none',
-      margin: theme.spacing(1)
-    }
+      margin: theme.spacing(1),
+    },
   }));
 
   const classes = useStyles();
@@ -95,7 +95,7 @@ function MediaStorage(props) {
       const uploadTask = storage.ref(`panels/${media.name}`).put(media);
 
       uploadTask.on(
-        'state_changed',
+        "state_changed",
         (snapshot) => {
           const progress = Math.round(
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100
@@ -107,7 +107,7 @@ function MediaStorage(props) {
         },
         () => {
           storage
-            .ref('panels')
+            .ref("panels")
             .child(media.name)
             .getDownloadURL()
             .then((url) => {
@@ -115,11 +115,13 @@ function MediaStorage(props) {
               setUrl(url);
               setProgress(0);
               setOpen(false);
+              props.setContent(url);
+              props.submitURL();
             });
         }
       );
     } else {
-      setError('Error please choose an media to upload');
+      setError("Error please choose an media to upload");
     }
   };
 
@@ -127,29 +129,35 @@ function MediaStorage(props) {
     <>
       <Modal open={open} onClose={() => setOpen(false)}>
         <div style={modalStyle} className={classes.paper}>
-          <Title text='chiMera' />
-          <>{progress > 0 ? <progress value={progress} max='100' /> : ''}</>
-          <form className='chimera__signup'>
+          <Title text="chiMera" />
+          <>{progress > 0 ? <progress value={progress} max="100" /> : ""}</>
+          <form className="chimera__signup">
             <form>
-              <Input type='file' onChange={handleChange} />
+              <Input color="primary" type="file" onChange={handleChange} />
               <Input
-                placeholder='None'
-                type='hidden'
-                value={media}
+                placeholder="None"
+                type="hidden"
+                // value={media}
                 onChange={(event) => setMedia(event.target.value)}
               />
-              <Button type='submit' onClick={handleUpload}>
+              <Button color="primary" type="submit" onClick={handleUpload}>
                 SAVE
               </Button>
             </form>
           </form>
         </div>
       </Modal>
-      {url ? (
+      {/* {url ? (
         <a href={url}>{url}</a>
-      ) : (
-        <Button onClick={() => setOpen(true)}>UPLOAD!</Button>
-      )}
+      ) : ( */}
+      <Button
+        style={{ marginLeft: "8" }}
+        color="primary"
+        onClick={() => setOpen(true)}
+      >
+        UPLOAD!
+      </Button>
+      {/* )} */}
     </>
   );
 }

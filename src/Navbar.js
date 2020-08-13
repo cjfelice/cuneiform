@@ -150,6 +150,8 @@ function Navbar(props) {
                       <MenuItem
                         onClick={(event) => {
                           handleClose(event);
+                          props.setMedia([]);
+                          props.setMediaBox();
                           menuSelect("NEWCANVAS");
                         }}
                       >
