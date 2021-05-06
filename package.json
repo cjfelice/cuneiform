@@ -32,7 +32,7 @@
     "react-bootstrap-dropdown": "^0.3.0",
     "react-bounds": "^0.3.1",
     "react-dom": "^16.13.1",
-    "react-draft-wysiwyg": "^1.14.5",
+    "react-draft-wysiwyg": "^1.14.6",
     "react-flip-move": "^3.0.4",
     "react-grid-layout": "^1.0.0",
     "react-headroom": "^3.0.0",
